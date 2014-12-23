@@ -1,0 +1,336 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2BC2A8D5144C433D00D5EF79 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC2A8D4144C433D00D5EF79 /* OpenGL.framework */; };
+		8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */; };
+		FB7D7F261A48E28D0003E4F0 /* UnityDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7F1F1A48E28D0003E4F0 /* UnityDevice.cpp */; };
+		FB7D7F2A1A48E2C70003E4F0 /* PopTrack in Resources */ = {isa = PBXBuildFile; fileRef = FB7D7F291A48E2C70003E4F0 /* PopTrack */; };
+		FB7D7F2C1A48E2DD0003E4F0 /* ofxSoylent in Resources */ = {isa = PBXBuildFile; fileRef = FB7D7F2B1A48E2DD0003E4F0 /* ofxSoylent */; };
+		FB7D7F311A48EE530003E4F0 /* SoyTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7F2F1A48EE530003E4F0 /* SoyTypes.cpp */; };
+		FB7D7F341A48EE8D0003E4F0 /* SoyString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7F321A48EE8D0003E4F0 /* SoyString.cpp */; };
+		FB7D7F371A48EEA40003E4F0 /* SoyRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7F351A48EEA40003E4F0 /* SoyRef.cpp */; };
+		FB7D7FBB1A48EEB60003E4F0 /* glew.c in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FA41A48EEB60003E4F0 /* glew.c */; };
+		FB7D7FC21A48EEFA0003E4F0 /* memheap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FC01A48EEFA0003E4F0 /* memheap.cpp */; };
+		FB7D7FC51A48EF0E0003E4F0 /* SoyDebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FC31A48EF0E0003E4F0 /* SoyDebug.cpp */; };
+		FB7D7FC81A48EF200003E4F0 /* SoyThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FC61A48EF200003E4F0 /* SoyThread.cpp */; };
+		FB7D7FCA1A48EFCC0003E4F0 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB7D7FC91A48EFCC0003E4F0 /* AGL.framework */; };
+		FB7D7FCD1A48F33A0003E4F0 /* Unity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FCB1A48F33A0003E4F0 /* Unity.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
+		2BC2A8D4144C433D00D5EF79 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		8D576316048677EA00EA77CD /* PopUnity.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PopUnity.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB7D7F171A48E28D0003E4F0 /* inttypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = inttypes.h; path = src/inttypes.h; sourceTree = "<group>"; };
+		FB7D7F1F1A48E28D0003E4F0 /* UnityDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UnityDevice.cpp; path = src/UnityDevice.cpp; sourceTree = "<group>"; };
+		FB7D7F201A48E28D0003E4F0 /* UnityDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnityDevice.h; path = src/UnityDevice.h; sourceTree = "<group>"; };
+		FB7D7F291A48E2C70003E4F0 /* PopTrack */ = {isa = PBXFileReference; lastKnownFileType = folder; name = PopTrack; path = ../NewChromantics/PopTrack; sourceTree = "<group>"; };
+		FB7D7F2B1A48E2DD0003E4F0 /* ofxSoylent */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ofxSoylent; path = ../NewChromantics/ofxSoylent; sourceTree = "<group>"; };
+		FB7D7F2D1A48E2F90003E4F0 /* PopApp.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = PopApp.xcconfig; path = ../NewChromantics/PopTrack/PopApp.xcconfig; sourceTree = "<group>"; };
+		FB7D7F2F1A48EE530003E4F0 /* SoyTypes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyTypes.cpp; path = ../NewChromantics/ofxSoylent/src/SoyTypes.cpp; sourceTree = "<group>"; };
+		FB7D7F301A48EE530003E4F0 /* SoyTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoyTypes.h; path = ../NewChromantics/ofxSoylent/src/SoyTypes.h; sourceTree = "<group>"; };
+		FB7D7F321A48EE8D0003E4F0 /* SoyString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyString.cpp; path = ../NewChromantics/ofxSoylent/src/SoyString.cpp; sourceTree = "<group>"; };
+		FB7D7F331A48EE8D0003E4F0 /* SoyString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoyString.h; path = ../NewChromantics/ofxSoylent/src/SoyString.h; sourceTree = "<group>"; };
+		FB7D7F351A48EEA40003E4F0 /* SoyRef.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyRef.cpp; path = ../NewChromantics/ofxSoylent/src/SoyRef.cpp; sourceTree = "<group>"; };
+		FB7D7F361A48EEA40003E4F0 /* SoyRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoyRef.h; path = ../NewChromantics/ofxSoylent/src/SoyRef.h; sourceTree = "<group>"; };
+		FB7D7FA41A48EEB60003E4F0 /* glew.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glew.c; sourceTree = "<group>"; };
+		FB7D7FA51A48EEB60003E4F0 /* glew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glew.h; sourceTree = "<group>"; };
+		FB7D7FA71A48EEB60003E4F0 /* glxew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glxew.h; sourceTree = "<group>"; };
+		FB7D7FA91A48EEB60003E4F0 /* wglew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wglew.h; sourceTree = "<group>"; };
+		FB7D7FBE1A48EEFA0003E4F0 /* array.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = array.hpp; path = ../NewChromantics/ofxSoylent/src/array.hpp; sourceTree = "<group>"; };
+		FB7D7FBF1A48EEFA0003E4F0 /* heaparray.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = heaparray.hpp; path = ../NewChromantics/ofxSoylent/src/heaparray.hpp; sourceTree = "<group>"; };
+		FB7D7FC01A48EEFA0003E4F0 /* memheap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = memheap.cpp; path = ../NewChromantics/ofxSoylent/src/memheap.cpp; sourceTree = "<group>"; };
+		FB7D7FC11A48EEFA0003E4F0 /* memheap.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = memheap.hpp; path = ../NewChromantics/ofxSoylent/src/memheap.hpp; sourceTree = "<group>"; };
+		FB7D7FC31A48EF0E0003E4F0 /* SoyDebug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyDebug.cpp; path = ../NewChromantics/ofxSoylent/src/SoyDebug.cpp; sourceTree = "<group>"; };
+		FB7D7FC41A48EF0E0003E4F0 /* SoyDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoyDebug.h; path = ../NewChromantics/ofxSoylent/src/SoyDebug.h; sourceTree = "<group>"; };
+		FB7D7FC61A48EF200003E4F0 /* SoyThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyThread.cpp; path = ../NewChromantics/ofxSoylent/src/SoyThread.cpp; sourceTree = "<group>"; };
+		FB7D7FC71A48EF200003E4F0 /* SoyThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoyThread.h; path = ../NewChromantics/ofxSoylent/src/SoyThread.h; sourceTree = "<group>"; };
+		FB7D7FC91A48EFCC0003E4F0 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = System/Library/Frameworks/AGL.framework; sourceTree = SDKROOT; };
+		FB7D7FCB1A48F33A0003E4F0 /* Unity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Unity.cpp; path = src/Unity.cpp; sourceTree = "<group>"; };
+		FB7D7FCC1A48F33A0003E4F0 /* Unity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Unity.h; path = src/Unity.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D576313048677EA00EA77CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB7D7FCA1A48EFCC0003E4F0 /* AGL.framework in Frameworks */,
+				8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */,
+				2BC2A8D5144C433D00D5EF79 /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* RenderingPlugin */ = {
+			isa = PBXGroup;
+			children = (
+				FB7D7F2D1A48E2F90003E4F0 /* PopApp.xcconfig */,
+				FB7D7F281A48E2AE0003E4F0 /* Soy */,
+				FB7D7F271A48E2A90003E4F0 /* Pop */,
+				FB7D7F0F1A48E1F30003E4F0 /* src */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				089C1671FE841209C02AAC07 /* External Frameworks and Libraries */,
+				19C28FB6FE9D52B211CA2CBB /* Products */,
+			);
+			name = RenderingPlugin;
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				FB7D7FC91A48EFCC0003E4F0 /* AGL.framework */,
+				0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */,
+				2BC2A8D4144C433D00D5EF79 /* OpenGL.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8D576317048677EA00EA77CD /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		19C28FB6FE9D52B211CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D576316048677EA00EA77CD /* PopUnity.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FB7D7F0F1A48E1F30003E4F0 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				FB7D7FA31A48EEB60003E4F0 /* gl */,
+				FB7D7F171A48E28D0003E4F0 /* inttypes.h */,
+				FB7D7FCB1A48F33A0003E4F0 /* Unity.cpp */,
+				FB7D7FCC1A48F33A0003E4F0 /* Unity.h */,
+				FB7D7F1F1A48E28D0003E4F0 /* UnityDevice.cpp */,
+				FB7D7F201A48E28D0003E4F0 /* UnityDevice.h */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		FB7D7F271A48E2A90003E4F0 /* Pop */ = {
+			isa = PBXGroup;
+			children = (
+				FB7D7F291A48E2C70003E4F0 /* PopTrack */,
+			);
+			name = Pop;
+			sourceTree = "<group>";
+		};
+		FB7D7F281A48E2AE0003E4F0 /* Soy */ = {
+			isa = PBXGroup;
+			children = (
+				FB7D7FC61A48EF200003E4F0 /* SoyThread.cpp */,
+				FB7D7FC71A48EF200003E4F0 /* SoyThread.h */,
+				FB7D7FC31A48EF0E0003E4F0 /* SoyDebug.cpp */,
+				FB7D7FC41A48EF0E0003E4F0 /* SoyDebug.h */,
+				FB7D7FBE1A48EEFA0003E4F0 /* array.hpp */,
+				FB7D7FBF1A48EEFA0003E4F0 /* heaparray.hpp */,
+				FB7D7FC01A48EEFA0003E4F0 /* memheap.cpp */,
+				FB7D7FC11A48EEFA0003E4F0 /* memheap.hpp */,
+				FB7D7F351A48EEA40003E4F0 /* SoyRef.cpp */,
+				FB7D7F361A48EEA40003E4F0 /* SoyRef.h */,
+				FB7D7F321A48EE8D0003E4F0 /* SoyString.cpp */,
+				FB7D7F331A48EE8D0003E4F0 /* SoyString.h */,
+				FB7D7F2F1A48EE530003E4F0 /* SoyTypes.cpp */,
+				FB7D7F301A48EE530003E4F0 /* SoyTypes.h */,
+				FB7D7F2B1A48E2DD0003E4F0 /* ofxSoylent */,
+			);
+			name = Soy;
+			sourceTree = "<group>";
+		};
+		FB7D7FA31A48EEB60003E4F0 /* gl */ = {
+			isa = PBXGroup;
+			children = (
+				FB7D7FA41A48EEB60003E4F0 /* glew.c */,
+				FB7D7FA51A48EEB60003E4F0 /* glew.h */,
+				FB7D7FA71A48EEB60003E4F0 /* glxew.h */,
+				FB7D7FA91A48EEB60003E4F0 /* wglew.h */,
+			);
+			name = gl;
+			path = src/gl;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D57630D048677EA00EA77CD /* PopUnity */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "PopUnity" */;
+			buildPhases = (
+				8D57630F048677EA00EA77CD /* Resources */,
+				8D576311048677EA00EA77CD /* Sources */,
+				8D576313048677EA00EA77CD /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PopUnity;
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = RenderingPlugin;
+			productReference = 8D576316048677EA00EA77CD /* PopUnity.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+			};
+			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "PopUnity" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 089C166AFE841209C02AAC07 /* RenderingPlugin */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D57630D048677EA00EA77CD /* PopUnity */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D57630F048677EA00EA77CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB7D7F2A1A48E2C70003E4F0 /* PopTrack in Resources */,
+				FB7D7F2C1A48E2DD0003E4F0 /* ofxSoylent in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D576311048677EA00EA77CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB7D7FBB1A48EEB60003E4F0 /* glew.c in Sources */,
+				FB7D7F341A48EE8D0003E4F0 /* SoyString.cpp in Sources */,
+				FB7D7F371A48EEA40003E4F0 /* SoyRef.cpp in Sources */,
+				FB7D7F261A48E28D0003E4F0 /* UnityDevice.cpp in Sources */,
+				FB7D7FC21A48EEFA0003E4F0 /* memheap.cpp in Sources */,
+				FB7D7FC81A48EF200003E4F0 /* SoyThread.cpp in Sources */,
+				FB7D7F311A48EE530003E4F0 /* SoyTypes.cpp in Sources */,
+				FB7D7FCD1A48F33A0003E4F0 /* Unity.cpp in Sources */,
+				FB7D7FC51A48EF0E0003E4F0 /* SoyDebug.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB911B08733D790010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/src/ffmpeg/lib",
+				);
+				PRODUCT_NAME = PopUnity;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		1DEB911C08733D790010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/src/ffmpeg/lib",
+				);
+				PRODUCT_NAME = PopUnity;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		1DEB911F08733D790010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FB7D7F2D1A48E2F90003E4F0 /* PopApp.xcconfig */;
+			buildSettings = {
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				PREBINDING = NO;
+				SOYLENT_DIR = ../NewChromantics/ofxSoylent/;
+			};
+			name = Debug;
+		};
+		1DEB912008733D790010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FB7D7F2D1A48E2F90003E4F0 /* PopApp.xcconfig */;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SOYLENT_DIR = ../NewChromantics/ofxSoylent/;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "PopUnity" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB911B08733D790010E9CD /* Debug */,
+				1DEB911C08733D790010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "PopUnity" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB911F08733D790010E9CD /* Debug */,
+				1DEB912008733D790010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}
