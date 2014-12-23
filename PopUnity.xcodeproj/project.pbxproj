@@ -10,17 +10,55 @@
 		2BC2A8D5144C433D00D5EF79 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC2A8D4144C433D00D5EF79 /* OpenGL.framework */; };
 		8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */; };
 		FB7D7F261A48E28D0003E4F0 /* UnityDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7F1F1A48E28D0003E4F0 /* UnityDevice.cpp */; };
-		FB7D7F2A1A48E2C70003E4F0 /* PopTrack in Resources */ = {isa = PBXBuildFile; fileRef = FB7D7F291A48E2C70003E4F0 /* PopTrack */; };
-		FB7D7F2C1A48E2DD0003E4F0 /* ofxSoylent in Resources */ = {isa = PBXBuildFile; fileRef = FB7D7F2B1A48E2DD0003E4F0 /* ofxSoylent */; };
 		FB7D7F311A48EE530003E4F0 /* SoyTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7F2F1A48EE530003E4F0 /* SoyTypes.cpp */; };
-		FB7D7F341A48EE8D0003E4F0 /* SoyString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7F321A48EE8D0003E4F0 /* SoyString.cpp */; };
-		FB7D7F371A48EEA40003E4F0 /* SoyRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7F351A48EEA40003E4F0 /* SoyRef.cpp */; };
 		FB7D7FBB1A48EEB60003E4F0 /* glew.c in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FA41A48EEB60003E4F0 /* glew.c */; };
 		FB7D7FC21A48EEFA0003E4F0 /* memheap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FC01A48EEFA0003E4F0 /* memheap.cpp */; };
-		FB7D7FC51A48EF0E0003E4F0 /* SoyDebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FC31A48EF0E0003E4F0 /* SoyDebug.cpp */; };
 		FB7D7FC81A48EF200003E4F0 /* SoyThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FC61A48EF200003E4F0 /* SoyThread.cpp */; };
 		FB7D7FCA1A48EFCC0003E4F0 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB7D7FC91A48EFCC0003E4F0 /* AGL.framework */; };
 		FB7D7FCD1A48F33A0003E4F0 /* Unity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FCB1A48F33A0003E4F0 /* Unity.cpp */; };
+		FB7D7FD01A48FCD10003E4F0 /* TChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FCE1A48FCD10003E4F0 /* TChannel.cpp */; };
+		FB7D7FD71A48FEF60003E4F0 /* PopMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FD11A48FEF60003E4F0 /* PopMain.cpp */; };
+		FB7D7FD81A48FEF60003E4F0 /* TJob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FD31A48FEF60003E4F0 /* TJob.cpp */; };
+		FB7D7FD91A48FEF60003E4F0 /* TJobFormat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FD51A48FEF60003E4F0 /* TJobFormat.cpp */; };
+		FB7D7FDD1A48FF700003E4F0 /* TParameters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FDB1A48FF700003E4F0 /* TParameters.cpp */; };
+		FB7D7FE41A48FF880003E4F0 /* TChannelFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FDE1A48FF880003E4F0 /* TChannelFile.cpp */; };
+		FB7D7FE51A48FF880003E4F0 /* TChannelPipe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FE01A48FF880003E4F0 /* TChannelPipe.cpp */; };
+		FB7D7FE61A48FF880003E4F0 /* TChannelSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FE21A48FF880003E4F0 /* TChannelSocket.cpp */; };
+		FB7D7FF11A48FFA10003E4F0 /* TProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FE71A48FFA10003E4F0 /* TProtocol.cpp */; };
+		FB7D7FF21A48FFA10003E4F0 /* TProtocolCli.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FE91A48FFA10003E4F0 /* TProtocolCli.cpp */; };
+		FB7D7FF31A48FFA10003E4F0 /* TProtocolHttp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FEB1A48FFA10003E4F0 /* TProtocolHttp.cpp */; };
+		FB7D7FF41A48FFA10003E4F0 /* TProtocolJson.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FED1A48FFA10003E4F0 /* TProtocolJson.cpp */; };
+		FB7D7FF51A48FFA10003E4F0 /* TProtocolWebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FEF1A48FFA10003E4F0 /* TProtocolWebSocket.cpp */; };
+		FB7D7FF81A48FFCB0003E4F0 /* SoyData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FF61A48FFCB0003E4F0 /* SoyData.cpp */; };
+		FB7D7FFB1A4900200003E4F0 /* SoyApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FF91A4900200003E4F0 /* SoyApp.cpp */; };
+		FB7D80021A4901080003E4F0 /* SoyPixels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FFC1A4901080003E4F0 /* SoyPixels.cpp */; };
+		FB7D80031A4901080003E4F0 /* SoyPng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FFE1A4901080003E4F0 /* SoyPng.cpp */; };
+		FB7D80041A4901080003E4F0 /* SoyRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D80001A4901080003E4F0 /* SoyRef.cpp */; };
+		FB7D800C1A4901310003E4F0 /* SoyArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D80061A4901310003E4F0 /* SoyArray.cpp */; };
+		FB7D800D1A4901310003E4F0 /* SoyDebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D80071A4901310003E4F0 /* SoyDebug.cpp */; };
+		FB7D800E1A4901310003E4F0 /* SoyEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D800A1A4901310003E4F0 /* SoyEvent.cpp */; };
+		FB7D80111A4901450003E4F0 /* SoyString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D800F1A4901450003E4F0 /* SoyString.cpp */; };
+		FB7D80141A49015D0003E4F0 /* TSerialisation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D80121A49015D0003E4F0 /* TSerialisation.cpp */; };
+		FB7D80281A4901C10003E4F0 /* sha1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D80251A4901C10003E4F0 /* sha1.cpp */; };
+		FB7D802B1A4901E60003E4F0 /* SoyTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D80291A4901E60003E4F0 /* SoyTime.cpp */; };
+		FB7D803E1A4903350003E4F0 /* AssertException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D802F1A4903350003E4F0 /* AssertException.cpp */; };
+		FB7D803F1A4903350003E4F0 /* Checks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D80321A4903350003E4F0 /* Checks.cpp */; };
+		FB7D80401A4903350003E4F0 /* CurrentTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D80351A4903350003E4F0 /* CurrentTest.cpp */; };
+		FB7D80411A4903350003E4F0 /* DeferredTestReporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D80371A4903350003E4F0 /* DeferredTestReporter.cpp */; };
+		FB7D80421A4903350003E4F0 /* DeferredTestResult.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D80391A4903350003E4F0 /* DeferredTestResult.cpp */; };
+		FB7D80431A4903350003E4F0 /* MemoryOutStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D803C1A4903350003E4F0 /* MemoryOutStream.cpp */; };
+		FB7D80601A4903460003E4F0 /* ReportAssert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D80451A4903460003E4F0 /* ReportAssert.cpp */; };
+		FB7D80611A4903460003E4F0 /* Test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D80471A4903460003E4F0 /* Test.cpp */; };
+		FB7D80621A4903460003E4F0 /* TestDetails.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D80491A4903460003E4F0 /* TestDetails.cpp */; };
+		FB7D80631A4903460003E4F0 /* TestList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D804B1A4903460003E4F0 /* TestList.cpp */; };
+		FB7D80641A4903460003E4F0 /* TestReporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D804E1A4903460003E4F0 /* TestReporter.cpp */; };
+		FB7D80651A4903460003E4F0 /* TestReporterStdout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D80501A4903460003E4F0 /* TestReporterStdout.cpp */; };
+		FB7D80661A4903460003E4F0 /* TestResults.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D80521A4903460003E4F0 /* TestResults.cpp */; };
+		FB7D80671A4903460003E4F0 /* TestRunner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D80541A4903460003E4F0 /* TestRunner.cpp */; };
+		FB7D80691A4903460003E4F0 /* TimeConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D80581A4903460003E4F0 /* TimeConstraint.cpp */; };
+		FB7D806B1A4903460003E4F0 /* XmlTestReporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D805D1A4903460003E4F0 /* XmlTestReporter.cpp */; };
+		FB7D80701A4903570003E4F0 /* SignalTranslator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D806C1A4903570003E4F0 /* SignalTranslator.cpp */; };
+		FB7D80711A4903570003E4F0 /* TimeHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D806E1A4903570003E4F0 /* TimeHelpers.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,10 +74,6 @@
 		FB7D7F2D1A48E2F90003E4F0 /* PopApp.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = PopApp.xcconfig; path = ../NewChromantics/PopTrack/PopApp.xcconfig; sourceTree = "<group>"; };
 		FB7D7F2F1A48EE530003E4F0 /* SoyTypes.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyTypes.cpp; path = ../NewChromantics/ofxSoylent/src/SoyTypes.cpp; sourceTree = "<group>"; };
 		FB7D7F301A48EE530003E4F0 /* SoyTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoyTypes.h; path = ../NewChromantics/ofxSoylent/src/SoyTypes.h; sourceTree = "<group>"; };
-		FB7D7F321A48EE8D0003E4F0 /* SoyString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyString.cpp; path = ../NewChromantics/ofxSoylent/src/SoyString.cpp; sourceTree = "<group>"; };
-		FB7D7F331A48EE8D0003E4F0 /* SoyString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoyString.h; path = ../NewChromantics/ofxSoylent/src/SoyString.h; sourceTree = "<group>"; };
-		FB7D7F351A48EEA40003E4F0 /* SoyRef.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyRef.cpp; path = ../NewChromantics/ofxSoylent/src/SoyRef.cpp; sourceTree = "<group>"; };
-		FB7D7F361A48EEA40003E4F0 /* SoyRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoyRef.h; path = ../NewChromantics/ofxSoylent/src/SoyRef.h; sourceTree = "<group>"; };
 		FB7D7FA41A48EEB60003E4F0 /* glew.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glew.c; sourceTree = "<group>"; };
 		FB7D7FA51A48EEB60003E4F0 /* glew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glew.h; sourceTree = "<group>"; };
 		FB7D7FA71A48EEB60003E4F0 /* glxew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glxew.h; sourceTree = "<group>"; };
@@ -48,13 +82,104 @@
 		FB7D7FBF1A48EEFA0003E4F0 /* heaparray.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = heaparray.hpp; path = ../NewChromantics/ofxSoylent/src/heaparray.hpp; sourceTree = "<group>"; };
 		FB7D7FC01A48EEFA0003E4F0 /* memheap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = memheap.cpp; path = ../NewChromantics/ofxSoylent/src/memheap.cpp; sourceTree = "<group>"; };
 		FB7D7FC11A48EEFA0003E4F0 /* memheap.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = memheap.hpp; path = ../NewChromantics/ofxSoylent/src/memheap.hpp; sourceTree = "<group>"; };
-		FB7D7FC31A48EF0E0003E4F0 /* SoyDebug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyDebug.cpp; path = ../NewChromantics/ofxSoylent/src/SoyDebug.cpp; sourceTree = "<group>"; };
-		FB7D7FC41A48EF0E0003E4F0 /* SoyDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoyDebug.h; path = ../NewChromantics/ofxSoylent/src/SoyDebug.h; sourceTree = "<group>"; };
 		FB7D7FC61A48EF200003E4F0 /* SoyThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyThread.cpp; path = ../NewChromantics/ofxSoylent/src/SoyThread.cpp; sourceTree = "<group>"; };
 		FB7D7FC71A48EF200003E4F0 /* SoyThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoyThread.h; path = ../NewChromantics/ofxSoylent/src/SoyThread.h; sourceTree = "<group>"; };
 		FB7D7FC91A48EFCC0003E4F0 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = System/Library/Frameworks/AGL.framework; sourceTree = SDKROOT; };
 		FB7D7FCB1A48F33A0003E4F0 /* Unity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Unity.cpp; path = src/Unity.cpp; sourceTree = "<group>"; };
 		FB7D7FCC1A48F33A0003E4F0 /* Unity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Unity.h; path = src/Unity.h; sourceTree = "<group>"; };
+		FB7D7FCE1A48FCD10003E4F0 /* TChannel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TChannel.cpp; path = ../NewChromantics/PopTrack/src/TChannel.cpp; sourceTree = "<group>"; };
+		FB7D7FCF1A48FCD10003E4F0 /* TChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TChannel.h; path = ../NewChromantics/PopTrack/src/TChannel.h; sourceTree = "<group>"; };
+		FB7D7FD11A48FEF60003E4F0 /* PopMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PopMain.cpp; path = ../NewChromantics/PopTrack/src/PopMain.cpp; sourceTree = "<group>"; };
+		FB7D7FD21A48FEF60003E4F0 /* PopMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PopMain.h; path = ../NewChromantics/PopTrack/src/PopMain.h; sourceTree = "<group>"; };
+		FB7D7FD31A48FEF60003E4F0 /* TJob.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TJob.cpp; path = ../NewChromantics/PopTrack/src/TJob.cpp; sourceTree = "<group>"; };
+		FB7D7FD41A48FEF60003E4F0 /* TJob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TJob.h; path = ../NewChromantics/PopTrack/src/TJob.h; sourceTree = "<group>"; };
+		FB7D7FD51A48FEF60003E4F0 /* TJobFormat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TJobFormat.cpp; path = ../NewChromantics/PopTrack/src/TJobFormat.cpp; sourceTree = "<group>"; };
+		FB7D7FD61A48FEF60003E4F0 /* TJobFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TJobFormat.h; path = ../NewChromantics/PopTrack/src/TJobFormat.h; sourceTree = "<group>"; };
+		FB7D7FDA1A48FF060003E4F0 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = ../NewChromantics/PopTrack/src; sourceTree = "<group>"; };
+		FB7D7FDB1A48FF700003E4F0 /* TParameters.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TParameters.cpp; path = ../NewChromantics/PopTrack/src/TParameters.cpp; sourceTree = "<group>"; };
+		FB7D7FDC1A48FF700003E4F0 /* TParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TParameters.h; path = ../NewChromantics/PopTrack/src/TParameters.h; sourceTree = "<group>"; };
+		FB7D7FDE1A48FF880003E4F0 /* TChannelFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TChannelFile.cpp; path = ../NewChromantics/PopTrack/src/TChannelFile.cpp; sourceTree = "<group>"; };
+		FB7D7FDF1A48FF880003E4F0 /* TChannelFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TChannelFile.h; path = ../NewChromantics/PopTrack/src/TChannelFile.h; sourceTree = "<group>"; };
+		FB7D7FE01A48FF880003E4F0 /* TChannelPipe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TChannelPipe.cpp; path = ../NewChromantics/PopTrack/src/TChannelPipe.cpp; sourceTree = "<group>"; };
+		FB7D7FE11A48FF880003E4F0 /* TChannelPipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TChannelPipe.h; path = ../NewChromantics/PopTrack/src/TChannelPipe.h; sourceTree = "<group>"; };
+		FB7D7FE21A48FF880003E4F0 /* TChannelSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TChannelSocket.cpp; path = ../NewChromantics/PopTrack/src/TChannelSocket.cpp; sourceTree = "<group>"; };
+		FB7D7FE31A48FF880003E4F0 /* TChannelSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TChannelSocket.h; path = ../NewChromantics/PopTrack/src/TChannelSocket.h; sourceTree = "<group>"; };
+		FB7D7FE71A48FFA10003E4F0 /* TProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TProtocol.cpp; path = ../NewChromantics/PopTrack/src/TProtocol.cpp; sourceTree = "<group>"; };
+		FB7D7FE81A48FFA10003E4F0 /* TProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TProtocol.h; path = ../NewChromantics/PopTrack/src/TProtocol.h; sourceTree = "<group>"; };
+		FB7D7FE91A48FFA10003E4F0 /* TProtocolCli.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TProtocolCli.cpp; path = ../NewChromantics/PopTrack/src/TProtocolCli.cpp; sourceTree = "<group>"; };
+		FB7D7FEA1A48FFA10003E4F0 /* TProtocolCli.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TProtocolCli.h; path = ../NewChromantics/PopTrack/src/TProtocolCli.h; sourceTree = "<group>"; };
+		FB7D7FEB1A48FFA10003E4F0 /* TProtocolHttp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TProtocolHttp.cpp; path = ../NewChromantics/PopTrack/src/TProtocolHttp.cpp; sourceTree = "<group>"; };
+		FB7D7FEC1A48FFA10003E4F0 /* TProtocolHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TProtocolHttp.h; path = ../NewChromantics/PopTrack/src/TProtocolHttp.h; sourceTree = "<group>"; };
+		FB7D7FED1A48FFA10003E4F0 /* TProtocolJson.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TProtocolJson.cpp; path = ../NewChromantics/PopTrack/src/TProtocolJson.cpp; sourceTree = "<group>"; };
+		FB7D7FEE1A48FFA10003E4F0 /* TProtocolJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TProtocolJson.h; path = ../NewChromantics/PopTrack/src/TProtocolJson.h; sourceTree = "<group>"; };
+		FB7D7FEF1A48FFA10003E4F0 /* TProtocolWebSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TProtocolWebSocket.cpp; path = ../NewChromantics/PopTrack/src/TProtocolWebSocket.cpp; sourceTree = "<group>"; };
+		FB7D7FF01A48FFA10003E4F0 /* TProtocolWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TProtocolWebSocket.h; path = ../NewChromantics/PopTrack/src/TProtocolWebSocket.h; sourceTree = "<group>"; };
+		FB7D7FF61A48FFCB0003E4F0 /* SoyData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyData.cpp; path = ../NewChromantics/PopTrack/src/SoyData.cpp; sourceTree = "<group>"; };
+		FB7D7FF71A48FFCB0003E4F0 /* SoyData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoyData.h; path = ../NewChromantics/PopTrack/src/SoyData.h; sourceTree = "<group>"; };
+		FB7D7FF91A4900200003E4F0 /* SoyApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyApp.cpp; path = ../NewChromantics/ofxSoylent/src/SoyApp.cpp; sourceTree = "<group>"; };
+		FB7D7FFA1A4900200003E4F0 /* SoyApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoyApp.h; path = ../NewChromantics/ofxSoylent/src/SoyApp.h; sourceTree = "<group>"; };
+		FB7D7FFC1A4901080003E4F0 /* SoyPixels.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyPixels.cpp; path = ../NewChromantics/ofxSoylent/src/SoyPixels.cpp; sourceTree = "<group>"; };
+		FB7D7FFD1A4901080003E4F0 /* SoyPixels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoyPixels.h; path = ../NewChromantics/ofxSoylent/src/SoyPixels.h; sourceTree = "<group>"; };
+		FB7D7FFE1A4901080003E4F0 /* SoyPng.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyPng.cpp; path = ../NewChromantics/ofxSoylent/src/SoyPng.cpp; sourceTree = "<group>"; };
+		FB7D7FFF1A4901080003E4F0 /* SoyPng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoyPng.h; path = ../NewChromantics/ofxSoylent/src/SoyPng.h; sourceTree = "<group>"; };
+		FB7D80001A4901080003E4F0 /* SoyRef.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyRef.cpp; path = ../NewChromantics/ofxSoylent/src/SoyRef.cpp; sourceTree = "<group>"; };
+		FB7D80051A4901310003E4F0 /* SortArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SortArray.h; path = ../NewChromantics/ofxSoylent/src/SortArray.h; sourceTree = "<group>"; };
+		FB7D80061A4901310003E4F0 /* SoyArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyArray.cpp; path = ../NewChromantics/ofxSoylent/src/SoyArray.cpp; sourceTree = "<group>"; };
+		FB7D80071A4901310003E4F0 /* SoyDebug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyDebug.cpp; path = ../NewChromantics/ofxSoylent/src/SoyDebug.cpp; sourceTree = "<group>"; };
+		FB7D80091A4901310003E4F0 /* SoyEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoyEnum.h; path = ../NewChromantics/ofxSoylent/src/SoyEnum.h; sourceTree = "<group>"; };
+		FB7D800A1A4901310003E4F0 /* SoyEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyEvent.cpp; path = ../NewChromantics/ofxSoylent/src/SoyEvent.cpp; sourceTree = "<group>"; };
+		FB7D800B1A4901310003E4F0 /* SoyEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoyEvent.h; path = ../NewChromantics/ofxSoylent/src/SoyEvent.h; sourceTree = "<group>"; };
+		FB7D800F1A4901450003E4F0 /* SoyString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyString.cpp; path = ../NewChromantics/ofxSoylent/src/SoyString.cpp; sourceTree = "<group>"; };
+		FB7D80101A4901450003E4F0 /* SoyString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoyString.h; path = ../NewChromantics/ofxSoylent/src/SoyString.h; sourceTree = "<group>"; };
+		FB7D80121A49015D0003E4F0 /* TSerialisation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TSerialisation.cpp; path = ../NewChromantics/PopTrack/src/TSerialisation.cpp; sourceTree = "<group>"; };
+		FB7D80131A49015D0003E4F0 /* TSerialisation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSerialisation.h; path = ../NewChromantics/PopTrack/src/TSerialisation.h; sourceTree = "<group>"; };
+		FB7D80251A4901C10003E4F0 /* sha1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sha1.cpp; path = ../NewChromantics/ofxSoylent/src/smallsha1/sha1.cpp; sourceTree = "<group>"; };
+		FB7D80261A4901C10003E4F0 /* sha1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sha1.h; path = ../NewChromantics/ofxSoylent/src/smallsha1/sha1.h; sourceTree = "<group>"; };
+		FB7D80291A4901E60003E4F0 /* SoyTime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyTime.cpp; path = ../NewChromantics/ofxSoylent/src/SoyTime.cpp; sourceTree = "<group>"; };
+		FB7D802A1A4901E60003E4F0 /* SoyTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoyTime.h; path = ../NewChromantics/ofxSoylent/src/SoyTime.h; sourceTree = "<group>"; };
+		FB7D802F1A4903350003E4F0 /* AssertException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AssertException.cpp; path = "../NewChromantics/PopTrack/src/UnitTest++/src/AssertException.cpp"; sourceTree = "<group>"; };
+		FB7D80301A4903350003E4F0 /* AssertException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AssertException.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/AssertException.h"; sourceTree = "<group>"; };
+		FB7D80311A4903350003E4F0 /* CheckMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckMacros.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/CheckMacros.h"; sourceTree = "<group>"; };
+		FB7D80321A4903350003E4F0 /* Checks.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Checks.cpp; path = "../NewChromantics/PopTrack/src/UnitTest++/src/Checks.cpp"; sourceTree = "<group>"; };
+		FB7D80331A4903350003E4F0 /* Checks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Checks.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/Checks.h"; sourceTree = "<group>"; };
+		FB7D80341A4903350003E4F0 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Config.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/Config.h"; sourceTree = "<group>"; };
+		FB7D80351A4903350003E4F0 /* CurrentTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CurrentTest.cpp; path = "../NewChromantics/PopTrack/src/UnitTest++/src/CurrentTest.cpp"; sourceTree = "<group>"; };
+		FB7D80361A4903350003E4F0 /* CurrentTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurrentTest.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/CurrentTest.h"; sourceTree = "<group>"; };
+		FB7D80371A4903350003E4F0 /* DeferredTestReporter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DeferredTestReporter.cpp; path = "../NewChromantics/PopTrack/src/UnitTest++/src/DeferredTestReporter.cpp"; sourceTree = "<group>"; };
+		FB7D80381A4903350003E4F0 /* DeferredTestReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeferredTestReporter.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/DeferredTestReporter.h"; sourceTree = "<group>"; };
+		FB7D80391A4903350003E4F0 /* DeferredTestResult.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DeferredTestResult.cpp; path = "../NewChromantics/PopTrack/src/UnitTest++/src/DeferredTestResult.cpp"; sourceTree = "<group>"; };
+		FB7D803A1A4903350003E4F0 /* DeferredTestResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeferredTestResult.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/DeferredTestResult.h"; sourceTree = "<group>"; };
+		FB7D803B1A4903350003E4F0 /* ExecuteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExecuteTest.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/ExecuteTest.h"; sourceTree = "<group>"; };
+		FB7D803C1A4903350003E4F0 /* MemoryOutStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MemoryOutStream.cpp; path = "../NewChromantics/PopTrack/src/UnitTest++/src/MemoryOutStream.cpp"; sourceTree = "<group>"; };
+		FB7D803D1A4903350003E4F0 /* MemoryOutStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemoryOutStream.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/MemoryOutStream.h"; sourceTree = "<group>"; };
+		FB7D80451A4903460003E4F0 /* ReportAssert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ReportAssert.cpp; path = "../NewChromantics/PopTrack/src/UnitTest++/src/ReportAssert.cpp"; sourceTree = "<group>"; };
+		FB7D80461A4903460003E4F0 /* ReportAssert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReportAssert.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/ReportAssert.h"; sourceTree = "<group>"; };
+		FB7D80471A4903460003E4F0 /* Test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Test.cpp; path = "../NewChromantics/PopTrack/src/UnitTest++/src/Test.cpp"; sourceTree = "<group>"; };
+		FB7D80481A4903460003E4F0 /* Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Test.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/Test.h"; sourceTree = "<group>"; };
+		FB7D80491A4903460003E4F0 /* TestDetails.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestDetails.cpp; path = "../NewChromantics/PopTrack/src/UnitTest++/src/TestDetails.cpp"; sourceTree = "<group>"; };
+		FB7D804A1A4903460003E4F0 /* TestDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestDetails.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/TestDetails.h"; sourceTree = "<group>"; };
+		FB7D804B1A4903460003E4F0 /* TestList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestList.cpp; path = "../NewChromantics/PopTrack/src/UnitTest++/src/TestList.cpp"; sourceTree = "<group>"; };
+		FB7D804C1A4903460003E4F0 /* TestList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestList.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/TestList.h"; sourceTree = "<group>"; };
+		FB7D804D1A4903460003E4F0 /* TestMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestMacros.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/TestMacros.h"; sourceTree = "<group>"; };
+		FB7D804E1A4903460003E4F0 /* TestReporter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestReporter.cpp; path = "../NewChromantics/PopTrack/src/UnitTest++/src/TestReporter.cpp"; sourceTree = "<group>"; };
+		FB7D804F1A4903460003E4F0 /* TestReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestReporter.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/TestReporter.h"; sourceTree = "<group>"; };
+		FB7D80501A4903460003E4F0 /* TestReporterStdout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestReporterStdout.cpp; path = "../NewChromantics/PopTrack/src/UnitTest++/src/TestReporterStdout.cpp"; sourceTree = "<group>"; };
+		FB7D80511A4903460003E4F0 /* TestReporterStdout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestReporterStdout.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/TestReporterStdout.h"; sourceTree = "<group>"; };
+		FB7D80521A4903460003E4F0 /* TestResults.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestResults.cpp; path = "../NewChromantics/PopTrack/src/UnitTest++/src/TestResults.cpp"; sourceTree = "<group>"; };
+		FB7D80531A4903460003E4F0 /* TestResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestResults.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/TestResults.h"; sourceTree = "<group>"; };
+		FB7D80541A4903460003E4F0 /* TestRunner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestRunner.cpp; path = "../NewChromantics/PopTrack/src/UnitTest++/src/TestRunner.cpp"; sourceTree = "<group>"; };
+		FB7D80551A4903460003E4F0 /* TestRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestRunner.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/TestRunner.h"; sourceTree = "<group>"; };
+		FB7D80571A4903460003E4F0 /* TestSuite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestSuite.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/TestSuite.h"; sourceTree = "<group>"; };
+		FB7D80581A4903460003E4F0 /* TimeConstraint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TimeConstraint.cpp; path = "../NewChromantics/PopTrack/src/UnitTest++/src/TimeConstraint.cpp"; sourceTree = "<group>"; };
+		FB7D80591A4903460003E4F0 /* TimeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeConstraint.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/TimeConstraint.h"; sourceTree = "<group>"; };
+		FB7D805A1A4903460003E4F0 /* TimeHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeHelpers.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/TimeHelpers.h"; sourceTree = "<group>"; };
+		FB7D805B1A4903460003E4F0 /* UnitTest++.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UnitTest++.h"; path = "../NewChromantics/PopTrack/src/UnitTest++/src/UnitTest++.h"; sourceTree = "<group>"; };
+		FB7D805D1A4903460003E4F0 /* XmlTestReporter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = XmlTestReporter.cpp; path = "../NewChromantics/PopTrack/src/UnitTest++/src/XmlTestReporter.cpp"; sourceTree = "<group>"; };
+		FB7D805E1A4903460003E4F0 /* XmlTestReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XmlTestReporter.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/XmlTestReporter.h"; sourceTree = "<group>"; };
+		FB7D806C1A4903570003E4F0 /* SignalTranslator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SignalTranslator.cpp; path = "../NewChromantics/PopTrack/src/UnitTest++/src/Posix/SignalTranslator.cpp"; sourceTree = "<group>"; };
+		FB7D806D1A4903570003E4F0 /* SignalTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignalTranslator.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/Posix/SignalTranslator.h"; sourceTree = "<group>"; };
+		FB7D806E1A4903570003E4F0 /* TimeHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TimeHelpers.cpp; path = "../NewChromantics/PopTrack/src/UnitTest++/src/Posix/TimeHelpers.cpp"; sourceTree = "<group>"; };
+		FB7D806F1A4903570003E4F0 /* TimeHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeHelpers.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/Posix/TimeHelpers.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,7 +252,39 @@
 		FB7D7F271A48E2A90003E4F0 /* Pop */ = {
 			isa = PBXGroup;
 			children = (
+				FB7D80121A49015D0003E4F0 /* TSerialisation.cpp */,
+				FB7D80131A49015D0003E4F0 /* TSerialisation.h */,
+				FB7D7FF61A48FFCB0003E4F0 /* SoyData.cpp */,
+				FB7D7FF71A48FFCB0003E4F0 /* SoyData.h */,
+				FB7D7FE71A48FFA10003E4F0 /* TProtocol.cpp */,
+				FB7D7FE81A48FFA10003E4F0 /* TProtocol.h */,
+				FB7D7FE91A48FFA10003E4F0 /* TProtocolCli.cpp */,
+				FB7D7FEA1A48FFA10003E4F0 /* TProtocolCli.h */,
+				FB7D7FEB1A48FFA10003E4F0 /* TProtocolHttp.cpp */,
+				FB7D7FEC1A48FFA10003E4F0 /* TProtocolHttp.h */,
+				FB7D7FED1A48FFA10003E4F0 /* TProtocolJson.cpp */,
+				FB7D7FEE1A48FFA10003E4F0 /* TProtocolJson.h */,
+				FB7D7FEF1A48FFA10003E4F0 /* TProtocolWebSocket.cpp */,
+				FB7D7FF01A48FFA10003E4F0 /* TProtocolWebSocket.h */,
+				FB7D7FDE1A48FF880003E4F0 /* TChannelFile.cpp */,
+				FB7D7FDF1A48FF880003E4F0 /* TChannelFile.h */,
+				FB7D7FE01A48FF880003E4F0 /* TChannelPipe.cpp */,
+				FB7D7FE11A48FF880003E4F0 /* TChannelPipe.h */,
+				FB7D7FE21A48FF880003E4F0 /* TChannelSocket.cpp */,
+				FB7D7FE31A48FF880003E4F0 /* TChannelSocket.h */,
+				FB7D7FDB1A48FF700003E4F0 /* TParameters.cpp */,
+				FB7D7FDC1A48FF700003E4F0 /* TParameters.h */,
+				FB7D7FDA1A48FF060003E4F0 /* src */,
 				FB7D7F291A48E2C70003E4F0 /* PopTrack */,
+				FB7D7FD11A48FEF60003E4F0 /* PopMain.cpp */,
+				FB7D7FD21A48FEF60003E4F0 /* PopMain.h */,
+				FB7D7FCE1A48FCD10003E4F0 /* TChannel.cpp */,
+				FB7D7FCF1A48FCD10003E4F0 /* TChannel.h */,
+				FB7D802E1A4903250003E4F0 /* UnitTest++ */,
+				FB7D7FD31A48FEF60003E4F0 /* TJob.cpp */,
+				FB7D7FD41A48FEF60003E4F0 /* TJob.h */,
+				FB7D7FD51A48FEF60003E4F0 /* TJobFormat.cpp */,
+				FB7D7FD61A48FEF60003E4F0 /* TJobFormat.h */,
 			);
 			name = Pop;
 			sourceTree = "<group>";
@@ -135,21 +292,33 @@
 		FB7D7F281A48E2AE0003E4F0 /* Soy */ = {
 			isa = PBXGroup;
 			children = (
-				FB7D7FC61A48EF200003E4F0 /* SoyThread.cpp */,
-				FB7D7FC71A48EF200003E4F0 /* SoyThread.h */,
-				FB7D7FC31A48EF0E0003E4F0 /* SoyDebug.cpp */,
-				FB7D7FC41A48EF0E0003E4F0 /* SoyDebug.h */,
 				FB7D7FBE1A48EEFA0003E4F0 /* array.hpp */,
 				FB7D7FBF1A48EEFA0003E4F0 /* heaparray.hpp */,
 				FB7D7FC01A48EEFA0003E4F0 /* memheap.cpp */,
 				FB7D7FC11A48EEFA0003E4F0 /* memheap.hpp */,
-				FB7D7F351A48EEA40003E4F0 /* SoyRef.cpp */,
-				FB7D7F361A48EEA40003E4F0 /* SoyRef.h */,
-				FB7D7F321A48EE8D0003E4F0 /* SoyString.cpp */,
-				FB7D7F331A48EE8D0003E4F0 /* SoyString.h */,
+				FB7D7F2B1A48E2DD0003E4F0 /* ofxSoylent */,
+				FB7D80231A4901B90003E4F0 /* smallsha1 */,
+				FB7D80051A4901310003E4F0 /* SortArray.h */,
+				FB7D7FF91A4900200003E4F0 /* SoyApp.cpp */,
+				FB7D7FFA1A4900200003E4F0 /* SoyApp.h */,
+				FB7D80061A4901310003E4F0 /* SoyArray.cpp */,
+				FB7D80071A4901310003E4F0 /* SoyDebug.cpp */,
+				FB7D80091A4901310003E4F0 /* SoyEnum.h */,
+				FB7D800A1A4901310003E4F0 /* SoyEvent.cpp */,
+				FB7D800B1A4901310003E4F0 /* SoyEvent.h */,
+				FB7D7FFC1A4901080003E4F0 /* SoyPixels.cpp */,
+				FB7D7FFD1A4901080003E4F0 /* SoyPixels.h */,
+				FB7D7FFE1A4901080003E4F0 /* SoyPng.cpp */,
+				FB7D7FFF1A4901080003E4F0 /* SoyPng.h */,
+				FB7D80001A4901080003E4F0 /* SoyRef.cpp */,
+				FB7D800F1A4901450003E4F0 /* SoyString.cpp */,
+				FB7D80101A4901450003E4F0 /* SoyString.h */,
+				FB7D7FC61A48EF200003E4F0 /* SoyThread.cpp */,
+				FB7D7FC71A48EF200003E4F0 /* SoyThread.h */,
+				FB7D80291A4901E60003E4F0 /* SoyTime.cpp */,
+				FB7D802A1A4901E60003E4F0 /* SoyTime.h */,
 				FB7D7F2F1A48EE530003E4F0 /* SoyTypes.cpp */,
 				FB7D7F301A48EE530003E4F0 /* SoyTypes.h */,
-				FB7D7F2B1A48E2DD0003E4F0 /* ofxSoylent */,
 			);
 			name = Soy;
 			sourceTree = "<group>";
@@ -164,6 +333,65 @@
 			);
 			name = gl;
 			path = src/gl;
+			sourceTree = "<group>";
+		};
+		FB7D80231A4901B90003E4F0 /* smallsha1 */ = {
+			isa = PBXGroup;
+			children = (
+				FB7D80251A4901C10003E4F0 /* sha1.cpp */,
+				FB7D80261A4901C10003E4F0 /* sha1.h */,
+			);
+			name = smallsha1;
+			sourceTree = "<group>";
+		};
+		FB7D802E1A4903250003E4F0 /* UnitTest++ */ = {
+			isa = PBXGroup;
+			children = (
+				FB7D80451A4903460003E4F0 /* ReportAssert.cpp */,
+				FB7D806C1A4903570003E4F0 /* SignalTranslator.cpp */,
+				FB7D806D1A4903570003E4F0 /* SignalTranslator.h */,
+				FB7D806E1A4903570003E4F0 /* TimeHelpers.cpp */,
+				FB7D806F1A4903570003E4F0 /* TimeHelpers.h */,
+				FB7D80461A4903460003E4F0 /* ReportAssert.h */,
+				FB7D80471A4903460003E4F0 /* Test.cpp */,
+				FB7D80481A4903460003E4F0 /* Test.h */,
+				FB7D80491A4903460003E4F0 /* TestDetails.cpp */,
+				FB7D804A1A4903460003E4F0 /* TestDetails.h */,
+				FB7D804B1A4903460003E4F0 /* TestList.cpp */,
+				FB7D804C1A4903460003E4F0 /* TestList.h */,
+				FB7D804D1A4903460003E4F0 /* TestMacros.h */,
+				FB7D804E1A4903460003E4F0 /* TestReporter.cpp */,
+				FB7D804F1A4903460003E4F0 /* TestReporter.h */,
+				FB7D80501A4903460003E4F0 /* TestReporterStdout.cpp */,
+				FB7D80511A4903460003E4F0 /* TestReporterStdout.h */,
+				FB7D80521A4903460003E4F0 /* TestResults.cpp */,
+				FB7D80531A4903460003E4F0 /* TestResults.h */,
+				FB7D80541A4903460003E4F0 /* TestRunner.cpp */,
+				FB7D80551A4903460003E4F0 /* TestRunner.h */,
+				FB7D80571A4903460003E4F0 /* TestSuite.h */,
+				FB7D80581A4903460003E4F0 /* TimeConstraint.cpp */,
+				FB7D80591A4903460003E4F0 /* TimeConstraint.h */,
+				FB7D805A1A4903460003E4F0 /* TimeHelpers.h */,
+				FB7D805B1A4903460003E4F0 /* UnitTest++.h */,
+				FB7D805D1A4903460003E4F0 /* XmlTestReporter.cpp */,
+				FB7D805E1A4903460003E4F0 /* XmlTestReporter.h */,
+				FB7D802F1A4903350003E4F0 /* AssertException.cpp */,
+				FB7D80301A4903350003E4F0 /* AssertException.h */,
+				FB7D80311A4903350003E4F0 /* CheckMacros.h */,
+				FB7D80321A4903350003E4F0 /* Checks.cpp */,
+				FB7D80331A4903350003E4F0 /* Checks.h */,
+				FB7D80341A4903350003E4F0 /* Config.h */,
+				FB7D80351A4903350003E4F0 /* CurrentTest.cpp */,
+				FB7D80361A4903350003E4F0 /* CurrentTest.h */,
+				FB7D80371A4903350003E4F0 /* DeferredTestReporter.cpp */,
+				FB7D80381A4903350003E4F0 /* DeferredTestReporter.h */,
+				FB7D80391A4903350003E4F0 /* DeferredTestResult.cpp */,
+				FB7D803A1A4903350003E4F0 /* DeferredTestResult.h */,
+				FB7D803B1A4903350003E4F0 /* ExecuteTest.h */,
+				FB7D803C1A4903350003E4F0 /* MemoryOutStream.cpp */,
+				FB7D803D1A4903350003E4F0 /* MemoryOutStream.h */,
+			);
+			name = "UnitTest++";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,8 +447,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB7D7F2A1A48E2C70003E4F0 /* PopTrack in Resources */,
-				FB7D7F2C1A48E2DD0003E4F0 /* ofxSoylent in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,15 +457,55 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB7D802B1A4901E60003E4F0 /* SoyTime.cpp in Sources */,
+				FB7D800E1A4901310003E4F0 /* SoyEvent.cpp in Sources */,
+				FB7D7FF81A48FFCB0003E4F0 /* SoyData.cpp in Sources */,
+				FB7D7FF31A48FFA10003E4F0 /* TProtocolHttp.cpp in Sources */,
+				FB7D80041A4901080003E4F0 /* SoyRef.cpp in Sources */,
+				FB7D80651A4903460003E4F0 /* TestReporterStdout.cpp in Sources */,
+				FB7D80631A4903460003E4F0 /* TestList.cpp in Sources */,
+				FB7D7FDD1A48FF700003E4F0 /* TParameters.cpp in Sources */,
+				FB7D7FD81A48FEF60003E4F0 /* TJob.cpp in Sources */,
+				FB7D80671A4903460003E4F0 /* TestRunner.cpp in Sources */,
+				FB7D80401A4903350003E4F0 /* CurrentTest.cpp in Sources */,
+				FB7D7FF21A48FFA10003E4F0 /* TProtocolCli.cpp in Sources */,
+				FB7D80611A4903460003E4F0 /* Test.cpp in Sources */,
+				FB7D80431A4903350003E4F0 /* MemoryOutStream.cpp in Sources */,
 				FB7D7FBB1A48EEB60003E4F0 /* glew.c in Sources */,
-				FB7D7F341A48EE8D0003E4F0 /* SoyString.cpp in Sources */,
-				FB7D7F371A48EEA40003E4F0 /* SoyRef.cpp in Sources */,
+				FB7D7FE61A48FF880003E4F0 /* TChannelSocket.cpp in Sources */,
+				FB7D7FF11A48FFA10003E4F0 /* TProtocol.cpp in Sources */,
+				FB7D80641A4903460003E4F0 /* TestReporter.cpp in Sources */,
+				FB7D7FE41A48FF880003E4F0 /* TChannelFile.cpp in Sources */,
+				FB7D803F1A4903350003E4F0 /* Checks.cpp in Sources */,
+				FB7D7FF51A48FFA10003E4F0 /* TProtocolWebSocket.cpp in Sources */,
+				FB7D7FD91A48FEF60003E4F0 /* TJobFormat.cpp in Sources */,
+				FB7D80031A4901080003E4F0 /* SoyPng.cpp in Sources */,
+				FB7D80141A49015D0003E4F0 /* TSerialisation.cpp in Sources */,
+				FB7D80021A4901080003E4F0 /* SoyPixels.cpp in Sources */,
+				FB7D80621A4903460003E4F0 /* TestDetails.cpp in Sources */,
+				FB7D80111A4901450003E4F0 /* SoyString.cpp in Sources */,
+				FB7D80661A4903460003E4F0 /* TestResults.cpp in Sources */,
+				FB7D800C1A4901310003E4F0 /* SoyArray.cpp in Sources */,
 				FB7D7F261A48E28D0003E4F0 /* UnityDevice.cpp in Sources */,
 				FB7D7FC21A48EEFA0003E4F0 /* memheap.cpp in Sources */,
+				FB7D80691A4903460003E4F0 /* TimeConstraint.cpp in Sources */,
+				FB7D7FFB1A4900200003E4F0 /* SoyApp.cpp in Sources */,
 				FB7D7FC81A48EF200003E4F0 /* SoyThread.cpp in Sources */,
+				FB7D80601A4903460003E4F0 /* ReportAssert.cpp in Sources */,
 				FB7D7F311A48EE530003E4F0 /* SoyTypes.cpp in Sources */,
 				FB7D7FCD1A48F33A0003E4F0 /* Unity.cpp in Sources */,
-				FB7D7FC51A48EF0E0003E4F0 /* SoyDebug.cpp in Sources */,
+				FB7D80281A4901C10003E4F0 /* sha1.cpp in Sources */,
+				FB7D7FF41A48FFA10003E4F0 /* TProtocolJson.cpp in Sources */,
+				FB7D7FE51A48FF880003E4F0 /* TChannelPipe.cpp in Sources */,
+				FB7D800D1A4901310003E4F0 /* SoyDebug.cpp in Sources */,
+				FB7D80411A4903350003E4F0 /* DeferredTestReporter.cpp in Sources */,
+				FB7D803E1A4903350003E4F0 /* AssertException.cpp in Sources */,
+				FB7D7FD01A48FCD10003E4F0 /* TChannel.cpp in Sources */,
+				FB7D80711A4903570003E4F0 /* TimeHelpers.cpp in Sources */,
+				FB7D80701A4903570003E4F0 /* SignalTranslator.cpp in Sources */,
+				FB7D806B1A4903460003E4F0 /* XmlTestReporter.cpp in Sources */,
+				FB7D80421A4903350003E4F0 /* DeferredTestResult.cpp in Sources */,
+				FB7D7FD71A48FEF60003E4F0 /* PopMain.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,7 +515,6 @@
 		1DEB911B08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -262,6 +527,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/src/ffmpeg/lib",
 				);
+				POP_DIR = "";
 				PRODUCT_NAME = PopUnity;
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -270,7 +536,6 @@
 		1DEB911C08733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
@@ -280,6 +545,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/src/ffmpeg/lib",
 				);
+				POP_DIR = "";
 				PRODUCT_NAME = PopUnity;
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -292,7 +558,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				ONLY_ACTIVE_ARCH = NO;
+				POP_DIR = ../NewChromantics/PopTrack/;
 				PREBINDING = NO;
 				SOYLENT_DIR = ../NewChromantics/ofxSoylent/;
 			};
@@ -304,6 +570,7 @@
 			buildSettings = {
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				POP_DIR = ../NewChromantics/PopTrack/;
 				PREBINDING = NO;
 				SOYLENT_DIR = ../NewChromantics/ofxSoylent/;
 			};

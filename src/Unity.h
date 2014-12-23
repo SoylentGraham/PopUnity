@@ -1,7 +1,8 @@
 #pragma once
 
 #include <ofxSoylent.h>
-
+#include <TJob.h>
+#include <TChannel.h>
 
 
 
@@ -12,3 +13,11 @@
 extern "C" void EXPORT_API UnityRenderEvent(int eventID);
 
 
+class PopUnity : public TChannelManager
+{
+public:
+	PopUnity();
+};
+
+extern "C" uint64 EXPORT_API CreateChannel(const char* ChannelSpec);
+extern "C" uint64 EXPORT_API Test();
