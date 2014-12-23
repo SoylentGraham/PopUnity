@@ -16,8 +16,25 @@ extern "C" void EXPORT_API UnityRenderEvent(int eventID);
 class PopUnity : public TChannelManager
 {
 public:
+	static PopUnity&	Get();		//	get singleton
+	
+public:
 	PopUnity();
+
+	virtual void	AddChannel(std::shared_ptr<TChannel> Channel) override;
+
+	void			FlushDebugMessages(void (*LogFunc)(const char*));
+	void			OnDebug(const std::string& Debug);
+	
+private:
+	void			OnJobRecieved(TJobAndChannel& JobAndChannel);	//	special job handling to send back to unity
+	
+private:
+	Array<std::string>	mDebugMessages;	//	gr: might need to be threadsafe
 };
 
-extern "C" uint64 EXPORT_API CreateChannel(const char* ChannelSpec);
-extern "C" uint64 EXPORT_API Test();
+
+extern "C" void EXPORT_API FlushDebug(void (*LogFunc)(const char*))
+{
+	PopUnity::Get().FlushDebugMessages(LogFunc);
+}
