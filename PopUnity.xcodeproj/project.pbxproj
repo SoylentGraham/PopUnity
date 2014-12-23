@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2BC2A8D5144C433D00D5EF79 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC2A8D4144C433D00D5EF79 /* OpenGL.framework */; };
 		8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */; };
+		FB2ACCCE1A49B22D00C33FA4 /* PopUnity.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8D576316048677EA00EA77CD /* PopUnity.bundle */; };
 		FB7D7F261A48E28D0003E4F0 /* UnityDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7F1F1A48E28D0003E4F0 /* UnityDevice.cpp */; };
 		FB7D7F311A48EE530003E4F0 /* SoyTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7F2F1A48EE530003E4F0 /* SoyTypes.cpp */; };
 		FB7D7FBB1A48EEB60003E4F0 /* glew.c in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FA41A48EEB60003E4F0 /* glew.c */; };
@@ -60,6 +61,19 @@
 		FB7D80701A4903570003E4F0 /* SignalTranslator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D806C1A4903570003E4F0 /* SignalTranslator.cpp */; };
 		FB7D80711A4903570003E4F0 /* TimeHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D806E1A4903570003E4F0 /* TimeHelpers.cpp */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FB2ACCCD1A49B21500C33FA4 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(SRCROOT)/Unity/Assets/Plugins";
+			dstSubfolderSpec = 0;
+			files = (
+				FB2ACCCE1A49B22D00C33FA4 /* PopUnity.bundle in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
@@ -404,6 +418,7 @@
 				8D57630F048677EA00EA77CD /* Resources */,
 				8D576311048677EA00EA77CD /* Sources */,
 				8D576313048677EA00EA77CD /* Frameworks */,
+				FB2ACCCD1A49B21500C33FA4 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -522,7 +537,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/src/ffmpeg/lib",
@@ -540,7 +554,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/src/ffmpeg/lib",
