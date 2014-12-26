@@ -100,6 +100,7 @@ extern "C" bool EXPORT_API SendJob(uint64 ChannelRef,const char* Command)
 	
 	TJob Job;
 	Job.mParams.mCommand = Command;
+	Job.mChannelMeta.mChannelRef = Channel->GetChannelRef();
 	if ( !Channel->SendCommand( Job ) )
 		return false;
 	
