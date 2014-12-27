@@ -13,6 +13,34 @@
 extern "C" void EXPORT_API UnityRenderEvent(int eventID);
 
 
+//	c# struct
+const int MaxCSharpParams = 10;
+typedef struct
+{
+	uint32			mParamCount;
+	const char*		mCommand;
+	const char*		mError;		//	common
+	const char*		mParamNames[MaxCSharpParams];
+	const TJob*		mTJob;		//	pointer to job
+	
+} TJobInterface;
+
+class TJobInterfaceWrapper : public TJobInterface
+{
+public:
+	TJobInterfaceWrapper(const TJob& Job);
+	
+private:
+	BufferArray<std::string,MaxCSharpParams*2+1> mStringBuffer;
+};
+
+
+namespace Unity
+{
+	typedef void (*LogCallback)(const char*);
+	typedef void (*JobCallback)(const TJobInterface*);
+};
+
 class PopUnity : public TChannelManager
 {
 public:
@@ -26,15 +54,20 @@ public:
 	void			FlushDebugMessages(void (*LogFunc)(const char*));
 	void			OnDebug(const std::string& Debug);
 	
+	std::shared_ptr<TJob>	PopJob();
+	void			PushJob(TJobAndChannel& JobAndChannel);
+	
 private:
 	void			OnJobRecieved(TJobAndChannel& JobAndChannel);	//	special job handling to send back to unity
 	
 private:
-	Array<std::string>	mDebugMessages;	//	gr: might need to be threadsafe
+	Array<std::shared_ptr<TJob>>	mPendingJobs;
+	Array<std::string>				mDebugMessages;	//	gr: might need to be threadsafe
 };
 
 
-extern "C" void EXPORT_API FlushDebug(void (*LogFunc)(const char*))
+
+extern "C" void EXPORT_API FlushDebug(Unity::LogCallback LogFunc)
 {
 	PopUnity::Get().FlushDebugMessages(LogFunc);
 }

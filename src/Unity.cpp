@@ -67,7 +67,49 @@ void PopUnity::OnJobRecieved(TJobAndChannel& JobAndChannel)
 {
 	//	send back to appropriate C# delegate!
 	std::Debug << "OnJobRecieved; " << JobAndChannel.GetJob().mParams.mCommand << " from " << JobAndChannel.GetChannel().GetChannelRef() << std::endl;
+	
+	auto& App = PopUnity::Get();
+	App.PushJob( JobAndChannel );
 }
+
+std::shared_ptr<TJob> PopUnity::PopJob()
+{
+	if ( mPendingJobs.IsEmpty() )
+		return nullptr;
+	
+	return mPendingJobs.PopAt(0);
+}
+
+void PopUnity::PushJob(TJobAndChannel& JobAndChannel)
+{
+	std::shared_ptr<TJob> Job( new TJob(JobAndChannel.GetJob() ) );
+	mPendingJobs.PushBack( Job );
+	
+}
+
+TJobInterfaceWrapper::TJobInterfaceWrapper(const TJob& Job)
+{
+	//	construct
+	mTJob = &Job;
+	mCommand = Job.mParams.mCommand.c_str();
+	mError = nullptr;
+	mParamCount = 123;
+
+	//
+	auto ErrorParam = Job.mParams.GetErrorParam();
+	if ( ErrorParam.IsValid() )
+		mError = mStringBuffer.PushBack(ErrorParam.mName).c_str();
+	
+	/*
+	auto& Params = Job.mParams.mParams;
+	for ( int i=0;	i<Params.GetSize();	i++ )
+	{
+		mParamNames[mParamCount] = Params[i].mName.c_str();
+		mParamCount++;
+	}
+	 */
+}
+
 
 
 extern "C" void EXPORT_API UnityRenderEvent(int eventID)
@@ -111,3 +153,25 @@ extern "C" uint64 EXPORT_API Test()
 {
 	return 1234;
 }
+
+extern "C" bool EXPORT_API PopJob(Unity::JobCallback Func)
+{
+	auto& App = PopUnity::Get();
+	
+	auto Job = App.PopJob();
+	if ( !Job )
+		return false;
+	
+	//	make a temp interface for c#
+	TJobInterfaceWrapper JobInterface( *Job.get() );
+	
+	//	send job interface to c# blocking callback
+	auto& Interface = static_cast<TJobInterface&>( JobInterface );
+	Func( &Interface );
+	
+	//	done, dispose of job
+	Job.reset();
+	
+	return true;
+}
+

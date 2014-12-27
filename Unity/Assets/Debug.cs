@@ -4,11 +4,46 @@ using System;
 using System.Runtime.InteropServices;
 
 
+
+public struct TJobInterface
+{
+	UInt32					ParamCount;
+	public System.IntPtr	sCommand;
+	public System.IntPtr	sError;
+//	public System.IntPtr	sParamName[10];
+//	public int				ParamCount;
+	public System.IntPtr	pJob;
+};
+
+
+public class PopJob
+{
+	public TJobInterface	mInterface;
+	public String			Command = "";
+	public String			Error = "";
+
+	public PopJob(TJobInterface Interface)
+	{
+		//	gr: strings aren't converting
+		mInterface = Interface;
+		Command = Marshal.PtrToStringAuto( Interface.sCommand );
+		Error = Marshal.PtrToStringAuto( Interface.sError );
+		UnityEngine.Debug.Log ("Decoded job command:" + Command + " error=" + Error);
+	}
+
+
+}
+
+
+
 public class PopUnity
 {
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	private delegate void			DebugLogDelegate(string str);
-
+	
+	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+	private delegate void			OnJobDelegate(ref TJobInterface Job);
+	
 	[DllImport ("PopUnity")]
 	public static extern UInt64 Test();
 	
@@ -20,8 +55,12 @@ public class PopUnity
 
 	[DllImport("PopUnity")]
 	public static extern void FlushDebug (System.IntPtr FunctionPtr);
-
+	
+	[DllImport("PopUnity")]
+	public static extern bool PopJob (System.IntPtr FunctionPtr);
+	
 	static private DebugLogDelegate	mDebugLogDelegate = new DebugLogDelegate( Log );
+	static private OnJobDelegate	mOnJobDelegate = new OnJobDelegate( OnJob );
 
 	public PopUnity()
 	{
@@ -32,9 +71,22 @@ public class PopUnity
 		UnityEngine.Debug.Log("PopUnity: " + str);
 	}
 
+	static void OnJob(ref TJobInterface JobInterface)
+	{
+		//	turn into the more clever c# class
+		PopJob Job = new PopJob( JobInterface );
+		UnityEngine.Debug.Log ("job! " + Job.Command );
+		UnityEngine.Debug.Log ("job.pJob = " + Job.mInterface.pJob);
+		UnityEngine.Debug.Log ("job.sCommand = " + Job.mInterface.sCommand );
+	}
+
 	static public void Update()
 	{
 		FlushDebug (Marshal.GetFunctionPointerForDelegate (mDebugLogDelegate));
+
+		//	pop all jobs
+		bool More = PopJob (Marshal.GetFunctionPointerForDelegate (mOnJobDelegate));
+
 	}
 };
 	
