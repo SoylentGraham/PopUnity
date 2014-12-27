@@ -4,15 +4,14 @@ using System;
 using System.Runtime.InteropServices;
 
 
-
 public struct TJobInterface
 {
-	UInt32					ParamCount;
+	public System.IntPtr	pJob;
 	public System.IntPtr	sCommand;
 	public System.IntPtr	sError;
-//	public System.IntPtr	sParamName[10];
+	UInt32					ParamCount;
+	//	public System.IntPtr	sParamName[10];
 //	public int				ParamCount;
-	public System.IntPtr	pJob;
 };
 
 
@@ -20,7 +19,7 @@ public class PopJob
 {
 	public TJobInterface	mInterface;
 	public String			Command = "";
-	public String			Error = "";
+	public String			Error = null;
 
 	public PopJob(TJobInterface Interface)
 	{
@@ -28,7 +27,6 @@ public class PopJob
 		mInterface = Interface;
 		Command = Marshal.PtrToStringAuto( Interface.sCommand );
 		Error = Marshal.PtrToStringAuto( Interface.sError );
-		UnityEngine.Debug.Log ("Decoded job command:" + Command + " error=" + Error);
 	}
 
 
@@ -43,10 +41,7 @@ public class PopUnity
 	
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	private delegate void			OnJobDelegate(ref TJobInterface Job);
-	
-	[DllImport ("PopUnity")]
-	public static extern UInt64 Test();
-	
+
 	[DllImport("PopUnity", CallingConvention = CallingConvention.Cdecl)]
 	public static extern UInt64 CreateChannel(string ChannelSpec);
 
@@ -76,8 +71,7 @@ public class PopUnity
 		//	turn into the more clever c# class
 		PopJob Job = new PopJob( JobInterface );
 		UnityEngine.Debug.Log ("job! " + Job.Command );
-		UnityEngine.Debug.Log ("job.pJob = " + Job.mInterface.pJob);
-		UnityEngine.Debug.Log ("job.sCommand = " + Job.mInterface.sCommand );
+		UnityEngine.Debug.Log ("(error: " + Job.Error);
 	}
 
 	static public void Update()
@@ -154,7 +148,6 @@ public class Debug : MonoBehaviour {
 		rect.height = Screen.height - rect.y;
 
 		string Text = "Hello ";
-		Text += PopUnity.Test ();
 		GUI.Label (rect, Text);
 	}
 }

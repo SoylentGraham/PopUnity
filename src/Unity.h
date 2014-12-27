@@ -17,11 +17,11 @@ extern "C" void EXPORT_API UnityRenderEvent(int eventID);
 const int MaxCSharpParams = 10;
 typedef struct
 {
-	uint32			mParamCount;
+	const TJob*		mTJob;		//	pointer to job
 	const char*		mCommand;
 	const char*		mError;		//	common
+	uint32			mParamCount;
 	const char*		mParamNames[MaxCSharpParams];
-	const TJob*		mTJob;		//	pointer to job
 	
 } TJobInterface;
 

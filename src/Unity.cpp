@@ -93,21 +93,22 @@ TJobInterfaceWrapper::TJobInterfaceWrapper(const TJob& Job)
 	mTJob = &Job;
 	mCommand = Job.mParams.mCommand.c_str();
 	mError = nullptr;
-	mParamCount = 123;
+	mParamCount = 0;
 
 	//
 	auto ErrorParam = Job.mParams.GetErrorParam();
 	if ( ErrorParam.IsValid() )
-		mError = mStringBuffer.PushBack(ErrorParam.mName).c_str();
+	{
+		//	gr: todo: no magic strings!
+		mError = mStringBuffer.PushBack(Job.mParams.GetParamAs<std::string>("error")).c_str();
+	}
 	
-	/*
 	auto& Params = Job.mParams.mParams;
 	for ( int i=0;	i<Params.GetSize();	i++ )
 	{
 		mParamNames[mParamCount] = Params[i].mName.c_str();
 		mParamCount++;
 	}
-	 */
 }
 
 
@@ -147,11 +148,6 @@ extern "C" bool EXPORT_API SendJob(uint64 ChannelRef,const char* Command)
 		return false;
 	
 	return true;
-}
-
-extern "C" uint64 EXPORT_API Test()
-{
-	return 1234;
 }
 
 extern "C" bool EXPORT_API PopJob(Unity::JobCallback Func)
