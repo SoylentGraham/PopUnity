@@ -29,6 +29,7 @@ PopUnity::PopUnity()
 
 void PopUnity::OnDebug(const std::string& Debug)
 {
+	std::lock_guard<std::mutex> Lock(mDebugMessagesLock);
 	mDebugMessages.PushBack( Debug );
 	
 	//	gr: cap this in case it's never flushed...
@@ -48,6 +49,7 @@ void PopUnity::FlushDebugMessages(void (*LogFunc)(const char*))
 {
 	//	send all messages to a delegate
 	//	gr: FIFO is inefficient, fix this, but still display in order...
+	std::lock_guard<std::mutex> Lock(mDebugMessagesLock);
 	while ( !mDebugMessages.IsEmpty() )
 	{
 		if ( LogFunc )

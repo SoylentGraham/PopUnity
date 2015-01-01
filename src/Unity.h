@@ -62,6 +62,7 @@ private:
 	
 private:
 	Array<std::shared_ptr<TJob>>	mPendingJobs;
+	std::mutex						mDebugMessagesLock;
 	Array<std::string>				mDebugMessages;	//	gr: might need to be threadsafe
 };
 
