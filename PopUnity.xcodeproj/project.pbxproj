@@ -10,6 +10,7 @@
 		2BC2A8D5144C433D00D5EF79 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC2A8D4144C433D00D5EF79 /* OpenGL.framework */; };
 		8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */; };
 		FB2ACCCE1A49B22D00C33FA4 /* PopUnity.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8D576316048677EA00EA77CD /* PopUnity.bundle */; };
+		FB6650CB1A55E54400DF0A12 /* SoyDebug.mm in Sources */ = {isa = PBXBuildFile; fileRef = FB6650CA1A55E54400DF0A12 /* SoyDebug.mm */; };
 		FB7D7F261A48E28D0003E4F0 /* UnityDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7F1F1A48E28D0003E4F0 /* UnityDevice.cpp */; };
 		FB7D7F311A48EE530003E4F0 /* SoyTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7F2F1A48EE530003E4F0 /* SoyTypes.cpp */; };
 		FB7D7FBB1A48EEB60003E4F0 /* glew.c in Sources */ = {isa = PBXBuildFile; fileRef = FB7D7FA41A48EEB60003E4F0 /* glew.c */; };
@@ -80,6 +81,7 @@
 		2BC2A8D4144C433D00D5EF79 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		8D576316048677EA00EA77CD /* PopUnity.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PopUnity.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB6650CA1A55E54400DF0A12 /* SoyDebug.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SoyDebug.mm; path = ../NewChromantics/ofxSoylent/src/SoyDebug.mm; sourceTree = "<group>"; };
 		FB7D7F171A48E28D0003E4F0 /* inttypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = inttypes.h; path = src/inttypes.h; sourceTree = "<group>"; };
 		FB7D7F1F1A48E28D0003E4F0 /* UnityDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UnityDevice.cpp; path = src/UnityDevice.cpp; sourceTree = "<group>"; };
 		FB7D7F201A48E28D0003E4F0 /* UnityDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnityDevice.h; path = src/UnityDevice.h; sourceTree = "<group>"; };
@@ -316,6 +318,7 @@
 				FB7D7FF91A4900200003E4F0 /* SoyApp.cpp */,
 				FB7D7FFA1A4900200003E4F0 /* SoyApp.h */,
 				FB7D80061A4901310003E4F0 /* SoyArray.cpp */,
+				FB6650CA1A55E54400DF0A12 /* SoyDebug.mm */,
 				FB7D80071A4901310003E4F0 /* SoyDebug.cpp */,
 				FB7D80091A4901310003E4F0 /* SoyEnum.h */,
 				FB7D800A1A4901310003E4F0 /* SoyEvent.cpp */,
@@ -489,6 +492,7 @@
 				FB7D7FBB1A48EEB60003E4F0 /* glew.c in Sources */,
 				FB7D7FE61A48FF880003E4F0 /* TChannelSocket.cpp in Sources */,
 				FB7D7FF11A48FFA10003E4F0 /* TProtocol.cpp in Sources */,
+				FB6650CB1A55E54400DF0A12 /* SoyDebug.mm in Sources */,
 				FB7D80641A4903460003E4F0 /* TestReporter.cpp in Sources */,
 				FB7D7FE41A48FF880003E4F0 /* TChannelFile.cpp in Sources */,
 				FB7D803F1A4903350003E4F0 /* Checks.cpp in Sources */,
