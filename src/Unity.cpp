@@ -147,6 +147,8 @@ extern "C" bool EXPORT_API SendJob(uint64 ChannelRef,const char* Command)
 		std::Debug << "Failed to decode command for job: " << Command << std::endl;
 		return false;
 	}
+	
+	std::Debug << "Sending job: " << Job.mParams << std::endl;
 
 	Job.mChannelMeta.mChannelRef = Channel->GetChannelRef();
 	if ( !Channel->SendCommand( Job ) )
@@ -173,6 +175,61 @@ extern "C" bool EXPORT_API PopJob(Unity::JobCallback Func)
 	//	done, dispose of job
 	Job.reset();
 	
+	return true;
+}
+
+
+
+extern "C" int EXPORT_API GetJobParam_int(TJobInterface* JobInterface,const char* Param,int DefaultValue)
+{
+	auto& Job = *JobInterface->mTJob;
+	auto Value = Job.mParams.GetParamAsWithDefault<int>( Param, DefaultValue );
+	return Value;
+}
+
+
+extern "C" const char* EXPORT_API GetJobParam_string(TJobInterface* JobInterface,const char* Param,const char* DefaultValue)
+{
+	//	gr: to avoid memory management, we leave the variable in a static
+	//		in theory, this is only called whilst the job interface exists
+	//		(so we could put a buffer there) but the result will be copied
+	//		to c# memory so we don't need to worry about this being changed
+	//		whilst in use
+	static std::string Value;
+
+	//	re-use this static
+	auto& DefaultValueString = Value;
+	DefaultValueString = DefaultValue;
+	
+	auto& Job = *JobInterface->mTJob;
+	Value = Job.mParams.GetParamAsWithDefault<std::string>( Param, DefaultValueString );
+	
+	return Value.c_str();
+}
+
+
+extern "C" bool EXPORT_API GetJobParam_texture(TJobInterface* JobInterface,const char* ParamName,int Texture)
+{
+	auto& Job = *JobInterface->mTJob;
+
+	//	pull image
+	SoyPixels Pixels;
+	auto Param = Job.mParams.GetParam( ParamName );
+	if ( !Param.IsValid() )
+	{
+		std::Debug << "No such param " << ParamName << std::endl;
+		return false;
+	}
+	
+	SoyPixels Image;
+	if ( !Param.Decode( Image ) )
+	{
+		std::Debug << "Failed to decode image from param " << ParamName << std::endl;
+		return false;
+	}
+
+	//	copy to texture on next render loop
+	std::Debug << "Decoded image " << Image.GetWidth() << "x" << Image.GetHeight() << " " << Image.GetFormat() << std::endl;
 	return true;
 }
 
