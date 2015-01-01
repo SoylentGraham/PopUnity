@@ -1,6 +1,6 @@
 #include "Unity.h"
 #include <PopMain.h>
-
+#include <TProtocolCli.h>
 
 std::shared_ptr<PopUnity> gApp;
 
@@ -142,7 +142,12 @@ extern "C" bool EXPORT_API SendJob(uint64 ChannelRef,const char* Command)
 		return false;
 	
 	TJob Job;
-	Job.mParams.mCommand = Command;
+	if ( !TProtocolCli::DecodeHeader( Job, Command ) )
+	{
+		std::Debug << "Failed to decode command for job: " << Command << std::endl;
+		return false;
+	}
+
 	Job.mChannelMeta.mChannelRef = Channel->GetChannelRef();
 	if ( !Channel->SendCommand( Job ) )
 		return false;
