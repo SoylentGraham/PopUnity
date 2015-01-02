@@ -154,7 +154,7 @@ public class Debug : MonoBehaviour {
 
 	void Start()
 	{
-		mTexture = new Texture2D(256,256,TextureFormat.RGB24,false);
+		mTexture = new Texture2D(1280,720,TextureFormat.BGRA32,false);
 		PopUnity.AssignJobHandler("re:getframe", ((Job) => this.OnGetFrameReply(Job)) );
 	}
 
@@ -206,5 +206,10 @@ public class Debug : MonoBehaviour {
 		//string Text = "Hello ";
 		//GUI.Label (rect, Text);
 		GUI.DrawTexture (rect, mTexture);
+	}
+
+	void OnPostRender()
+	{
+		GL.IssuePluginEvent (0);
 	}
 }

@@ -1,4 +1,71 @@
 #include "UnityDevice.h"
+#include <SoyDebug.h>
+#include "Unity.h"
+
+
+static bool	OPENGL_REREADY_MAP			=true;	//	after we copy the dynamic texture, immediately re-open the map
+static bool	OPENGL_USE_STREAM_TEXTURE	=true;	//	GL_STREAM_DRAW else GL_DYNAMIC_DRAW
+
+
+namespace Unity
+{
+	std::shared_ptr<TUnityDevice>	gDevice;
+	SoyEvent<int>					gOnPostRender;
+
+	bool	AllocDevice(Unity::TGfxDevice::Type DeviceType,void* Device);
+	bool	FreeDevice(Unity::TGfxDevice::Type DeviceType);
+
+};
+
+
+bool Unity::AllocDevice(Unity::TGfxDevice::Type DeviceType,void* Device)
+{
+	//	free old device
+	gDevice.reset();
+	
+	//	alloc new one
+	switch ( DeviceType )
+	{
+#if defined(ENABLE_DX11)
+		case Unity::TGfxDevice::D3D11:
+			if ( Device )
+				gDevice = ofPtr<TUnityDevice>( new TUnityDevice_Dx11( static_cast<ID3D11Device*>(Device) ) );
+			break;
+#endif
+#if defined(ENABLE_OPENGL)
+		case Unity::TGfxDevice::OpenGL:
+			gDevice = ofPtr<TUnityDevice>( new TUnityDevice_Opengl() );
+			break;
+#endif
+		default:
+			break;
+	};
+	
+	if ( !gDevice )
+	{
+		//	no warning if explicitly no device
+		if ( DeviceType != Unity::TGfxDevice::Invalid )
+			std::Debug << "Failed to allocated device " << DeviceType << std::endl;
+	}
+	
+	/*
+	//	update device on all instances (remove, or add)
+	for ( int i=0;	i<mInstances.GetSize();	i++ )
+	{
+		auto& Instance = *mInstances[i];
+		Instance.SetDevice( mDevice );
+	}
+	 */
+	
+	return gDevice!=nullptr;
+}
+
+
+bool Unity::FreeDevice(Unity::TGfxDevice::Type DeviceType)
+{
+	AllocDevice( Unity::TGfxDevice::Invalid, nullptr );
+	return true;
+}
 
 
 
@@ -10,11 +77,11 @@ extern "C" void EXPORT_API UnitySetGraphicsDevice(void* device, int deviceType, 
 	switch ( DeviceEvent )
 	{
 		case Unity::TGfxDeviceEvent::Shutdown:
-	//		Unity::GetFastVideo().FreeDevice( DeviceType );
+			Unity::FreeDevice( DeviceType );
 			break;
 			
 		case Unity::TGfxDeviceEvent::Initialize:
-	//		Unity::GetFastVideo().AllocDevice( DeviceType, device );
+			Unity::AllocDevice( DeviceType, device );
 			break;
 			
 		default:
@@ -23,6 +90,22 @@ extern "C" void EXPORT_API UnitySetGraphicsDevice(void* device, int deviceType, 
 	
 }
 
+extern "C" void EXPORT_API UnityRenderEvent(int eventID)
+{
+	if ( Unity::gDevice )
+		Unity::gDevice->SetRenderThread();
+	
+	switch ( eventID )
+	{
+		case UnityEvent::PostRender:
+			Unity::gOnPostRender.OnTriggered(eventID);
+			break;
+			
+		default:
+			std::Debug << "Unknown UnityRenderEvent [" << eventID << "]" << std::endl;
+			break;
+	}
+}
 
 
 #if defined(ENABLE_DX11)
@@ -55,67 +138,6 @@ TFrameFormat::Type TUnityDevice_Dx11::GetFormat(DXGI_FORMAT Format)
 }
 #endif
 
-
-#if defined(ENABLE_OPENGL)
-GLint TUnityDevice_Opengl::GetFormat(TFrameFormat::Type Format)
-{
-	switch ( Format )
-	{
-		case TFrameFormat::RGBA:	return GL_RGBA;
-		case TFrameFormat::RGB:		return GL_RGB;
-		case TFrameFormat::BGRA:	return GL_BGRA;
-			
-		default:
-			return GL_INVALID_FORMAT;
-	}
-}
-#endif
-
-#if defined(ENABLE_OPENGL)
-TFrameFormat::Type TUnityDevice_Opengl::GetFormat(GLint Format)
-{
-	//	return 0 if none supported
-	switch ( Format )
-	{
-		case GL_RGBA:	return TFrameFormat::RGBA;
-		case GL_RGB:	return TFrameFormat::RGB;
-		case GL_BGRA:	return TFrameFormat::BGRA;
-
-		//	gr: osx returns these values hmmmm
-		case GL_RGBA8:	return TFrameFormat::RGBA;
-		case GL_RGB8:	return TFrameFormat::RGB;
-			
-		default:
-			return TFrameFormat::Invalid;
-	};
-}
-#endif
-
-
-ofPtr<TUnityDevice> Unity::AllocDevice(Unity::TGfxDevice::Type Type,void* Device)
-{
-	//	only support one atm
-	ofPtr<TUnityDevice> pDevice;
-
-	switch ( Type )
-	{
-#if defined(ENABLE_DX11)
-		case Unity::TGfxDevice::D3D11:
-			if ( Device )
-				pDevice = ofPtr<TUnityDevice>( new TUnityDevice_Dx11( static_cast<ID3D11Device*>(Device) ) );
-			break;
-#endif
-#if defined(ENABLE_OPENGL)
-		case Unity::TGfxDevice::OpenGL:
-			pDevice = ofPtr<TUnityDevice>( new TUnityDevice_Opengl() );
-			break;
-#endif
-        default:
-            break;
-	};
-
-	return pDevice;
-}
 
 
 #if defined(ENABLE_DX11)
@@ -406,9 +428,7 @@ bool Unity::TTexture_Opengl::Bind(TUnityDevice_Opengl& Device)
 	//	gr: this only works AFTER glBindTexture: http://www.opengl.org/sdk/docs/man/xhtml/glIsTexture.xml
 	if ( !glIsTexture(TextureName) )
 	{
-		BufferString<200> Debug;
-		Debug << "Bound invalid texture name [" << TextureName << "]";
-		Unity::DebugError(Debug);
+		std::Debug << "Bound invalid texture name [" << TextureName << "]" << std::endl;
 		return false;
 	}
 
@@ -433,17 +453,15 @@ bool Unity::TTexture_Opengl::Unbind(TUnityDevice_Opengl& Device)
 
 
 #if defined(ENABLE_OPENGL)
-Unity::TTexture TUnityDevice_Opengl::AllocTexture(TFrameMeta FrameMeta)
+Unity::TTexture TUnityDevice_Opengl::AllocTexture(SoyPixelsMetaFull FrameMeta)
 {
 	if ( !FrameMeta.IsValid() )
 		return Unity::TTexture();
 
-	auto Format = GetFormat( FrameMeta.mFormat );
-	if ( Format == GL_INVALID_FORMAT )
+	int Format = GL_INVALID_FORMAT;
+	if ( !SoyPixelsFormat::GetOpenglFormat( Format, FrameMeta.GetFormat() ) )
 	{
-		BufferString<200> Debug;
-		Debug << "Failed to create texture; unsupported format " << TFrameFormat::ToString( FrameMeta.mFormat );
-		Unity::DebugError(Debug);
+		std::Debug << "Failed to create texture; unsupported format " << FrameMeta.GetFormat() << std::endl;
 		return Unity::TTexture();
 	}
 
@@ -467,9 +485,11 @@ Unity::TTexture TUnityDevice_Opengl::AllocTexture(TFrameMeta FrameMeta)
 	}
 
 	//	initialise to set dimensions
-	TFramePixels InitFramePixels( FrameMeta );
-	InitFramePixels.SetColour( HARDWARE_INIT_TEXTURE_COLOUR );
-	glTexImage2D( GL_TEXTURE_2D, 0, Format, FrameMeta.mWidth, FrameMeta.mHeight, 0, Format, GL_UNSIGNED_BYTE, InitFramePixels.GetData() );
+	SoyPixels InitFramePixels;
+	InitFramePixels.Init( FrameMeta.GetWidth(), FrameMeta.GetHeight(), FrameMeta.GetFormat() );
+//	SoyPixels.SetColour( HARDWARE_INIT_TEXTURE_COLOUR );
+	auto& PixelsArray = InitFramePixels.GetPixelsArray();
+	glTexImage2D( GL_TEXTURE_2D, 0, Format, FrameMeta.GetWidth(), FrameMeta.GetHeight(), 0, Format, GL_UNSIGNED_BYTE, PixelsArray.GetArray() );
 	if ( HasError() )
 	{
 		DeleteTexture( Texture );
@@ -482,7 +502,7 @@ Unity::TTexture TUnityDevice_Opengl::AllocTexture(TFrameMeta FrameMeta)
 
 
 #if defined(ENABLE_OPENGL)
-Unity::TDynamicTexture TUnityDevice_Opengl::AllocDynamicTexture(TFrameMeta FrameMeta)
+Unity::TDynamicTexture TUnityDevice_Opengl::AllocDynamicTexture(SoyPixelsMetaFull FrameMeta)
 {
 	if ( !FrameMeta.IsValid() )
 		return Unity::TDynamicTexture();
@@ -613,7 +633,7 @@ bool TUnityDevice_Opengl::Unbind(TOpenglBufferCache& Buffer)
 #endif
 
 #if defined(ENABLE_OPENGL)
-TFrameMeta TUnityDevice_Opengl::GetTextureMeta(Unity::TTexture Texture)
+SoyPixelsMetaFull TUnityDevice_Opengl::GetTextureMeta(Unity::TTexture Texture)
 {
 	/*
 	TUnityDeviceContextScope Context( *this );
@@ -622,7 +642,7 @@ TFrameMeta TUnityDevice_Opengl::GetTextureMeta(Unity::TTexture Texture)
 		*/
 	auto& TextureGl = static_cast<Unity::TTexture_Opengl&>( Texture );
 	if ( !TextureGl.Bind(*this) )
-		return TFrameMeta();
+		return SoyPixelsMetaFull();
 	
 	GLint Width=0,Height=0,Formatgl=GL_INVALID_FORMAT;
 	int Lod = 0;
@@ -631,24 +651,24 @@ TFrameMeta TUnityDevice_Opengl::GetTextureMeta(Unity::TTexture Texture)
 	glGetTexLevelParameteriv( GL_TEXTURE_2D, Lod, GL_TEXTURE_INTERNAL_FORMAT, &Formatgl );
 	
 	if ( HasError() )
-		return TFrameMeta();
+		return SoyPixelsMetaFull();
 
-	auto Format = GetFormat( Formatgl );
-	TFrameMeta TextureMeta( Width, Height, Format );
+	auto Format = SoyPixelsFormat::GetFormatFromOpenglFormat( Formatgl );
+	SoyPixelsMetaFull TextureMeta( Width, Height, Format );
 	return TextureMeta;
 }
 #endif
 
 
 #if defined(ENABLE_OPENGL)
-TFrameMeta TUnityDevice_Opengl::GetTextureMeta(Unity::TDynamicTexture Texture)
+SoyPixelsMetaFull TUnityDevice_Opengl::GetTextureMeta(Unity::TDynamicTexture Texture)
 {
-	return TFrameMeta();
+	return SoyPixelsMetaFull();
 }
 #endif
 
 #if defined(ENABLE_OPENGL)
-bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const TFramePixels& Frame,bool Blocking)
+bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const SoyPixelsImpl& Frame,bool Blocking)
 {
 	TUnityDeviceContextScope Context( *this );
 	if ( !Context )
@@ -658,6 +678,12 @@ bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const TFramePixels
 	if ( !TextureGl.Bind(*this) )
 		return false;
 
+	//	grab the texture's width & height so we can clip, if we try and copy pixels bigger than the texture we'll get an error
+	int TextureWidth=0,TextureHeight=0;
+	int MipLevel = 0;
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, MipLevel, GL_TEXTURE_WIDTH, &TextureWidth );
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, MipLevel, GL_TEXTURE_HEIGHT, &TextureHeight );
+	
 	if ( glewIsSupported("GL_APPLE_client_storage") )
 	{
 		//	https://developer.apple.com/library/mac/documentation/graphicsimaging/conceptual/opengl-macprogguide/opengl_texturedata/opengl_texturedata.html
@@ -667,22 +693,32 @@ bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const TFramePixels
 		
 		glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_TRUE);
 		
-		static TFramePixels PixelsBuffer;//( TFrameMeta() );
-		PixelsBuffer = Frame;
+		static SoyPixels PixelsBuffer;//( TFrameMeta() );
+		PixelsBuffer.Copy( Frame );
 		
 		int Lod = 0;
-		GLint Format = GetFormat( Frame.mMeta.mFormat );
+		GLint Format;
+		SoyPixelsFormat::GetOpenglFormat( Format, Frame.GetFormat() );
 		GLint InternalFormat = GL_BGRA;
 		GLenum InternalStorage = GL_UNSIGNED_INT_8_8_8_8_REV;
-		glTexImage2D(GL_TEXTURE_2D, Lod, Format, PixelsBuffer.GetWidth(), PixelsBuffer.GetHeight(), 0, InternalFormat, InternalStorage, PixelsBuffer.GetData() );
+		glTexImage2D(GL_TEXTURE_2D, Lod, Format, PixelsBuffer.GetWidth(), PixelsBuffer.GetHeight(), 0, InternalFormat, InternalStorage, PixelsBuffer.GetPixelsArray().GetArray() );
 		
 		if ( HasError() )
 			return false;
 	}
 	else
 	{
-		GLint Format = GetFormat( Frame.mMeta.mFormat );
-		glTexSubImage2D( GL_TEXTURE_2D, 0, 0, 0, Frame.GetWidth(), Frame.GetHeight(), Format, GL_UNSIGNED_BYTE, Frame.GetData() );
+		GLint Format;
+		SoyPixelsFormat::GetOpenglFormat( Format, Frame.GetFormat() );
+		
+		
+		int Width = Frame.GetWidth();
+		int Height = Frame.GetHeight();
+		auto& Pixels = Frame.GetPixelsArray();
+		int MipLevel = 0;
+		int XOffset = 0;
+		int YOffset = 0;
+		glTexSubImage2D( GL_TEXTURE_2D, MipLevel, XOffset, YOffset, Width, Height, Format, GL_UNSIGNED_BYTE, Pixels.GetArray() );
 		if ( HasError() )
 			return false;
 	}
@@ -695,7 +731,7 @@ bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const TFramePixels
 #if defined(ENABLE_OPENGL)
 bool TUnityDevice_Opengl::AllocMap(TOpenglBufferCache& Buffer)
 {
-	Unity::TScopeTimerWarning timer_glTexSubImage2D(__FUNCTION__,1);
+//	Unity::TScopeTimerWarning timer_glTexSubImage2D(__FUNCTION__,1);
 
 	//	already mapped
 	if ( Buffer.mDataMap )
@@ -741,7 +777,7 @@ bool TUnityDevice_Opengl::AllocMap(TOpenglBufferCache& Buffer)
 #if defined(ENABLE_OPENGL)
 bool TUnityDevice_Opengl::FreeMap(TOpenglBufferCache& Buffer)
 {
-	Unity::TScopeTimerWarning timer_glTexSubImage2D(__FUNCTION__,1);
+//	Unity::TScopeTimerWarning timer_glTexSubImage2D(__FUNCTION__,1);
 
 	//	not mapped
 	if ( !Buffer.mDataMap )
@@ -762,11 +798,8 @@ bool TUnityDevice_Opengl::FreeMap(TOpenglBufferCache& Buffer)
 	//	http://www.opengl.org/wiki/Buffer_Object#Mapping
 	if ( Error != GL_TRUE )
 	{
-		BufferString<100> Debug;
-		Debug << "glUnmapBuffer returned " << Error << ", may be harmless.";
-		Unity::DebugError( Debug );
+		std::Debug << "glUnmapBuffer returned " << Error << ", may be harmless." << std::endl;
 	}
-	
 
 	if ( HasError() )
 		return false;
@@ -779,7 +812,7 @@ bool TUnityDevice_Opengl::FreeMap(TOpenglBufferCache& Buffer)
 
 
 #if defined(ENABLE_OPENGL)
-bool TUnityDevice_Opengl::CopyTexture(Unity::TDynamicTexture Texture,const TFramePixels& Frame,bool Blocking)
+bool TUnityDevice_Opengl::CopyTexture(Unity::TDynamicTexture Texture,const SoyPixelsImpl& Frame,bool Blocking)
 {
 	ofMutex::ScopedLock lock( mBufferCache );
 	auto* Buffer = mBufferCache.Find( Texture.GetInteger() );
@@ -795,8 +828,9 @@ bool TUnityDevice_Opengl::CopyTexture(Unity::TDynamicTexture Texture,const TFram
 		return false;
 
 	//	gr: do safety check here
-	int DataSize = ofMin( Frame.GetDataSize(), Buffer->mBufferMeta.GetDataSize() );
-	memcpy( Buffer->mDataMap, Frame.GetData(), DataSize );
+	auto& PixelsArray = Frame.GetPixelsArray();
+	int DataSize = ofMin( PixelsArray.GetDataSize(), Buffer->mBufferMeta.GetDataSize() );
+	memcpy( Buffer->mDataMap, PixelsArray.GetArray(), DataSize );
 
 	//	umap if in render thread?
 	//FreeMap( Buffer );
@@ -809,7 +843,7 @@ bool TUnityDevice_Opengl::CopyTexture(Unity::TDynamicTexture Texture,const TFram
 #if defined(ENABLE_OPENGL)
 bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture DstTextureU,Unity::TDynamicTexture SrcTextureU)
 {
-	Unity::TScopeTimerWarning Timer(__FUNCTION__,1);
+	//Unity::TScopeTimerWarning Timer(__FUNCTION__,1);
 	TUnityDeviceContextScope Context( *this );
 	if ( !Context )
 		return false;
@@ -831,11 +865,12 @@ bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture DstTextureU,Unity::TDynami
 		return false;
 	
 //	TFrameMeta TextureMeta = GetTextureMeta( DstTextureU );
-	TFrameMeta TextureMeta = Buffer->mBufferMeta;
-	auto Format = GetFormat( TextureMeta.mFormat );
+	auto TextureMeta = Buffer->mBufferMeta;
+	int Format;
+	if ( SoyPixelsFormat::GetOpenglFormat( Format, TextureMeta.GetFormat() ) )
 	{
-		Unity::TScopeTimerWarning timer_glTexSubImage2D("glTexSubImage2D",1);
-		glTexSubImage2D( GL_TEXTURE_2D, 0, 0, 0, TextureMeta.mWidth, TextureMeta.mHeight, Format, GL_UNSIGNED_BYTE, nullptr );
+		//Unity::TScopeTimerWarning timer_glTexSubImage2D("glTexSubImage2D",1);
+		glTexSubImage2D( GL_TEXTURE_2D, 0, 0, 0, TextureMeta.GetWidth(), TextureMeta.GetHeight(), Format, GL_UNSIGNED_BYTE, nullptr );
 		if ( HasError() )
 			return false;
 	}
@@ -930,9 +965,7 @@ bool TUnityDevice_Opengl::HasError()
 	if ( Error == GL_NO_ERROR )
 		return false;
 
-	BufferString<200> Debug;
-	Debug << "Opengl error; " << OpenglError_ToString( Error );
-	Unity::DebugError(Debug);
+	std::Debug << "Opengl error; " << OpenglError_ToString( Error ) << std::endl;
 	return true;
 }
 #endif
@@ -961,14 +994,10 @@ void TUnityDevice_Opengl::OnRenderThreadUpdate()
 		auto Error = glewInit();
 		if ( Error != GLEW_OK )
 		{
-			BufferString<100> Debug;
-			Debug << "Failed to initalise GLEW: " << Error;
-			Unity::DebugError( Debug );
+			std::Debug << "Failed to initalise GLEW: " << Error << std::endl;
 		}
 
-		std::string Debug = "Opengl version ";
-		Debug += GetString( GL_VERSION );
-		Unity::Debug( Debug );
+		std::Debug << "Opengl version " << GetString( GL_VERSION ) << std::endl;
 	}
 
 	//	do we have some dynamic textures we need to allocate or delete?

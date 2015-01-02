@@ -1,14 +1,14 @@
 #pragma once
 
 #include <ofxSoylent.h>
-
-
+#include <SoyPixels.h>
+#include <SoyData.h>
 
 #if defined(TARGET_WINDOWS)
 	#define ENABLE_DX11
 	#define ENABLE_OPENGL
 #elif defined(TARGET_OSX)
-//	#define ENABLE_OPENGL
+	#define ENABLE_OPENGL
 #endif
 
 
@@ -17,7 +17,11 @@
 // before it's being reset (i.e. resolution changed), after it's being reset, etc.
 extern "C" void EXPORT_API UnitySetGraphicsDevice(void* device, int deviceType, int eventType);
 
-
+// If exported by a plugin, this function will be called for GL.IssuePluginEvent script calls.
+// The function will be called on a rendering thread; note that when multithreaded rendering is used,
+// the rendering thread WILL BE DIFFERENT from the thread that all scripts & other game logic happens!
+// You have to ensure any synchronization with other plugin script calls is properly done by you.
+extern "C" void EXPORT_API UnityRenderEvent(int eventID);
 
 
 #if defined(ENABLE_DX11)
@@ -152,8 +156,6 @@ namespace Unity
 		};
 	};
     
-	ofPtr<TUnityDevice> AllocDevice(Unity::TGfxDevice::Type Type,void* Device);
-    
     class TTexture;
 	class TDynamicTexture;
 
@@ -252,6 +254,26 @@ public:
 };
 #endif
 
+class SoyPixelsMetaFull : public SoyPixelsMeta
+{
+public:
+	SoyPixelsMetaFull() :
+		mDataSize	( 0 )
+	{
+	}
+	SoyPixelsMetaFull(int Width,int Height,SoyPixelsFormat::Type Format)
+	{
+		mWidth = Width;
+		mFormat = Format;
+		mDataSize = SoyPixelsMeta::GetDataSize(Height);
+	}
+
+	uint16		GetHeight() const		{	return SoyPixelsMeta::GetHeight( GetDataSize() );	}
+	int			GetDataSize() const		{	return mDataSize;	}
+
+public:
+	int			mDataSize;
+};
 
 #if defined(ENABLE_OPENGL)
 class TOpenglBufferCache
@@ -274,7 +296,7 @@ public:
 public:
 	uint32		mUnityRef;			//	so that we can allocate a texture out of the render thread, we map to our own ID, not the opengl name
 	GLuint		mBufferName;		//	thread safe as only allocated/destroyed during render thread
-	TFrameMeta	mBufferMeta;		//	data allocated (inc size)
+	SoyPixelsMetaFull	mBufferMeta;
 
 	//	these might need a mutex
 	void*		mDataMap;
@@ -339,20 +361,20 @@ public:
 		assert( IsRenderThreadActive() );
 	}
 	
-/*
+
 	virtual bool            IsValid()=0;
-    virtual Unity::TTexture			AllocTexture(TFrameMeta FrameMeta)=0;
-    virtual Unity::TDynamicTexture	AllocDynamicTexture(TFrameMeta FrameMeta)=0;
+    virtual Unity::TTexture			AllocTexture(SoyPixelsMetaFull FrameMeta)=0;
+    virtual Unity::TDynamicTexture	AllocDynamicTexture(SoyPixelsMetaFull FrameMeta)=0;
     virtual bool            DeleteTexture(Unity::TTexture& Texture)=0;
     virtual bool            DeleteTexture(Unity::TDynamicTexture& Texture)=0;
-	virtual TFrameMeta      GetTextureMeta(Unity::TTexture Texture)=0;
-	virtual TFrameMeta      GetTextureMeta(Unity::TDynamicTexture Texture)=0;
-	TFrameMeta              GetTextureMeta(Unity::TTexture* Texture)		{   return Texture ? GetTextureMeta(*Texture) : TFrameMeta();   }
-	TFrameMeta              GetTextureMeta(Unity::TDynamicTexture* Texture)	{   return Texture ? GetTextureMeta(*Texture) : TFrameMeta();   }
-	virtual bool            CopyTexture(Unity::TTexture Texture,const TFramePixels& Frame,bool Blocking)=0;
-	virtual bool            CopyTexture(Unity::TDynamicTexture Texture,const TFramePixels& Frame,bool Blocking)=0;
+	virtual SoyPixelsMetaFull      GetTextureMeta(Unity::TTexture Texture)=0;
+	virtual SoyPixelsMetaFull      GetTextureMeta(Unity::TDynamicTexture Texture)=0;
+	SoyPixelsMetaFull              GetTextureMeta(Unity::TTexture* Texture)		{   return Texture ? GetTextureMeta(*Texture) : SoyPixelsMetaFull();   }
+	SoyPixelsMetaFull              GetTextureMeta(Unity::TDynamicTexture* Texture)	{   return Texture ? GetTextureMeta(*Texture) : SoyPixelsMetaFull();   }
+	virtual bool            CopyTexture(Unity::TTexture Texture,const SoyPixelsImpl& Frame,bool Blocking)=0;
+	virtual bool            CopyTexture(Unity::TDynamicTexture Texture,const SoyPixelsImpl& Frame,bool Blocking)=0;
 	virtual bool            CopyTexture(Unity::TTexture DstTexture,const Unity::TDynamicTexture SrcTexture)=0;
-*/
+
 public:
 	ofMutex					mContextLock;	//	contexts are generally not threadsafe (certainly not DX11 or opengl) so make it common
 	std::thread::id			mRenderThreadId;
@@ -455,18 +477,16 @@ public:
 	virtual void			OnRenderThreadUpdate();
 	virtual void			OnRenderThreadPostUpdate();
 	virtual bool            IsValid()	{	return !mFirstRun;	}		//	only valid once we've done first loop
-    virtual Unity::TTexture AllocTexture(TFrameMeta FrameMeta);
-    virtual Unity::TDynamicTexture	AllocDynamicTexture(TFrameMeta FrameMeta);
-    virtual bool            DeleteTexture(Unity::TTexture& Texture);
-    virtual bool            DeleteTexture(Unity::TDynamicTexture& Texture);
-	virtual TFrameMeta      GetTextureMeta(Unity::TTexture Texture);
-	virtual TFrameMeta      GetTextureMeta(Unity::TDynamicTexture Texture);
-	virtual bool            CopyTexture(Unity::TTexture Texture,const TFramePixels& Frame,bool Blocking);
-	virtual bool            CopyTexture(Unity::TDynamicTexture Texture,const TFramePixels& Frame,bool Blocking);
-	virtual bool            CopyTexture(Unity::TTexture DstTexture,const Unity::TDynamicTexture SrcTexture);
+    virtual Unity::TTexture AllocTexture(SoyPixelsMetaFull FrameMeta) override;
+    virtual Unity::TDynamicTexture	AllocDynamicTexture(SoyPixelsMetaFull FrameMeta) override;
+    virtual bool            DeleteTexture(Unity::TTexture& Texture) override;
+    virtual bool			DeleteTexture(Unity::TDynamicTexture& Texture) override;
+	virtual SoyPixelsMetaFull      GetTextureMeta(Unity::TTexture Texture) override;
+	virtual SoyPixelsMetaFull      GetTextureMeta(Unity::TDynamicTexture Texture) override;
+	virtual bool            CopyTexture(Unity::TTexture Texture,const SoyPixelsImpl& Frame,bool Blocking) override;
+	virtual bool            CopyTexture(Unity::TDynamicTexture Texture,const SoyPixelsImpl& Frame,bool Blocking) override;
+	virtual bool            CopyTexture(Unity::TTexture DstTexture,const Unity::TDynamicTexture SrcTexture) override;
  
-	static TFrameFormat::Type	GetFormat(GLint Format);
-	static GLint				GetFormat(TFrameFormat::Type Format);
 	static bool				HasError();	//	note: static so need parent to do a context lock
 	std::string				GetString(GLenum StringId);
 	
@@ -493,6 +513,11 @@ private:
 
 
 
+namespace Unity
+{
+	extern SoyEvent<int>					gOnPostRender;
+	extern std::shared_ptr<TUnityDevice>	gDevice;
+};
 
 
 
