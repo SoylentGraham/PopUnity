@@ -10,7 +10,6 @@ static bool	OPENGL_USE_STREAM_TEXTURE	=true;	//	GL_STREAM_DRAW else GL_DYNAMIC_D
 namespace Unity
 {
 	std::shared_ptr<TUnityDevice>	gDevice;
-	SoyEvent<int>					gOnPostRender;
 
 	bool	AllocDevice(Unity::TGfxDevice::Type DeviceType,void* Device);
 	bool	FreeDevice(Unity::TGfxDevice::Type DeviceType);
@@ -98,7 +97,7 @@ extern "C" void EXPORT_API UnityRenderEvent(int eventID)
 	switch ( eventID )
 	{
 		case UnityEvent::PostRender:
-			Unity::gOnPostRender.OnTriggered(eventID);
+			UnityEvent::mOnPostRender.OnTriggered(eventID);
 			break;
 			
 		default:
@@ -678,9 +677,10 @@ bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const SoyPixelsImp
 	if ( !TextureGl.Bind(*this) )
 		return false;
 
+	int MipLevel = 0;
+
 	//	grab the texture's width & height so we can clip, if we try and copy pixels bigger than the texture we'll get an error
 	int TextureWidth=0,TextureHeight=0;
-	int MipLevel = 0;
 	glGetTexLevelParameteriv(GL_TEXTURE_2D, MipLevel, GL_TEXTURE_WIDTH, &TextureWidth );
 	glGetTexLevelParameteriv(GL_TEXTURE_2D, MipLevel, GL_TEXTURE_HEIGHT, &TextureHeight );
 	
@@ -693,15 +693,14 @@ bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const SoyPixelsImp
 		
 		glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_TRUE);
 		
-		static SoyPixels PixelsBuffer;//( TFrameMeta() );
+		static SoyPixels PixelsBuffer;
 		PixelsBuffer.Copy( Frame );
 		
-		int Lod = 0;
-		GLint Format;
-		SoyPixelsFormat::GetOpenglFormat( Format, Frame.GetFormat() );
-		GLint InternalFormat = GL_BGRA;
-		GLenum InternalStorage = GL_UNSIGNED_INT_8_8_8_8_REV;
-		glTexImage2D(GL_TEXTURE_2D, Lod, Format, PixelsBuffer.GetWidth(), PixelsBuffer.GetHeight(), 0, InternalFormat, InternalStorage, PixelsBuffer.GetPixelsArray().GetArray() );
+		GLint PixelFormat;
+		SoyPixelsFormat::GetOpenglFormat( PixelFormat, Frame.GetFormat() );
+		GLint TargetFormat = GL_BGRA;
+		GLenum TargetStorage = GL_UNSIGNED_INT_8_8_8_8_REV;
+		glTexImage2D(GL_TEXTURE_2D, MipLevel, PixelFormat, PixelsBuffer.GetWidth(), PixelsBuffer.GetHeight(), 0, TargetFormat, TargetStorage, PixelsBuffer.GetPixelsArray().GetArray() );
 		
 		if ( HasError() )
 			return false;
@@ -711,13 +710,20 @@ bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const SoyPixelsImp
 		GLint Format;
 		SoyPixelsFormat::GetOpenglFormat( Format, Frame.GetFormat() );
 		
+		int XOffset = 0;
+		int YOffset = 0;
 		
 		int Width = Frame.GetWidth();
 		int Height = Frame.GetHeight();
+		
+		//	if texture doesnt fit we'll get GL_INVALID_VALUE
+		//	if frame is bigger than texture, it will mangle (bad stride)
+		if ( Width != TextureWidth )
+			Width = TextureWidth;
+		if ( Height != TextureHeight )
+			Height = TextureHeight;
+		
 		auto& Pixels = Frame.GetPixelsArray();
-		int MipLevel = 0;
-		int XOffset = 0;
-		int YOffset = 0;
 		glTexSubImage2D( GL_TEXTURE_2D, MipLevel, XOffset, YOffset, Width, Height, Format, GL_UNSIGNED_BYTE, Pixels.GetArray() );
 		if ( HasError() )
 			return false;

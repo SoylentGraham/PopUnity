@@ -29,11 +29,15 @@ private:
 
 namespace UnityEvent
 {
+	//	gl.IssuePluginEvent event id's
 	enum Type
 	{
 		PostRender = 0,		
 	};
-}
+	
+	extern SoyEvent<int>	mOnPostRender;
+	extern SoyEvent<bool>	mOnStopped;		//	editor stopped
+};
 
 namespace Unity
 {
@@ -62,6 +66,7 @@ public:
 
 	void			FlushDebugMessages(void (*LogFunc)(const char*));
 	void			OnDebug(const std::string& Debug);
+	void			OnStopped();
 	
 	std::shared_ptr<TJob>	PopJob();
 	void			PushJob(TJobAndChannel& JobAndChannel);

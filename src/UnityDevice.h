@@ -515,7 +515,6 @@ private:
 
 namespace Unity
 {
-	extern SoyEvent<int>					gOnPostRender;
 	extern std::shared_ptr<TUnityDevice>	gDevice;
 };
 

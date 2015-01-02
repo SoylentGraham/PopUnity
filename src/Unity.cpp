@@ -5,12 +5,23 @@
 
 std::shared_ptr<PopUnity> gApp;
 
+namespace UnityEvent
+{
+	SoyEvent<int>	mOnPostRender;
+	SoyEvent<bool>	mOnStopped;
+
+};
 
 extern "C" void EXPORT_API FlushDebug(Unity::LogCallback LogFunc)
 {
 	PopUnity::Get().FlushDebugMessages(LogFunc);
 }
 
+extern "C" void EXPORT_API OnStopped()
+{
+	bool Dummy = true;
+	UnityEvent::mOnStopped.OnTriggered(Dummy);
+}
 
 TPopAppError::Type PopMain(TJobParams& Params)
 {
@@ -32,7 +43,20 @@ PopUnity& PopUnity::Get()
 PopUnity::PopUnity()
 {
 	std::Debug.GetOnFlushEvent().AddListener( *this, &PopUnity::OnDebug );
-	Unity::gOnPostRender.AddListener( [this](int&) { this->ProcessCopyTextureQueue(); } );
+	UnityEvent::mOnPostRender.AddListener( [this](int&) { this->ProcessCopyTextureQueue(); } );
+	UnityEvent::mOnStopped.AddListener( [this](bool&) { this->OnStopped(); } );
+}
+
+void PopUnity::OnStopped()
+{
+	//	close all channels
+	for ( auto it=mChannels.begin();	it!=mChannels.end();	it++ )
+	{
+		auto& Channel = *it;
+		Channel->Shutdown();
+		Channel.reset();
+	}
+	mChannels.clear();
 }
 
 void PopUnity::OnDebug(const std::string& Debug)
