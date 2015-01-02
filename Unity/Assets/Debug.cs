@@ -156,6 +156,7 @@ public class Debug : MonoBehaviour {
 	{
 		mTexture = new Texture2D(1280,720,TextureFormat.BGRA32,false);
 		PopUnity.AssignJobHandler("re:getframe", ((Job) => this.OnGetFrameReply(Job)) );
+		PopUnity.AssignJobHandler("newframe", ((Job) => this.OnGetFrameReply(Job)) );
 	}
 
 	void Update () {
