@@ -201,7 +201,7 @@ extern "C" bool EXPORT_API SendJob(uint64 ChannelRef,const char* Command)
 		return false;
 	}
 	
-	std::Debug << "Sending job: " << Job.mParams << std::endl;
+	//std::Debug << "Sending job: " << Job.mParams << std::endl;
 
 	Job.mChannelMeta.mChannelRef = Channel->GetChannelRef();
 	if ( !Channel->SendCommand( Job ) )
@@ -283,7 +283,7 @@ extern "C" bool EXPORT_API GetJobParam_texture(TJobInterface* JobInterface,const
 	}
 
 	//	copy to texture on next render loop
-	std::Debug << "Decoded image " << Image.GetWidth() << "x" << Image.GetHeight() << " " << Image.GetFormat() << std::endl;
+	//std::Debug << "Decoded image " << Image.GetWidth() << "x" << Image.GetHeight() << " " << Image.GetFormat() << std::endl;
 
 	auto& App = PopUnity::Get();
 	App.CopyTexture( pPixels, Texture );
