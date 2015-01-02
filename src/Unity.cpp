@@ -1,8 +1,15 @@
 #include "Unity.h"
+#include "UnityDevice.h"
 #include <PopMain.h>
 #include <TProtocolCli.h>
 
 std::shared_ptr<PopUnity> gApp;
+
+
+extern "C" void EXPORT_API FlushDebug(Unity::LogCallback LogFunc)
+{
+	PopUnity::Get().FlushDebugMessages(LogFunc);
+}
 
 
 TPopAppError::Type PopMain(TJobParams& Params)
@@ -25,6 +32,7 @@ PopUnity& PopUnity::Get()
 PopUnity::PopUnity()
 {
 	std::Debug.GetOnFlushEvent().AddListener( *this, &PopUnity::OnDebug );
+	Unity::gOnPostRender.AddListener( [this](int&) { this->ProcessCopyTextureQueue(); } );
 }
 
 void PopUnity::OnDebug(const std::string& Debug)
@@ -89,6 +97,34 @@ void PopUnity::PushJob(TJobAndChannel& JobAndChannel)
 	
 }
 
+
+void PopUnity::ProcessCopyTextureQueue()
+{
+	while ( !mCopyTextureQueue.IsEmpty() )
+	{
+		mCopyTextureQueue.lock();
+		TCopyTextureCommand Copy = mCopyTextureQueue.PopBack();
+		mCopyTextureQueue.unlock();
+		
+		if ( !Unity::gDevice )
+			continue;
+		
+		Unity::TTexture Texture( Copy.mTexture );
+		Unity::gDevice->CopyTexture( Texture, Copy.mPixels->mValue, true );
+	}
+}
+
+
+void PopUnity::CopyTexture(std::shared_ptr<SoyData_Impl<SoyPixels>> Pixels,int Texture)
+{
+	mCopyTextureQueue.lock();
+	auto& Copy = mCopyTextureQueue.PushBack();
+	Copy.mPixels = Pixels;
+	Copy.mTexture = Texture;
+	mCopyTextureQueue.unlock();
+	
+}
+
 TJobInterfaceWrapper::TJobInterfaceWrapper(const TJob& Job)
 {
 	//	construct
@@ -110,15 +146,6 @@ TJobInterfaceWrapper::TJobInterfaceWrapper(const TJob& Job)
 	{
 		mParamNames[mParamCount] = Params[i].mName.c_str();
 		mParamCount++;
-	}
-}
-
-
-
-extern "C" void EXPORT_API UnityRenderEvent(int eventID)
-{
-	switch ( eventID )
-	{
 	}
 }
 
@@ -223,8 +250,9 @@ extern "C" bool EXPORT_API GetJobParam_texture(TJobInterface* JobInterface,const
 		return false;
 	}
 	
-	SoyPixels Image;
-	if ( !Param.Decode( Image ) )
+	std::shared_ptr<SoyData_Impl<SoyPixels>> pPixels( new SoyData_Stack<SoyPixels>() );
+	auto& Image = pPixels->mValue;
+	if ( !Param.Decode( *pPixels ) )
 	{
 		std::Debug << "Failed to decode image from param " << ParamName << std::endl;
 		return false;
@@ -232,6 +260,10 @@ extern "C" bool EXPORT_API GetJobParam_texture(TJobInterface* JobInterface,const
 
 	//	copy to texture on next render loop
 	std::Debug << "Decoded image " << Image.GetWidth() << "x" << Image.GetHeight() << " " << Image.GetFormat() << std::endl;
+
+	auto& App = PopUnity::Get();
+	App.CopyTexture( pPixels, Texture );
+	
 	return true;
 }
 

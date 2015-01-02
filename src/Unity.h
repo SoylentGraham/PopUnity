@@ -6,13 +6,6 @@
 
 
 
-// If exported by a plugin, this function will be called for GL.IssuePluginEvent script calls.
-// The function will be called on a rendering thread; note that when multithreaded rendering is used,
-// the rendering thread WILL BE DIFFERENT from the thread that all scripts & other game logic happens!
-// You have to ensure any synchronization with other plugin script calls is properly done by you.
-extern "C" void EXPORT_API UnityRenderEvent(int eventID);
-
-
 //	c# struct
 const int MaxCSharpParams = 10;
 typedef struct
@@ -34,12 +27,28 @@ private:
 	BufferArray<std::string,MaxCSharpParams*2+1> mStringBuffer;
 };
 
+namespace UnityEvent
+{
+	enum Type
+	{
+		PostRender = 0,		
+	};
+}
 
 namespace Unity
 {
 	typedef void (*LogCallback)(const char*);
 	typedef void (*JobCallback)(const TJobInterface*);
 };
+
+
+class TCopyTextureCommand
+{
+public:
+	std::shared_ptr<SoyData_Impl<SoyPixels>>	mPixels;
+	int											mTexture;
+};
+
 
 class PopUnity : public TChannelManager
 {
@@ -57,6 +66,9 @@ public:
 	std::shared_ptr<TJob>	PopJob();
 	void			PushJob(TJobAndChannel& JobAndChannel);
 	
+	void			CopyTexture(std::shared_ptr<SoyData_Impl<SoyPixels>> Pixels,int Texture);
+	void			ProcessCopyTextureQueue();
+	
 private:
 	void			OnJobRecieved(TJobAndChannel& JobAndChannel);	//	special job handling to send back to unity
 	
@@ -64,11 +76,7 @@ private:
 	Array<std::shared_ptr<TJob>>	mPendingJobs;
 	std::mutex						mDebugMessagesLock;
 	Array<std::string>				mDebugMessages;	//	gr: might need to be threadsafe
+	ofMutexT<Array<TCopyTextureCommand>>	mCopyTextureQueue;
 };
 
 
-
-extern "C" void EXPORT_API FlushDebug(Unity::LogCallback LogFunc)
-{
-	PopUnity::Get().FlushDebugMessages(LogFunc);
-}
