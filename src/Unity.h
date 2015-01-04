@@ -49,8 +49,8 @@ namespace Unity
 class TCopyTextureCommand
 {
 public:
-	std::shared_ptr<SoyData_Impl<SoyPixels>>	mPixels;
-	int											mTexture;
+	TJobParam	mPixelsParam;
+	int			mTexture;
 };
 
 
@@ -71,7 +71,7 @@ public:
 	std::shared_ptr<TJob>	PopJob();
 	void			PushJob(TJobAndChannel& JobAndChannel);
 	
-	void			CopyTexture(std::shared_ptr<SoyData_Impl<SoyPixels>> Pixels,int Texture);
+	void			CopyTexture(TJobParam PixelsParam,int Texture);
 	void			ProcessCopyTextureQueue();
 	
 private:
@@ -82,6 +82,7 @@ private:
 	std::mutex						mDebugMessagesLock;
 	Array<std::string>				mDebugMessages;	//	gr: might need to be threadsafe
 	ofMutexT<Array<TCopyTextureCommand>>	mCopyTextureQueue;
+	SoyPixels						mTexturePixelsBuffer;	//	save realloc
 };
 
 

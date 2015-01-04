@@ -134,16 +134,19 @@ void PopUnity::ProcessCopyTextureQueue()
 			continue;
 		
 		Unity::TTexture Texture( Copy.mTexture );
-		Unity::gDevice->CopyTexture( Texture, Copy.mPixels->mValue, true );
+		SoyData_Impl<SoyPixels> Pixels(mTexturePixelsBuffer);
+		if ( !Copy.mPixelsParam.Decode( Pixels ) )
+			continue;
+		Unity::gDevice->CopyTexture( Texture, Pixels.mValue, true );
 	}
 }
 
 
-void PopUnity::CopyTexture(std::shared_ptr<SoyData_Impl<SoyPixels>> Pixels,int Texture)
+void PopUnity::CopyTexture(TJobParam PixelsParam,int Texture)
 {
 	mCopyTextureQueue.lock();
 	auto& Copy = mCopyTextureQueue.PushBack();
-	Copy.mPixels = Pixels;
+	Copy.mPixelsParam = PixelsParam;
 	Copy.mTexture = Texture;
 	mCopyTextureQueue.unlock();
 	
@@ -274,6 +277,7 @@ extern "C" bool EXPORT_API GetJobParam_texture(TJobInterface* JobInterface,const
 		return false;
 	}
 	
+	/*
 	std::shared_ptr<SoyData_Impl<SoyPixels>> pPixels( new SoyData_Stack<SoyPixels>() );
 	auto& Image = pPixels->mValue;
 	if ( !Param.Decode( *pPixels ) )
@@ -285,8 +289,9 @@ extern "C" bool EXPORT_API GetJobParam_texture(TJobInterface* JobInterface,const
 	//	copy to texture on next render loop
 	//std::Debug << "Decoded image " << Image.GetWidth() << "x" << Image.GetHeight() << " " << Image.GetFormat() << std::endl;
 
+	 */
 	auto& App = PopUnity::Get();
-	App.CopyTexture( pPixels, Texture );
+	App.CopyTexture( Param, Texture );
 	
 	return true;
 }
