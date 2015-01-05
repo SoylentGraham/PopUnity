@@ -162,12 +162,21 @@ public class Debug : MonoBehaviour {
 
 	private String	ServerAddress = "cli://localhost:7070";
 	private PopUnityChannel	mChannel = null;
-	private String	JobString = "getframe serial=face memfile=false";
-	Texture2D mTexture;
+	private String	JobString = "subscribenewframe serial=isight memfile=false";
+	public Texture2D mTexture;
+	public Material MaterialForTexture;
 
 	void Start()
 	{
-		mTexture = new Texture2D(1280,720,TextureFormat.BGRA32,false);
+		//	need to CREATE a texture. overwriting an existing one doesn't work...
+		if (mTexture == null) {
+			mTexture = new Texture2D (1280, 1024, TextureFormat.BGRA32, false);
+
+			//	need a material...
+			if (MaterialForTexture != null)
+				MaterialForTexture.mainTexture = mTexture;
+		}
+
 		PopUnity.AssignJobHandler("re:getframe", ((Job) => this.OnGetFrameReply(Job)) );
 		PopUnity.AssignJobHandler("newframe", ((Job) => this.OnGetFrameReply(Job)) );
 	}
@@ -219,7 +228,7 @@ public class Debug : MonoBehaviour {
 
 		//string Text = "Hello ";
 		//GUI.Label (rect, Text);
-		GUI.DrawTexture (rect, mTexture);
+		//GUI.DrawTexture (rect, mTexture);
 	}
 
 	void OnPostRender()
