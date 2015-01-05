@@ -78,7 +78,7 @@ private:
 	void			OnJobRecieved(TJobAndChannel& JobAndChannel);	//	special job handling to send back to unity
 	
 private:
-	Array<std::shared_ptr<TJob>>	mPendingJobs;
+	TLockQueue<std::shared_ptr<TJob>>	mPendingJobs;
 	std::mutex						mDebugMessagesLock;
 	Array<std::string>				mDebugMessages;	//	gr: might need to be threadsafe
 	ofMutexT<Array<TCopyTextureCommand>>	mCopyTextureQueue;

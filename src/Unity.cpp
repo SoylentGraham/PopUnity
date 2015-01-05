@@ -111,13 +111,13 @@ std::shared_ptr<TJob> PopUnity::PopJob()
 	if ( mPendingJobs.IsEmpty() )
 		return nullptr;
 	
-	return mPendingJobs.PopAt(0);
+	return mPendingJobs.Pop();
 }
 
 void PopUnity::PushJob(TJobAndChannel& JobAndChannel)
 {
 	std::shared_ptr<TJob> Job( new TJob(JobAndChannel.GetJob() ) );
-	mPendingJobs.PushBack( Job );
+	mPendingJobs.Push( Job );
 	
 }
 
