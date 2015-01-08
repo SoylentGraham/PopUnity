@@ -160,7 +160,18 @@ void PopUnity::ProcessCopyTextureQueue()
 void PopUnity::CopyTexture(TJobParam PixelsParam,Unity::TTexture Texture,SoyPixelsFormat::Type ConvertToFormat)
 {
 	mCopyTextureQueue.lock();
-	auto& Copy = mCopyTextureQueue.PushBack();
+	
+	//	if we have this texture already in the queue, replace it
+	TCopyTextureCommand* pCopyCommand = nullptr;
+	pCopyCommand = mCopyTextureQueue.Find( Texture );
+	
+	//	doesn't already exist, alloc new entry
+	if ( !pCopyCommand )
+	{
+		pCopyCommand = &mCopyTextureQueue.PushBack();
+	}
+
+	auto& Copy = *pCopyCommand;
 	Copy.mPixelsParam = PixelsParam;
 	Copy.mTexture = Texture;
 	Copy.mConvertToFormat = ConvertToFormat;

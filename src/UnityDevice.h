@@ -180,6 +180,9 @@ public:
 		mObject     ( reinterpret_cast<void*>(Id) )
     {
     }
+	
+	inline bool			operator==(const TTexture& Texture) const	{	return GetPointer() == Texture.GetPointer();	}
+	
     virtual bool        IsValid() const {   return (mObject != nullptr);  }	//	nullpointer != 0, so might have issues here in c++11
 	operator            bool()			{	return IsValid();	}
 

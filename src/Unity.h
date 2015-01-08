@@ -54,6 +54,8 @@ public:
 	{
 	}
 	
+	inline bool				operator==(const Unity::TTexture& Texture) const	{	return mTexture == Texture;	}
+	
 public:
 	TJobParam				mPixelsParam;
 	Unity::TTexture			mTexture;
