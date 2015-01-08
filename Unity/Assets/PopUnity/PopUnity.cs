@@ -14,7 +14,22 @@ public struct TJobInterface
 	//public System.IntPtr[10]	sParamName;
 };
 
-
+public enum SoyPixelsFormat
+{
+	Invalid			= 0,
+	Greyscale		= 1,
+	GreyscaleAlpha	= 2,	//	png has this for 2 channel, so why not us!
+	RGB				= 3,
+	RGBA			= 4,
+	
+	//	non integer-based channel counts
+	BGRA			= 5,
+	BGR				= 6,
+	KinectDepth		= 7,	//	16 bit, so "two channels". 13 bits of depth, 3 bits of user-index
+	FreenectDepth10bit	= 8,	//	16 bit
+	FreenectDepth11bit	= 9,	//	16 bit
+	FreenectDepthmm	= 10,	//	16 bit
+}
 
 public class PopJob
 {
@@ -46,10 +61,20 @@ public class PopJob
 		return Marshal.PtrToStringAuto( stringPtr );
 	}
 
-	public bool GetParam(string Param,Texture2D texture)
+	public bool GetParam(string Param,Texture2D texture,SoyPixelsFormat Format=SoyPixelsFormat.Invalid)
 	{
-		return PopUnity.GetJobParam_texture( ref mInterface, Param, texture.GetNativeTextureID() );
+		int FormatInt = Convert.ToInt32 (Format);
+		return PopUnity.GetJobParam_texture( ref mInterface, Param, texture.GetNativeTextureID(), FormatInt );
 	}
+
+	public bool GetParamPixelsWidthHeight(string Param,out int Width,out int Height)
+	{
+		//	gr: to remove warning
+		Width = 0;
+		Height = 0;
+		return PopUnity.GetJobParam_PixelsWidthHeight( ref mInterface, Param, ref Width, ref Height );
+	}
+	
 }
 
 
@@ -92,7 +117,12 @@ public class PopUnity
 	public static extern System.IntPtr GetJobParam_string(ref TJobInterface JobInterface,string Param,string DefaultValue);
 
 	[DllImport("PopUnity", CallingConvention = CallingConvention.Cdecl)]
-	public static extern bool GetJobParam_texture(ref TJobInterface JobInterface,string Param,int Texture);
+	public static extern bool GetJobParam_texture(ref TJobInterface JobInterface,string Param,int Texture,int ConvertToFormat);
+	
+	[DllImport("PopUnity", CallingConvention = CallingConvention.Cdecl)]
+	public static extern bool GetJobParam_PixelsWidthHeight(ref TJobInterface JobInterface,string Param,ref int Width,ref int Height);
+	
+
 
 	[DllImport("PopUnity")]
 	private static extern void Cleanup ();
@@ -133,7 +163,7 @@ public class PopUnity
 			TJobHandler Handler = mJobHandlers[Job.Command];
 			Handler( Job );
 		}
-		catch ( KeyNotFoundException e )
+		catch ( KeyNotFoundException )
 		{
 			UnityEngine.Debug.Log ("Unhandled job " + Job.Command);
 		}
@@ -145,7 +175,10 @@ public class PopUnity
 
 		//	pop all jobs
 		bool More = PopJob (Marshal.GetFunctionPointerForDelegate (mOnJobDelegate));
-
+		while ( More )
+		{
+			More = PopJob (Marshal.GetFunctionPointerForDelegate (mOnJobDelegate));
+		}
 	}
 };
 	
