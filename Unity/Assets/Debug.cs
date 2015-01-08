@@ -179,6 +179,7 @@ public class Debug : MonoBehaviour {
 
 		PopUnity.AssignJobHandler("re:getframe", ((Job) => this.OnGetFrameReply(Job)) );
 		PopUnity.AssignJobHandler("newframe", ((Job) => this.OnGetFrameReply(Job)) );
+		PopUnity.AssignJobHandler ("newdepth", ((Job) => this.OnGetFrameReply (Job)));
 	}
 
 	void Update () {
