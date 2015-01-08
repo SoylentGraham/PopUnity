@@ -307,7 +307,7 @@ extern "C" bool EXPORT_API GetJobParam_texture(TJobInterface* JobInterface,const
 }
 
 
-extern "C" bool EXPORT_API GetJobParam_PixelsWidthHeight(TJobInterface* JobInterface,const char* ParamName,int Texture,int* Width,int* Height)
+extern "C" bool EXPORT_API GetJobParam_PixelsWidthHeight(TJobInterface* JobInterface,const char* ParamName,int* Width,int* Height)
 {
 	auto& Job = *JobInterface->mTJob;
 	
