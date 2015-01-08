@@ -751,28 +751,37 @@ bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const SoyPixelsImp
 		const ArrayInterface<char>& PixelsArray = Pixels.GetPixelsArray();
 		auto* PixelsArrayData = PixelsArray.GetArray();
 	
-		GLint TargetFormat = GL_RGB;
-		
-		GLint ValidSourceFormats[] =
+		static bool UseSubImage = true;
+		if ( UseSubImage )
 		{
-			GL_COLOR_INDEX,
-			GL_RED,
-			GL_GREEN,
-			GL_BLUE,
-			GL_ALPHA,
-			GL_RGB,
-			GL_RGBA,
-			GL_BGR_EXT,
-			GL_BGR_EXT,
-			GL_BGRA_EXT,
-			GL_LUMINANCE,
-			GL_LUMINANCE_ALPHA,
-		};
-		int Dummy = sizeofarray(ValidSourceFormats);
-		auto ValidSourceFormatsArray = GetRemoteArray( ValidSourceFormats, Dummy );
-		if ( !Soy::Assert( ValidSourceFormatsArray.Find( GlPixelsFormat ), "using unsupported pixels format for gltexImage2d" ) )
-			return false;
-		glTexImage2D( GL_TEXTURE_2D, MipLevel, TargetFormat,  Width, Height, Border, GlPixelsFormat, GL_UNSIGNED_BYTE, PixelsArrayData );
+			int XOffset = 0;
+			int YOffset = 0;
+			glTexSubImage2D( GL_TEXTURE_2D, MipLevel, XOffset, YOffset, Width, Height, GlPixelsFormat, GL_UNSIGNED_BYTE, PixelsArrayData );
+		}
+		else
+		{
+			GLint TargetFormat = GL_RGB;
+			GLint ValidSourceFormats[] =
+			{
+				GL_COLOR_INDEX,
+				GL_RED,
+				GL_GREEN,
+				GL_BLUE,
+				GL_ALPHA,
+				GL_RGB,
+				GL_RGBA,
+				GL_BGR_EXT,
+				GL_BGR_EXT,
+				GL_BGRA_EXT,
+				GL_LUMINANCE,
+				GL_LUMINANCE_ALPHA,
+			};
+			int Dummy = sizeofarray(ValidSourceFormats);
+			auto ValidSourceFormatsArray = GetRemoteArray( ValidSourceFormats, Dummy );
+			if ( !Soy::Assert( ValidSourceFormatsArray.Find( GlPixelsFormat ), "using unsupported pixels format for gltexImage2d" ) )
+				return false;
+			glTexImage2D( GL_TEXTURE_2D, MipLevel, TargetFormat,  Width, Height, Border, GlPixelsFormat, GL_UNSIGNED_BYTE, PixelsArrayData );
+		}
 		if ( HasError() )
 			return false;
 	}
