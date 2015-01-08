@@ -50,7 +50,6 @@ extern "C" void EXPORT_API UnityRenderEvent(int eventID);
 		#include <OpenGL/OpenGL.h>
 	#endif
 
-#define GL_INVALID_FORMAT		0
 #define GL_INVALID_TEXTURE_NAME	0u
 #define GL_INVALID_BUFFER_NAME	0u
 #endif

@@ -457,7 +457,7 @@ Unity::TTexture TUnityDevice_Opengl::AllocTexture(SoyPixelsMetaFull FrameMeta)
 	if ( !FrameMeta.IsValid() )
 		return Unity::TTexture();
 
-	int Format = GL_INVALID_FORMAT;
+	int Format = GL_INVALID_VALUE;
 	if ( !SoyPixelsFormat::GetOpenglFormat( Format, FrameMeta.GetFormat() ) )
 	{
 		std::Debug << "Failed to create texture; unsupported format " << FrameMeta.GetFormat() << std::endl;
@@ -643,7 +643,7 @@ SoyPixelsMetaFull TUnityDevice_Opengl::GetTextureMeta(Unity::TTexture Texture)
 	if ( !TextureGl.Bind(*this) )
 		return SoyPixelsMetaFull();
 	
-	GLint Width=0,Height=0,Formatgl=GL_INVALID_FORMAT;
+	GLint Width=0,Height=0,Formatgl=GL_INVALID_VALUE;
 	int Lod = 0;
 	glGetTexLevelParameteriv( GL_TEXTURE_2D, Lod, GL_TEXTURE_WIDTH, &Width );
 	glGetTexLevelParameteriv( GL_TEXTURE_2D, Lod, GL_TEXTURE_HEIGHT, &Height );
@@ -677,6 +677,38 @@ bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const SoyPixelsImp
 	if ( !TextureGl.Bind(*this) )
 		return false;
 
+	//	if we don't support this format in opengl, convert
+	GLint GlPixelsFormat = GL_INVALID_VALUE;
+	SoyPixelsFormat::GetOpenglFormat( GlPixelsFormat, Frame.GetFormat() );
+	
+	Array<SoyPixelsFormat::Type> TryFormats;
+	TryFormats.PushBack( SoyPixelsFormat::RGB );
+	TryFormats.PushBack( SoyPixelsFormat::RGBA );
+	TryFormats.PushBack( SoyPixelsFormat::Greyscale );
+	SoyPixels TempPixels;
+	const SoyPixelsImpl* UsePixels = &Frame;
+	while ( GlPixelsFormat == GL_INVALID_VALUE && !TryFormats.IsEmpty() )
+	{
+		auto TryFormat = TryFormats.PopAt(0);
+		GLint TryGlFormat = GL_INVALID_VALUE;
+		if ( !SoyPixelsFormat::GetOpenglFormat( TryGlFormat, TryFormat ) )
+			continue;
+		
+		//	can't use this format!
+		if ( TryGlFormat == GL_INVALID_VALUE )
+			continue;
+
+		if ( !TempPixels.Copy(Frame ) )
+			continue;
+		if ( !TempPixels.SetFormat( TryFormat ) )
+			continue;
+		
+		GlPixelsFormat = TryGlFormat;
+		UsePixels = &TempPixels;
+	}
+
+	auto& Pixels = *UsePixels;
+	
 	int MipLevel = 0;
 
 	//	grab the texture's width & height so we can clip, if we try and copy pixels bigger than the texture we'll get an error
@@ -694,27 +726,20 @@ bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const SoyPixelsImp
 		glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_TRUE);
 		
 		static SoyPixels PixelsBuffer;
-		PixelsBuffer.Copy( Frame );
+		PixelsBuffer.Copy( Pixels );
 		
-		GLint PixelFormat;
-		SoyPixelsFormat::GetOpenglFormat( PixelFormat, Frame.GetFormat() );
 		GLint TargetFormat = GL_BGRA;
 		GLenum TargetStorage = GL_UNSIGNED_INT_8_8_8_8_REV;
-		glTexImage2D(GL_TEXTURE_2D, MipLevel, PixelFormat, PixelsBuffer.GetWidth(), PixelsBuffer.GetHeight(), 0, TargetFormat, TargetStorage, PixelsBuffer.GetPixelsArray().GetArray() );
+		glTexImage2D(GL_TEXTURE_2D, MipLevel, GlPixelsFormat, PixelsBuffer.GetWidth(), PixelsBuffer.GetHeight(), 0, TargetFormat, TargetStorage, PixelsBuffer.GetPixelsArray().GetArray() );
 		
 		if ( HasError() )
 			return false;
 	}
 	else
 	{
-		GLint Format;
-		SoyPixelsFormat::GetOpenglFormat( Format, Frame.GetFormat() );
-		
-		int XOffset = 0;
-		int YOffset = 0;
-		
 		int Width = Frame.GetWidth();
 		int Height = Frame.GetHeight();
+		int Border = 0;
 		
 		//	if texture doesnt fit we'll get GL_INVALID_VALUE
 		//	if frame is bigger than texture, it will mangle (bad stride)
@@ -723,8 +748,31 @@ bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const SoyPixelsImp
 		if ( Height != TextureHeight )
 			Height = TextureHeight;
 		
-		auto& Pixels = Frame.GetPixelsArray();
-		glTexSubImage2D( GL_TEXTURE_2D, MipLevel, XOffset, YOffset, Width, Height, Format, GL_UNSIGNED_BYTE, Pixels.GetArray() );
+		const ArrayInterface<char>& PixelsArray = Pixels.GetPixelsArray();
+		auto* PixelsArrayData = PixelsArray.GetArray();
+	
+		GLint TargetFormat = GL_RGB;
+		
+		GLint ValidSourceFormats[] =
+		{
+			GL_COLOR_INDEX,
+			GL_RED,
+			GL_GREEN,
+			GL_BLUE,
+			GL_ALPHA,
+			GL_RGB,
+			GL_RGBA,
+			GL_BGR_EXT,
+			GL_BGR_EXT,
+			GL_BGRA_EXT,
+			GL_LUMINANCE,
+			GL_LUMINANCE_ALPHA,
+		};
+		int Dummy = sizeofarray(ValidSourceFormats);
+		auto ValidSourceFormatsArray = GetRemoteArray( ValidSourceFormats, Dummy );
+		if ( !Soy::Assert( ValidSourceFormatsArray.Find( GlPixelsFormat ), "using unsupported pixels format for gltexImage2d" ) )
+			return false;
+		glTexImage2D( GL_TEXTURE_2D, MipLevel, TargetFormat,  Width, Height, Border, GlPixelsFormat, GL_UNSIGNED_BYTE, PixelsArrayData );
 		if ( HasError() )
 			return false;
 	}
