@@ -3,7 +3,7 @@
 #include <ofxSoylent.h>
 #include <TJob.h>
 #include <TChannel.h>
-
+#include "UnityDevice.h"
 
 
 //	c# struct
@@ -49,8 +49,15 @@ namespace Unity
 class TCopyTextureCommand
 {
 public:
-	TJobParam	mPixelsParam;
-	int			mTexture;
+	TCopyTextureCommand() :
+		mConvertToFormat	( SoyPixelsFormat::Invalid )
+	{
+	}
+	
+public:
+	TJobParam				mPixelsParam;
+	Unity::TTexture			mTexture;
+	SoyPixelsFormat::Type	mConvertToFormat;	//	in case we want to convert the format. Used for kinectdepth -> greyscale (instead of default to RGB)
 };
 
 
@@ -71,7 +78,7 @@ public:
 	std::shared_ptr<TJob>	PopJob();
 	void			PushJob(TJobAndChannel& JobAndChannel);
 	
-	void			CopyTexture(TJobParam PixelsParam,int Texture);
+	void			CopyTexture(TJobParam PixelsParam,Unity::TTexture Texture,SoyPixelsFormat::Type ConvertToFormat);
 	void			ProcessCopyTextureQueue();
 	
 private:

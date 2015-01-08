@@ -133,22 +133,37 @@ void PopUnity::ProcessCopyTextureQueue()
 		if ( !Unity::gDevice )
 			continue;
 		
-		Unity::TTexture Texture( Copy.mTexture );
+		if ( !Copy.mTexture.IsValid() )
+		{
+			std::Debug << "CopyTexture failed as target texture is invalid" << std::endl;
+			continue;
+		}
+
 		SoyData_Impl<SoyPixels> Pixels(mTexturePixelsBuffer);
 		if ( !Copy.mPixelsParam.Decode( Pixels ) )
 			continue;
 		
-		Unity::gDevice->CopyTexture( Texture, Pixels.mValue, true );
+		//	want to reformat
+		if ( Copy.mConvertToFormat != SoyPixelsFormat::Invalid && Pixels.mValue.GetFormat() != Copy.mConvertToFormat )
+		{
+			if ( !Pixels.mValue.SetFormat( Copy.mConvertToFormat ) )
+			{
+				std::Debug << "CopyTexture() Failed to convert pixels from " << Pixels.GetFormat() << " to " << Copy.mConvertToFormat << std::endl;
+			}
+		}
+		
+		Unity::gDevice->CopyTexture( Copy.mTexture, Pixels.mValue, true );
 	}
 }
 
 
-void PopUnity::CopyTexture(TJobParam PixelsParam,int Texture)
+void PopUnity::CopyTexture(TJobParam PixelsParam,Unity::TTexture Texture,SoyPixelsFormat::Type ConvertToFormat)
 {
 	mCopyTextureQueue.lock();
 	auto& Copy = mCopyTextureQueue.PushBack();
 	Copy.mPixelsParam = PixelsParam;
 	Copy.mTexture = Texture;
+	Copy.mConvertToFormat = ConvertToFormat;
 	mCopyTextureQueue.unlock();
 	
 }
@@ -273,12 +288,10 @@ extern "C" const char* EXPORT_API GetJobParam_string(TJobInterface* JobInterface
 }
 
 
-extern "C" bool EXPORT_API GetJobParam_texture(TJobInterface* JobInterface,const char* ParamName,int Texture)
+extern "C" bool EXPORT_API GetJobParam_texture(TJobInterface* JobInterface,const char* ParamName,int Texture,SoyPixelsFormat::Type Format)
 {
 	auto& Job = *JobInterface->mTJob;
 
-	//	pull image
-	SoyPixels Pixels;
 	auto Param = Job.mParams.GetParam( ParamName );
 	if ( !Param.IsValid() )
 	{
@@ -286,21 +299,29 @@ extern "C" bool EXPORT_API GetJobParam_texture(TJobInterface* JobInterface,const
 		return false;
 	}
 	
-	/*
-	std::shared_ptr<SoyData_Impl<SoyPixels>> pPixels( new SoyData_Stack<SoyPixels>() );
-	auto& Image = pPixels->mValue;
-	if ( !Param.Decode( *pPixels ) )
+	//	don't extract now and extract during upload in case it's a memfile and we can get the very latest image
+	auto& App = PopUnity::Get();
+	App.CopyTexture( Param, Unity::TTexture(Texture), Format );
+	
+	return true;
+}
+
+
+extern "C" bool EXPORT_API GetJobParam_PixelsWidthHeight(TJobInterface* JobInterface,const char* ParamName,int Texture,int* Width,int* Height)
+{
+	auto& Job = *JobInterface->mTJob;
+	
+	//	pull image
+	SoyPixels Pixels;
+	if ( !Job.mParams.GetParamAs( ParamName, Pixels ) )
 	{
-		std::Debug << "Failed to decode image from param " << ParamName << std::endl;
+		std::Debug << "Failed to extract pixels from param " << ParamName << std::endl;
 		return false;
 	}
 
-	//	copy to texture on next render loop
-	//std::Debug << "Decoded image " << Image.GetWidth() << "x" << Image.GetHeight() << " " << Image.GetFormat() << std::endl;
-
-	 */
-	auto& App = PopUnity::Get();
-	App.CopyTexture( Param, Texture );
+	//	get image dimensions
+	*Width = Pixels.GetWidth();
+	*Height = Pixels.GetHeight();
 	
 	return true;
 }
