@@ -137,6 +137,7 @@ void PopUnity::ProcessCopyTextureQueue()
 		SoyData_Impl<SoyPixels> Pixels(mTexturePixelsBuffer);
 		if ( !Copy.mPixelsParam.Decode( Pixels ) )
 			continue;
+		
 		Unity::gDevice->CopyTexture( Texture, Pixels.mValue, true );
 	}
 }
@@ -240,6 +241,14 @@ extern "C" int EXPORT_API GetJobParam_int(TJobInterface* JobInterface,const char
 {
 	auto& Job = *JobInterface->mTJob;
 	auto Value = Job.mParams.GetParamAsWithDefault<int>( Param, DefaultValue );
+	return Value;
+}
+
+
+extern "C" float EXPORT_API GetJobParam_float(TJobInterface* JobInterface,const char* Param,float DefaultValue)
+{
+	auto& Job = *JobInterface->mTJob;
+	auto Value = Job.mParams.GetParamAsWithDefault<float>( Param, DefaultValue );
 	return Value;
 }
 
