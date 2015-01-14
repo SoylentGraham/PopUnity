@@ -737,15 +737,16 @@ bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const SoyPixelsImp
 	}
 	else
 	{
-		int Width = Frame.GetWidth();
-		int Height = Frame.GetHeight();
+		int Width = Pixels.GetWidth();
+		int Height = Pixels.GetHeight();
 		int Border = 0;
 		
 		//	if texture doesnt fit we'll get GL_INVALID_VALUE
 		//	if frame is bigger than texture, it will mangle (bad stride)
-		if ( Width != TextureWidth )
+		//	if pixels is smaller, we'll just get the sub-image drawn
+		if ( Width > TextureWidth )
 			Width = TextureWidth;
-		if ( Height != TextureHeight )
+		if ( Height > TextureHeight )
 			Height = TextureHeight;
 		
 		const ArrayInterface<char>& PixelsArray = Pixels.GetPixelsArray();
