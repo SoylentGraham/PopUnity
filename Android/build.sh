@@ -9,7 +9,7 @@ android update project -t android-19 -p . -s
 
 
 if [ -z "$ANDROID_NDK" ]; then
-  ANDROID_NDK=~/ndk
+  export ANDROID_NDK=~/ndk
 fi
 
 #We never pass NDK_DEBUG=1 to vrlib as this generates a duplicate gdbserver
