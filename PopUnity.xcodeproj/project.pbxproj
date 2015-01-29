@@ -62,6 +62,7 @@
 		FB7D806B1A4903460003E4F0 /* XmlTestReporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D805D1A4903460003E4F0 /* XmlTestReporter.cpp */; };
 		FB7D80701A4903570003E4F0 /* SignalTranslator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D806C1A4903570003E4F0 /* SignalTranslator.cpp */; };
 		FB7D80711A4903570003E4F0 /* TimeHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D806E1A4903570003E4F0 /* TimeHelpers.cpp */; };
+		FBE8227A1A7A62A600383F3B /* Android.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBE822791A7A62A600383F3B /* Android.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -200,6 +201,8 @@
 		FB7D806E1A4903570003E4F0 /* TimeHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TimeHelpers.cpp; path = "../NewChromantics/PopTrack/src/UnitTest++/src/Posix/TimeHelpers.cpp"; sourceTree = "<group>"; };
 		FB7D806F1A4903570003E4F0 /* TimeHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeHelpers.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/Posix/TimeHelpers.h"; sourceTree = "<group>"; };
 		FBE822781A79503C00383F3B /* Android */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Android; sourceTree = "<group>"; };
+		FBE822791A7A62A600383F3B /* Android.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Android.cpp; path = src/Android.cpp; sourceTree = "<group>"; };
+		FBE8227B1A7A654400383F3B /* PopAndroid.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = PopAndroid.xcconfig; path = ../NewChromantics/PopTrack/PopAndroid.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				FB7D7F2D1A48E2F90003E4F0 /* PopApp.xcconfig */,
+				FBE8227B1A7A654400383F3B /* PopAndroid.xcconfig */,
 				FB7D7F281A48E2AE0003E4F0 /* Soy */,
 				FB7D7F271A48E2A90003E4F0 /* Pop */,
 				FB7D7F0F1A48E1F30003E4F0 /* src */,
@@ -263,6 +267,7 @@
 				FB7D7FA31A48EEB60003E4F0 /* gl */,
 				FB7D7F171A48E28D0003E4F0 /* inttypes.h */,
 				FB7D7FCB1A48F33A0003E4F0 /* Unity.cpp */,
+				FBE822791A7A62A600383F3B /* Android.cpp */,
 				FB7D7FCC1A48F33A0003E4F0 /* Unity.h */,
 				FB7D7F1F1A48E28D0003E4F0 /* UnityDevice.cpp */,
 				FB7D7F201A48E28D0003E4F0 /* UnityDevice.h */,
@@ -542,6 +547,7 @@
 				FB7D7FFB1A4900200003E4F0 /* SoyApp.cpp in Sources */,
 				FB7D7FC81A48EF200003E4F0 /* SoyThread.cpp in Sources */,
 				FB7D80601A4903460003E4F0 /* ReportAssert.cpp in Sources */,
+				FBE8227A1A7A62A600383F3B /* Android.cpp in Sources */,
 				FB7D7F311A48EE530003E4F0 /* SoyTypes.cpp in Sources */,
 				FB7D7FCD1A48F33A0003E4F0 /* Unity.cpp in Sources */,
 				FB7D80281A4901C10003E4F0 /* sha1.cpp in Sources */,
@@ -564,6 +570,7 @@
 /* Begin XCBuildConfiguration section */
 		1DEB911B08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FB7D7F2D1A48E2F90003E4F0 /* PopApp.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -589,6 +596,7 @@
 		};
 		1DEB911C08733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FB7D7F2D1A48E2F90003E4F0 /* PopApp.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -611,7 +619,6 @@
 		};
 		1DEB911F08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FB7D7F2D1A48E2F90003E4F0 /* PopApp.xcconfig */;
 			buildSettings = {
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -624,7 +631,6 @@
 		};
 		1DEB912008733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FB7D7F2D1A48E2F90003E4F0 /* PopApp.xcconfig */;
 			buildSettings = {
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -636,6 +642,7 @@
 		};
 		FBE822731A78F09C00383F3B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FBE8227B1A7A654400383F3B /* PopAndroid.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -680,6 +687,7 @@
 		};
 		FBE822741A78F09C00383F3B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FBE8227B1A7A654400383F3B /* PopAndroid.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
