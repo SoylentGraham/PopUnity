@@ -1,7 +1,7 @@
 #include "UnityDevice.h"
 #include <SoyDebug.h>
 #include "Unity.h"
-
+#include <RemoteArray.h>
 
 static bool	OPENGL_REREADY_MAP			=true;	//	after we copy the dynamic texture, immediately re-open the map
 static bool	OPENGL_USE_STREAM_TEXTURE	=true;	//	GL_STREAM_DRAW else GL_DYNAMIC_DRAW
@@ -777,9 +777,8 @@ bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const SoyPixelsImp
 				GL_LUMINANCE,
 				GL_LUMINANCE_ALPHA,
 			};
-			int Dummy = sizeofarray(ValidSourceFormats);
-			auto ValidSourceFormatsArray = GetRemoteArray( ValidSourceFormats, Dummy );
-			if ( !Soy::Assert( ValidSourceFormatsArray.Find( GlPixelsFormat ), "using unsupported pixels format for gltexImage2d" ) )
+			auto ValidSourceFormatsArray = GetRemoteArray( ValidSourceFormats );
+			if ( !Soy::Assert( GetArrayBridge(ValidSourceFormatsArray).Find( GlPixelsFormat ), "using unsupported pixels format for gltexImage2d" ) )
 				return false;
 			glTexImage2D( GL_TEXTURE_2D, MipLevel, TargetFormat,  Width, Height, Border, GlPixelsFormat, GL_UNSIGNED_BYTE, PixelsArrayData );
 		}

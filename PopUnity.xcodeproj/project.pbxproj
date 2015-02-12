@@ -62,6 +62,7 @@
 		FB7D806B1A4903460003E4F0 /* XmlTestReporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D805D1A4903460003E4F0 /* XmlTestReporter.cpp */; };
 		FB7D80701A4903570003E4F0 /* SignalTranslator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D806C1A4903570003E4F0 /* SignalTranslator.cpp */; };
 		FB7D80711A4903570003E4F0 /* TimeHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D806E1A4903570003E4F0 /* TimeHelpers.cpp */; };
+		FB9C89C91A8CD13300931EFB /* TChannelFork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB9C89C71A8CD13300931EFB /* TChannelFork.cpp */; };
 		FBE8227A1A7A62A600383F3B /* Android.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBE822791A7A62A600383F3B /* Android.cpp */; };
 /* End PBXBuildFile section */
 
@@ -200,6 +201,8 @@
 		FB7D806D1A4903570003E4F0 /* SignalTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignalTranslator.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/Posix/SignalTranslator.h"; sourceTree = "<group>"; };
 		FB7D806E1A4903570003E4F0 /* TimeHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TimeHelpers.cpp; path = "../NewChromantics/PopTrack/src/UnitTest++/src/Posix/TimeHelpers.cpp"; sourceTree = "<group>"; };
 		FB7D806F1A4903570003E4F0 /* TimeHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeHelpers.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/Posix/TimeHelpers.h"; sourceTree = "<group>"; };
+		FB9C89C71A8CD13300931EFB /* TChannelFork.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TChannelFork.cpp; path = ../NewChromantics/PopTrack/src/TChannelFork.cpp; sourceTree = "<group>"; };
+		FB9C89C81A8CD13300931EFB /* TChannelFork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TChannelFork.h; path = ../NewChromantics/PopTrack/src/TChannelFork.h; sourceTree = "<group>"; };
 		FBE822781A79503C00383F3B /* Android */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Android; sourceTree = "<group>"; };
 		FBE822791A7A62A600383F3B /* Android.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Android.cpp; path = src/Android.cpp; sourceTree = "<group>"; };
 		FBE8227B1A7A654400383F3B /* PopAndroid.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = PopAndroid.xcconfig; path = ../NewChromantics/PopTrack/PopAndroid.xcconfig; sourceTree = "<group>"; };
@@ -283,6 +286,8 @@
 				FB7D7FF61A48FFCB0003E4F0 /* SoyData.cpp */,
 				FB7D7FF71A48FFCB0003E4F0 /* SoyData.h */,
 				FB7D7FE71A48FFA10003E4F0 /* TProtocol.cpp */,
+				FB9C89C71A8CD13300931EFB /* TChannelFork.cpp */,
+				FB9C89C81A8CD13300931EFB /* TChannelFork.h */,
 				FB7D7FE81A48FFA10003E4F0 /* TProtocol.h */,
 				FB7D7FE91A48FFA10003E4F0 /* TProtocolCli.cpp */,
 				FB7D7FEA1A48FFA10003E4F0 /* TProtocolCli.h */,
@@ -553,6 +558,7 @@
 				FB7D80281A4901C10003E4F0 /* sha1.cpp in Sources */,
 				FB7D7FF41A48FFA10003E4F0 /* TProtocolJson.cpp in Sources */,
 				FB7D7FE51A48FF880003E4F0 /* TChannelPipe.cpp in Sources */,
+				FB9C89C91A8CD13300931EFB /* TChannelFork.cpp in Sources */,
 				FB7D800D1A4901310003E4F0 /* SoyDebug.cpp in Sources */,
 				FB7D80411A4903350003E4F0 /* DeferredTestReporter.cpp in Sources */,
 				FB7D803E1A4903350003E4F0 /* AssertException.cpp in Sources */,
