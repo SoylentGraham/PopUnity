@@ -127,8 +127,11 @@ public class PopUnity
 	[DllImport("PopUnity")]
 	private static extern void Cleanup ();
 
-	static private DebugLogDelegate	mDebugLogDelegate = new DebugLogDelegate( Log );
+	static private DebugLogDelegate	mDebugLogDelegate = new DebugLogDelegate(Log);
 	static private OnJobDelegate	mOnJobDelegate = new OnJobDelegate( OnJob );
+
+	public delegate void TDebugDelegate(String Log);
+	public static TDebugDelegate DebugDelegate;
 
 	public PopUnity()
 	{
@@ -145,9 +148,15 @@ public class PopUnity
 #endif
 	}
 
+	static void ConsoleDebugLog(String Log)
+	{
+		UnityEngine.Debug.Log (Log);
+	}
+
 	static void Log(string str)
 	{
-		UnityEngine.Debug.Log("PopUnity: " + str);
+		if (DebugDelegate != null)
+			DebugDelegate ("PopUnity: " + str);
 	}
 
 	static void OnJob(ref TJobInterface JobInterface)
@@ -169,9 +178,17 @@ public class PopUnity
 		}
 	}
 
+	static public void Start()
+	{
+		DebugDelegate += ConsoleDebugLog;
+	}
+
 	static public void Update()
 	{
-		FlushDebug (Marshal.GetFunctionPointerForDelegate (mDebugLogDelegate));
+		if ( mDebugLogDelegate != null )
+			FlushDebug (Marshal.GetFunctionPointerForDelegate (mDebugLogDelegate));
+		else
+			FlushDebug (System.IntPtr.Zero);
 
 		//	pop all jobs
 		bool More = PopJob (Marshal.GetFunctionPointerForDelegate (mOnJobDelegate));
