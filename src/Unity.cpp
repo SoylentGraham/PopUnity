@@ -21,10 +21,15 @@ extern "C" void EXPORT_API OnStopped()
 {
 	bool Dummy = true;
 	UnityEvent::mOnStopped.OnTriggered(Dummy);
+	
+	//	gr: todo; clear singleton to emulate built app better
 }
 
 TPopAppError::Type PopMain(TJobParams& Params)
 {
+	//	construct early; gr: maybe too early, or is this loaded on first call?
+	PopUnity::Get();
+	
 	//	unused in dll?
 	return TPopAppError::Success;
 }
@@ -82,6 +87,9 @@ void PopUnity::FlushDebugMessages(void (*LogFunc)(const char*))
 	//	send all messages to a delegate
 	//	gr: FIFO is inefficient, fix this, but still display in order...
 	std::lock_guard<std::mutex> Lock(mDebugMessagesLock);
+	if ( !LogFunc )
+		mDebugMessages.Clear();
+	
 	while ( !mDebugMessages.IsEmpty() )
 	{
 		if ( LogFunc )
@@ -222,7 +230,10 @@ extern "C" bool EXPORT_API SendJob(uint64 ChannelRef,const char* Command)
 	auto& App = PopUnity::Get();
 	auto Channel = App.GetChannel( SoyRef(ChannelRef) );
 	if ( !Channel )
+	{
+		std::Debug << "Failed to send command(" << Command << ") to non-existant channel " << Channel << std::endl;
 		return false;
+	}
 	
 	TJob Job;
 	if ( !TProtocolCli::DecodeHeader( Job, Command ) )
