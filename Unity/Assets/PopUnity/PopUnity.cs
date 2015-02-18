@@ -5,6 +5,30 @@ using System;
 using System.Runtime.InteropServices;
 
 
+
+public struct bool10
+{
+	public bool		a,b,c,d,e,f,g,h,i,j;
+};
+
+public struct TFeatureBinRing
+{
+	public bool10		a,b,c,d,e,f,g,h,i,j;
+	public UInt32		mCount;
+};
+
+public struct TFeatureMatch
+{
+	public UInt32	mCoord_x;
+	public UInt32	mCoord_y;
+	public float			mScore;
+	public TFeatureBinRing	mFeature;
+	public UInt32			mScoreCoord_x;
+	public UInt32			mScoreCoord_y;
+	public TFeatureBinRing	mSourceFeature;
+};
+
+
 public struct TJobInterface
 {
 	public System.IntPtr	pJob;
@@ -74,7 +98,27 @@ public class PopJob
 		Height = 0;
 		return PopUnity.GetJobParam_PixelsWidthHeight( ref mInterface, Param, ref Width, ref Height );
 	}
-	
+
+	public bool GetParamArray(string Param,string ElementTypeName,ref List<TFeatureMatch> Array)
+	{
+		TFeatureMatch[] Buffer = new TFeatureMatch[100];
+		//	test for reading format
+		Buffer [0].mCoord_x = 1;
+		Buffer [0].mCoord_y = 2;
+		Buffer [0].mScore = 3.0f;
+
+		int ElementsRead = PopUnity.GetJobParam_Array( ref mInterface, Param, ElementTypeName, ref Buffer, Buffer.Length );
+		if (ElementsRead < 0) {
+			Array.Clear ();
+			return false;
+		}
+
+		Array.Clear ();
+		for (int i=0; i<Math.Min( Buffer.Length, ElementsRead); i++)
+			Array.Add (Buffer [i]);
+
+		return true;
+	}
 }
 
 
@@ -122,10 +166,11 @@ public class PopUnity
 	[DllImport("PopUnity", CallingConvention = CallingConvention.Cdecl)]
 	public static extern bool GetJobParam_PixelsWidthHeight(ref TJobInterface JobInterface,string Param,ref int Width,ref int Height);
 	
-
+	[DllImport("PopUnity", CallingConvention = CallingConvention.Cdecl)]
+	public static extern int GetJobParam_Array(ref TJobInterface JobInterface,string Param,string ElementTypeName,ref TFeatureMatch[] Array,int ArraySize);
 
 	[DllImport("PopUnity")]
-	private static extern void Cleanup ();
+	private static extern void OnStopped ();
 
 	static private DebugLogDelegate	mDebugLogDelegate = new DebugLogDelegate(Log);
 	static private OnJobDelegate	mOnJobDelegate = new OnJobDelegate( OnJob );
@@ -144,7 +189,7 @@ public class PopUnity
 	{
 #if UNITY_EDITOR
 		if (UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode && UnityEditor.EditorApplication.isPlaying)
-			Cleanup();
+			OnStopped();
 #endif
 	}
 
@@ -164,7 +209,8 @@ public class PopUnity
 		//	turn into the more clever c# class
 		PopJob Job = new PopJob( JobInterface );
 		UnityEngine.Debug.Log ("job! " + Job.Command );
-		UnityEngine.Debug.Log ("(error: " + Job.Error);
+		if ( Job.Error != null )
+			UnityEngine.Debug.Log ("(error: " + Job.Error);
 
 		//	send job to handler
 		try
@@ -180,12 +226,18 @@ public class PopUnity
 
 	static public void Start()
 	{
+		//	gr: only add the console log in editor mode. Can't see it in builds, and saves CPU time if we blindly flush messages by having no delegates
+#if UNITY_EDITOR
 		DebugDelegate += ConsoleDebugLog;
+#endif
 	}
 
 	static public void Update()
 	{
-		if ( mDebugLogDelegate != null )
+		//	if we have no listeners, do fast flush
+		bool HasListeners = (DebugDelegate!=null) && (DebugDelegate.GetInvocationList().Length > 0);
+		HasListeners &= (mDebugLogDelegate!=null) &&(mDebugLogDelegate.GetInvocationList().Length > 0);
+		if ( HasListeners )
 			FlushDebug (Marshal.GetFunctionPointerForDelegate (mDebugLogDelegate));
 		else
 			FlushDebug (System.IntPtr.Zero);

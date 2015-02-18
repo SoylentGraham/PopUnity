@@ -348,3 +348,58 @@ extern "C" bool EXPORT_API GetJobParam_PixelsWidthHeight(TJobInterface* JobInter
 	return true;
 }
 
+#include <TFeatureBinRing.h>
+
+template<typename ELEMENTTYPE>
+bool TryExtractArray(const TJobParams& Params,const std::string& ParamName,const std::string& TypeName,void* Buffer,int& BufferSize)
+{
+	//	typename doesn't come from Soy::GetTypeName so we can't use is_sametypename
+	if ( !Soy::StringMatches( Soy::GetTypeName<ELEMENTTYPE>(), TypeName, false ) )
+		return false;
+	
+	Array<ELEMENTTYPE> ParamArray;
+	if ( !Params.GetParamAs( ParamName, ParamArray ) )
+		return false;
+
+	//	save real size
+	int RealSize = ParamArray.GetSize();
+	
+	//	cap data so we don't overwrite mem
+	if ( ParamArray.GetSize() > BufferSize )
+		ParamArray.SetSize( BufferSize );
+
+	//	last bit crashes. wrong ptrs?
+//	memcpy( Buffer, ParamArray.GetArray(), ParamArray.GetDataSize() );
+
+	//	return real size
+	BufferSize = RealSize;
+	return true;
+}
+
+extern "C" int EXPORT_API GetJobParam_Array(TJobInterface* JobInterface,const char* ParamName,const char* ElementTypeName,void* Array,int ArraySize)
+{
+	auto& Job = *JobInterface->mTJob;
+
+	//	find param
+	auto Param = Job.mParams.GetParam( ParamName );
+	if ( !Param.IsValid() )
+		return -1;
+	
+	//	decode to our format, then encode to binary so we can memcpy.
+	//	gr: to skip a step, check if it's already binary/ourformat. Any other format we have to decode (memfile, gzip etc)
+	std::stringstream ArrayElementFormat;
+	ArrayElementFormat << "array<" << ElementTypeName << ", prcore::heap>";
+	TJobFormat Format( ArrayElementFormat.str() );
+	if ( !Param.GetFormat().HasContainer( ArrayElementFormat.str() ) )
+	{
+		std::Debug << "Param " << ParamName << " (" << Param.GetFormat() << ") does not contain " << ArrayElementFormat.str() << std::endl;
+		return -1;
+	}
+
+	if ( TryExtractArray<TFeatureMatch>( Job.mParams, ParamName, ElementTypeName, Array, ArraySize ) )
+		return ArraySize;
+	
+	std::Debug << "don't know how to handle type " << ElementTypeName << std::endl;
+	return -1;
+}
+
