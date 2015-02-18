@@ -2,6 +2,7 @@
 #include "UnityDevice.h"
 #include <PopMain.h>
 #include <TProtocolCli.h>
+#include "RemoteArray.h"
 
 std::shared_ptr<PopUnity> gApp;
 
@@ -350,6 +351,15 @@ extern "C" bool EXPORT_API GetJobParam_PixelsWidthHeight(TJobInterface* JobInter
 
 #include <TFeatureBinRing.h>
 
+
+class TFeatureMatchCSharp
+{
+public:
+	uint32	x;
+	uint32	y;
+	float	score;
+};
+
 template<typename ELEMENTTYPE>
 bool TryExtractArray(const TJobParams& Params,const std::string& ParamName,const std::string& TypeName,void* Buffer,int& BufferSize)
 {
@@ -365,11 +375,20 @@ bool TryExtractArray(const TJobParams& Params,const std::string& ParamName,const
 	int RealSize = ParamArray.GetSize();
 	
 	//	cap data so we don't overwrite mem
-	if ( ParamArray.GetSize() > BufferSize )
-		ParamArray.SetSize( BufferSize );
+	//if ( ParamArray.GetSize() > BufferSize )
+	//	ParamArray.SetSize( BufferSize );
+	//	memcpy( Buffer, ParamArray.GetArray(), ParamArray.GetDataSize() );
 
 	//	last bit crashes. wrong ptrs?
-//	memcpy( Buffer, ParamArray.GetArray(), ParamArray.GetDataSize() );
+	TFeatureMatchCSharp* BufferSmall = reinterpret_cast<TFeatureMatchCSharp*>(Buffer);
+	auto SmallFeatures = GetRemoteArray( BufferSmall, BufferSize );
+	for ( int i=0;	i<std::min(BufferSize,ParamArray.GetSize());	i++ )
+	{
+		auto& Fm = ParamArray[i];
+		SmallFeatures[i].x = Fm.mCoord.x;
+		SmallFeatures[i].y = Fm.mCoord.y;
+		SmallFeatures[i].score = Fm.mScore;
+	}
 
 	//	return real size
 	BufferSize = RealSize;
