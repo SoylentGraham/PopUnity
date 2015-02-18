@@ -4,30 +4,33 @@ using System.Collections.Generic;
 using System;
 using System.Runtime.InteropServices;
 
-
-
-public struct bool10
-{
-	public bool		a,b,c,d,e,f,g,h,i,j;
-};
-
-public struct TFeatureBinRing
-{
-	public bool10		a,b,c,d,e,f,g,h,i,j;
-	public UInt32		mCount;
-};
-
+/*
+[StructLayout(LayoutKind.Sequential, Size=228),Serializable]
 public struct TFeatureMatch
 {
 	public UInt32	mCoord_x;
 	public UInt32	mCoord_y;
 	public float			mScore;
-	public TFeatureBinRing	mFeature;
+
+	[MarshalAsAttribute(UnmanagedType.ByValArray, SizeConst = 100)]
+	public bool[]				mFeature;
+	public UInt32			mFeatureSize;
+
 	public UInt32			mScoreCoord_x;
 	public UInt32			mScoreCoord_y;
-	public TFeatureBinRing	mSourceFeature;
-};
 
+	[MarshalAsAttribute(UnmanagedType.ByValArray, SizeConst = 100)]
+	public bool[]			mSourceFeature;
+	public UInt32			mSourceFeatureSize;
+};
+*/
+[StructLayout(LayoutKind.Sequential, Size=12),Serializable]
+public struct TFeatureMatch
+{
+	public UInt32	mCoord_x;
+	public UInt32	mCoord_y;
+	public float	mScore;
+};
 
 public struct TJobInterface
 {
@@ -99,23 +102,42 @@ public class PopJob
 		return PopUnity.GetJobParam_PixelsWidthHeight( ref mInterface, Param, ref Width, ref Height );
 	}
 
-	public bool GetParamArray(string Param,string ElementTypeName,ref List<TFeatureMatch> Array)
+	public bool GetParamArray(string Param,string ElementTypeName,ref List<TFeatureMatch> Array,int MaxSize)
 	{
-		TFeatureMatch[] Buffer = new TFeatureMatch[100];
+		TFeatureMatch[] Buffer = new TFeatureMatch[MaxSize];
 		//	test for reading format
 		Buffer [0].mCoord_x = 1;
 		Buffer [0].mCoord_y = 2;
 		Buffer [0].mScore = 3.0f;
+		Buffer [1].mCoord_x = 4;
+		Buffer [1].mCoord_y = 5;
+		Buffer [1].mScore = 6.0f;
 
-		int ElementsRead = PopUnity.GetJobParam_Array( ref mInterface, Param, ElementTypeName, ref Buffer, Buffer.Length );
+		IntPtr ptr = Marshal.AllocHGlobal( Marshal.SizeOf(Buffer[0]) * Buffer.Length);
+		long LongPtr = ptr.ToInt64(); // Must work both on x86 and x64
+		for (int I = 0; I < Buffer.Length; I++)
+		{
+			IntPtr RectPtr = new IntPtr(LongPtr);
+			Marshal.StructureToPtr(Buffer[I], RectPtr, false); // You do not need to erase struct in this case
+			LongPtr += Marshal.SizeOf(Buffer[I]);
+		}
+
+		int ElementsRead = PopUnity.GetJobParam_Array( ref mInterface, Param, ElementTypeName, ptr, Buffer.Length );
 		if (ElementsRead < 0) {
 			Array.Clear ();
 			return false;
 		}
 
 		Array.Clear ();
-		for (int i=0; i<Math.Min( Buffer.Length, ElementsRead); i++)
+
+		//	copy back
+		LongPtr = ptr.ToInt64(); // Must work both on x86 and x64
+		for (int i=0; i<Math.Min( Buffer.Length, ElementsRead); i++) {
+			IntPtr pElement = new IntPtr (LongPtr);
+			LongPtr += Marshal.SizeOf (Buffer [i]);
+			Buffer[i] = (TFeatureMatch)Marshal.PtrToStructure (pElement, typeof(TFeatureMatch));
 			Array.Add (Buffer [i]);
+		}
 
 		return true;
 	}
@@ -167,7 +189,7 @@ public class PopUnity
 	public static extern bool GetJobParam_PixelsWidthHeight(ref TJobInterface JobInterface,string Param,ref int Width,ref int Height);
 	
 	[DllImport("PopUnity", CallingConvention = CallingConvention.Cdecl)]
-	public static extern int GetJobParam_Array(ref TJobInterface JobInterface,string Param,string ElementTypeName,ref TFeatureMatch[] Array,int ArraySize);
+	public static extern int GetJobParam_Array(ref TJobInterface JobInterface,string Param,string ElementTypeName,System.IntPtr Array,int ArraySize);
 
 	[DllImport("PopUnity")]
 	private static extern void OnStopped ();
