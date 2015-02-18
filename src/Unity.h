@@ -50,7 +50,8 @@ class TCopyTextureCommand
 {
 public:
 	TCopyTextureCommand() :
-		mConvertToFormat	( SoyPixelsFormat::Invalid )
+		mConvertToFormat	( SoyPixelsFormat::Invalid ),
+		mStretch			( false )
 	{
 	}
 	
@@ -60,6 +61,7 @@ public:
 	TJobParam				mPixelsParam;
 	Unity::TTexture			mTexture;
 	SoyPixelsFormat::Type	mConvertToFormat;	//	in case we want to convert the format. Used for kinectdepth -> greyscale (instead of default to RGB)
+	bool					mStretch;
 };
 
 
@@ -80,7 +82,7 @@ public:
 	std::shared_ptr<TJob>	PopJob();
 	void			PushJob(TJobAndChannel& JobAndChannel);
 	
-	void			CopyTexture(TJobParam PixelsParam,Unity::TTexture Texture,SoyPixelsFormat::Type ConvertToFormat);
+	void			CopyTexture(TJobParam PixelsParam,Unity::TTexture Texture,SoyPixelsFormat::Type ConvertToFormat,bool Stretch);
 	void			ProcessCopyTextureQueue();
 	
 private:

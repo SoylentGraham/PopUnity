@@ -373,8 +373,8 @@ public:
 	virtual SoyPixelsMetaFull      GetTextureMeta(Unity::TDynamicTexture Texture)=0;
 	SoyPixelsMetaFull              GetTextureMeta(Unity::TTexture* Texture)		{   return Texture ? GetTextureMeta(*Texture) : SoyPixelsMetaFull();   }
 	SoyPixelsMetaFull              GetTextureMeta(Unity::TDynamicTexture* Texture)	{   return Texture ? GetTextureMeta(*Texture) : SoyPixelsMetaFull();   }
-	virtual bool            CopyTexture(Unity::TTexture Texture,const SoyPixelsImpl& Frame,bool Blocking)=0;
-	virtual bool            CopyTexture(Unity::TDynamicTexture Texture,const SoyPixelsImpl& Frame,bool Blocking)=0;
+	virtual bool            CopyTexture(Unity::TTexture Texture,const SoyPixelsImpl& Frame,bool Blocking,bool Stretch)=0;
+	virtual bool            CopyTexture(Unity::TDynamicTexture Texture,const SoyPixelsImpl& Frame,bool Blocking,bool Stretch)=0;
 	virtual bool            CopyTexture(Unity::TTexture DstTexture,const Unity::TDynamicTexture SrcTexture)=0;
 
 public:
@@ -428,8 +428,8 @@ public:
     virtual bool            DeleteTexture(Unity::TDynamicTexture& Texture);
 	virtual TFrameMeta      GetTextureMeta(Unity::TTexture Texture);
 	virtual TFrameMeta      GetTextureMeta(Unity::TDynamicTexture Texture);
-	virtual bool            CopyTexture(Unity::TTexture Texture,const TFramePixels& Frame,bool Blocking);
-	virtual bool            CopyTexture(Unity::TDynamicTexture Texture,const TFramePixels& Frame,bool Blocking);
+	virtual bool            CopyTexture(Unity::TTexture Texture,const TFramePixels& Frame,bool Blocking,bool Stretch) override;
+	virtual bool            CopyTexture(Unity::TDynamicTexture Texture,const TFramePixels& Frame,bool Blocking,bool Stretch) override;
 	virtual bool            CopyTexture(Unity::TTexture DstTexture,const Unity::TDynamicTexture SrcTexture);
     
 	ID3D11Device&				GetDevice()		{	assert( mDevice );	return *mDevice;	}
@@ -485,8 +485,8 @@ public:
     virtual bool			DeleteTexture(Unity::TDynamicTexture& Texture) override;
 	virtual SoyPixelsMetaFull      GetTextureMeta(Unity::TTexture Texture) override;
 	virtual SoyPixelsMetaFull      GetTextureMeta(Unity::TDynamicTexture Texture) override;
-	virtual bool            CopyTexture(Unity::TTexture Texture,const SoyPixelsImpl& Frame,bool Blocking) override;
-	virtual bool            CopyTexture(Unity::TDynamicTexture Texture,const SoyPixelsImpl& Frame,bool Blocking) override;
+	virtual bool            CopyTexture(Unity::TTexture Texture,const SoyPixelsImpl& Frame,bool Blocking,bool Stretch) override;
+	virtual bool            CopyTexture(Unity::TDynamicTexture Texture,const SoyPixelsImpl& Frame,bool Blocking,bool Stretch) override;
 	virtual bool            CopyTexture(Unity::TTexture DstTexture,const Unity::TDynamicTexture SrcTexture) override;
  
 	static bool				HasError();	//	note: static so need parent to do a context lock

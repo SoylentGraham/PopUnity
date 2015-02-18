@@ -1,7 +1,7 @@
 #include "UnityDevice.h"
 #include <SoyDebug.h>
 #include "Unity.h"
-
+#include <RemoteArray.h>
 
 static bool	OPENGL_REREADY_MAP			=true;	//	after we copy the dynamic texture, immediately re-open the map
 static bool	OPENGL_USE_STREAM_TEXTURE	=true;	//	GL_STREAM_DRAW else GL_DYNAMIC_DRAW
@@ -667,7 +667,7 @@ SoyPixelsMetaFull TUnityDevice_Opengl::GetTextureMeta(Unity::TDynamicTexture Tex
 #endif
 
 #if defined(ENABLE_OPENGL)
-bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const SoyPixelsImpl& Frame,bool Blocking)
+bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const SoyPixelsImpl& Frame,bool Blocking,bool Stretch)
 {
 	TUnityDeviceContextScope Context( *this );
 	if ( !Context )
@@ -716,7 +716,7 @@ bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const SoyPixelsImp
 	glGetTexLevelParameteriv(GL_TEXTURE_2D, MipLevel, GL_TEXTURE_WIDTH, &TextureWidth );
 	glGetTexLevelParameteriv(GL_TEXTURE_2D, MipLevel, GL_TEXTURE_HEIGHT, &TextureHeight );
 	
-	if ( glewIsSupported("GL_APPLE_client_storage") )
+	if ( !Stretch && glewIsSupported("GL_APPLE_client_storage") )
 	{
 		//	https://developer.apple.com/library/mac/documentation/graphicsimaging/conceptual/opengl-macprogguide/opengl_texturedata/opengl_texturedata.html
 		glTexParameteri(GL_TEXTURE_2D,
@@ -752,7 +752,7 @@ bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const SoyPixelsImp
 		const ArrayInterface<char>& PixelsArray = Pixels.GetPixelsArray();
 		auto* PixelsArrayData = PixelsArray.GetArray();
 	
-		static bool UseSubImage = true;
+		bool UseSubImage = !Stretch;
 		if ( UseSubImage )
 		{
 			int XOffset = 0;
@@ -777,9 +777,8 @@ bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const SoyPixelsImp
 				GL_LUMINANCE,
 				GL_LUMINANCE_ALPHA,
 			};
-			int Dummy = sizeofarray(ValidSourceFormats);
-			auto ValidSourceFormatsArray = GetRemoteArray( ValidSourceFormats, Dummy );
-			if ( !Soy::Assert( ValidSourceFormatsArray.Find( GlPixelsFormat ), "using unsupported pixels format for gltexImage2d" ) )
+			auto ValidSourceFormatsArray = GetRemoteArray( ValidSourceFormats );
+			if ( !Soy::Assert( GetArrayBridge(ValidSourceFormatsArray).Find( GlPixelsFormat ), "using unsupported pixels format for gltexImage2d" ) )
 				return false;
 			glTexImage2D( GL_TEXTURE_2D, MipLevel, TargetFormat,  Width, Height, Border, GlPixelsFormat, GL_UNSIGNED_BYTE, PixelsArrayData );
 		}
@@ -876,7 +875,7 @@ bool TUnityDevice_Opengl::FreeMap(TOpenglBufferCache& Buffer)
 
 
 #if defined(ENABLE_OPENGL)
-bool TUnityDevice_Opengl::CopyTexture(Unity::TDynamicTexture Texture,const SoyPixelsImpl& Frame,bool Blocking)
+bool TUnityDevice_Opengl::CopyTexture(Unity::TDynamicTexture Texture,const SoyPixelsImpl& Frame,bool Blocking,bool Stretch)
 {
 	ofMutex::ScopedLock lock( mBufferCache );
 	auto* Buffer = mBufferCache.Find( Texture.GetInteger() );

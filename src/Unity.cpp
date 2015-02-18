@@ -2,6 +2,7 @@
 #include "UnityDevice.h"
 #include <PopMain.h>
 #include <TProtocolCli.h>
+#include "RemoteArray.h"
 
 std::shared_ptr<PopUnity> gApp;
 
@@ -21,10 +22,15 @@ extern "C" void EXPORT_API OnStopped()
 {
 	bool Dummy = true;
 	UnityEvent::mOnStopped.OnTriggered(Dummy);
+	
+	//	gr: todo; clear singleton to emulate built app better
 }
 
 TPopAppError::Type PopMain(TJobParams& Params)
 {
+	//	construct early; gr: maybe too early, or is this loaded on first call?
+	PopUnity::Get();
+	
 	//	unused in dll?
 	return TPopAppError::Success;
 }
@@ -82,6 +88,9 @@ void PopUnity::FlushDebugMessages(void (*LogFunc)(const char*))
 	//	send all messages to a delegate
 	//	gr: FIFO is inefficient, fix this, but still display in order...
 	std::lock_guard<std::mutex> Lock(mDebugMessagesLock);
+	if ( !LogFunc )
+		mDebugMessages.Clear();
+	
 	while ( !mDebugMessages.IsEmpty() )
 	{
 		if ( LogFunc )
@@ -152,12 +161,12 @@ void PopUnity::ProcessCopyTextureQueue()
 			}
 		}
 		
-		Unity::gDevice->CopyTexture( Copy.mTexture, Pixels.mValue, true );
+		Unity::gDevice->CopyTexture( Copy.mTexture, Pixels.mValue, true, Copy.mStretch );
 	}
 }
 
 
-void PopUnity::CopyTexture(TJobParam PixelsParam,Unity::TTexture Texture,SoyPixelsFormat::Type ConvertToFormat)
+void PopUnity::CopyTexture(TJobParam PixelsParam,Unity::TTexture Texture,SoyPixelsFormat::Type ConvertToFormat,bool Stretch)
 {
 	mCopyTextureQueue.lock();
 	
@@ -175,6 +184,7 @@ void PopUnity::CopyTexture(TJobParam PixelsParam,Unity::TTexture Texture,SoyPixe
 	Copy.mPixelsParam = PixelsParam;
 	Copy.mTexture = Texture;
 	Copy.mConvertToFormat = ConvertToFormat;
+	Copy.mStretch = Stretch;
 	mCopyTextureQueue.unlock();
 	
 }
@@ -222,7 +232,10 @@ extern "C" bool EXPORT_API SendJob(uint64 ChannelRef,const char* Command)
 	auto& App = PopUnity::Get();
 	auto Channel = App.GetChannel( SoyRef(ChannelRef) );
 	if ( !Channel )
+	{
+		std::Debug << "Failed to send command(" << Command << ") to non-existant channel " << Channel << std::endl;
 		return false;
+	}
 	
 	TJob Job;
 	if ( !TProtocolCli::DecodeHeader( Job, Command ) )
@@ -299,7 +312,7 @@ extern "C" const char* EXPORT_API GetJobParam_string(TJobInterface* JobInterface
 }
 
 
-extern "C" bool EXPORT_API GetJobParam_texture(TJobInterface* JobInterface,const char* ParamName,int Texture,SoyPixelsFormat::Type Format)
+extern "C" bool EXPORT_API GetJobParam_texture(TJobInterface* JobInterface,const char* ParamName,int Texture,SoyPixelsFormat::Type Format,bool Stretch)
 {
 	auto& Job = *JobInterface->mTJob;
 
@@ -312,7 +325,7 @@ extern "C" bool EXPORT_API GetJobParam_texture(TJobInterface* JobInterface,const
 	
 	//	don't extract now and extract during upload in case it's a memfile and we can get the very latest image
 	auto& App = PopUnity::Get();
-	App.CopyTexture( Param, Unity::TTexture(Texture), Format );
+	App.CopyTexture( Param, Unity::TTexture(Texture), Format, Stretch );
 	
 	return true;
 }
@@ -335,5 +348,78 @@ extern "C" bool EXPORT_API GetJobParam_PixelsWidthHeight(TJobInterface* JobInter
 	*Height = Pixels.GetHeight();
 	
 	return true;
+}
+
+#include <TFeatureBinRing.h>
+
+
+class TFeatureMatchCSharp
+{
+public:
+	uint32	x;
+	uint32	y;
+	float	score;
+};
+
+template<typename ELEMENTTYPE>
+bool TryExtractArray(const TJobParams& Params,const std::string& ParamName,const std::string& TypeName,void* Buffer,int& BufferSize)
+{
+	//	typename doesn't come from Soy::GetTypeName so we can't use is_sametypename
+	if ( !Soy::StringMatches( Soy::GetTypeName<ELEMENTTYPE>(), TypeName, false ) )
+		return false;
+	
+	Array<ELEMENTTYPE> ParamArray;
+	if ( !Params.GetParamAs( ParamName, ParamArray ) )
+		return false;
+
+	//	save real size
+	int RealSize = ParamArray.GetSize();
+	
+	//	cap data so we don't overwrite mem
+	//if ( ParamArray.GetSize() > BufferSize )
+	//	ParamArray.SetSize( BufferSize );
+	//	memcpy( Buffer, ParamArray.GetArray(), ParamArray.GetDataSize() );
+
+	//	last bit crashes. wrong ptrs?
+	TFeatureMatchCSharp* BufferSmall = reinterpret_cast<TFeatureMatchCSharp*>(Buffer);
+	auto SmallFeatures = GetRemoteArray( BufferSmall, BufferSize );
+	for ( int i=0;	i<std::min(BufferSize,ParamArray.GetSize());	i++ )
+	{
+		auto& Fm = ParamArray[i];
+		SmallFeatures[i].x = Fm.mCoord.x;
+		SmallFeatures[i].y = Fm.mCoord.y;
+		SmallFeatures[i].score = Fm.mScore;
+	}
+
+	//	return real size
+	BufferSize = RealSize;
+	return true;
+}
+
+extern "C" int EXPORT_API GetJobParam_Array(TJobInterface* JobInterface,const char* ParamName,const char* ElementTypeName,void* Array,int ArraySize)
+{
+	auto& Job = *JobInterface->mTJob;
+
+	//	find param
+	auto Param = Job.mParams.GetParam( ParamName );
+	if ( !Param.IsValid() )
+		return -1;
+	
+	//	decode to our format, then encode to binary so we can memcpy.
+	//	gr: to skip a step, check if it's already binary/ourformat. Any other format we have to decode (memfile, gzip etc)
+	std::stringstream ArrayElementFormat;
+	ArrayElementFormat << "array<" << ElementTypeName << ", prcore::heap>";
+	TJobFormat Format( ArrayElementFormat.str() );
+	if ( !Param.GetFormat().HasContainer( ArrayElementFormat.str() ) )
+	{
+		std::Debug << "Param " << ParamName << " (" << Param.GetFormat() << ") does not contain " << ArrayElementFormat.str() << std::endl;
+		return -1;
+	}
+
+	if ( TryExtractArray<TFeatureMatch>( Job.mParams, ParamName, ElementTypeName, Array, ArraySize ) )
+		return ArraySize;
+	
+	std::Debug << "don't know how to handle type " << ElementTypeName << std::endl;
+	return -1;
 }
 

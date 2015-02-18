@@ -62,6 +62,9 @@
 		FB7D806B1A4903460003E4F0 /* XmlTestReporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D805D1A4903460003E4F0 /* XmlTestReporter.cpp */; };
 		FB7D80701A4903570003E4F0 /* SignalTranslator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D806C1A4903570003E4F0 /* SignalTranslator.cpp */; };
 		FB7D80711A4903570003E4F0 /* TimeHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB7D806E1A4903570003E4F0 /* TimeHelpers.cpp */; };
+		FB9C89C91A8CD13300931EFB /* TChannelFork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB9C89C71A8CD13300931EFB /* TChannelFork.cpp */; };
+		FBC7F1431A9448850085DAFE /* TFeatureBinRing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBC7F1411A9448850085DAFE /* TFeatureBinRing.cpp */; };
+		FBE8227A1A7A62A600383F3B /* Android.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FBE822791A7A62A600383F3B /* Android.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -199,6 +202,13 @@
 		FB7D806D1A4903570003E4F0 /* SignalTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignalTranslator.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/Posix/SignalTranslator.h"; sourceTree = "<group>"; };
 		FB7D806E1A4903570003E4F0 /* TimeHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TimeHelpers.cpp; path = "../NewChromantics/PopTrack/src/UnitTest++/src/Posix/TimeHelpers.cpp"; sourceTree = "<group>"; };
 		FB7D806F1A4903570003E4F0 /* TimeHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeHelpers.h; path = "../NewChromantics/PopTrack/src/UnitTest++/src/Posix/TimeHelpers.h"; sourceTree = "<group>"; };
+		FB9C89C71A8CD13300931EFB /* TChannelFork.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TChannelFork.cpp; path = ../NewChromantics/PopTrack/src/TChannelFork.cpp; sourceTree = "<group>"; };
+		FB9C89C81A8CD13300931EFB /* TChannelFork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TChannelFork.h; path = ../NewChromantics/PopTrack/src/TChannelFork.h; sourceTree = "<group>"; };
+		FBC7F1411A9448850085DAFE /* TFeatureBinRing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TFeatureBinRing.cpp; path = ../NewChromantics/PopTrack/src/TFeatureBinRing.cpp; sourceTree = "<group>"; };
+		FBC7F1421A9448850085DAFE /* TFeatureBinRing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TFeatureBinRing.h; path = ../NewChromantics/PopTrack/src/TFeatureBinRing.h; sourceTree = "<group>"; };
+		FBE822781A79503C00383F3B /* Android */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Android; sourceTree = "<group>"; };
+		FBE822791A7A62A600383F3B /* Android.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Android.cpp; path = src/Android.cpp; sourceTree = "<group>"; };
+		FBE8227B1A7A654400383F3B /* PopAndroid.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = PopAndroid.xcconfig; path = ../NewChromantics/PopTrack/PopAndroid.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,12 +229,14 @@
 			isa = PBXGroup;
 			children = (
 				FB7D7F2D1A48E2F90003E4F0 /* PopApp.xcconfig */,
+				FBE8227B1A7A654400383F3B /* PopAndroid.xcconfig */,
 				FB7D7F281A48E2AE0003E4F0 /* Soy */,
 				FB7D7F271A48E2A90003E4F0 /* Pop */,
 				FB7D7F0F1A48E1F30003E4F0 /* src */,
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* External Frameworks and Libraries */,
 				19C28FB6FE9D52B211CA2CBB /* Products */,
+				FBE822781A79503C00383F3B /* Android */,
 			);
 			name = RenderingPlugin;
 			sourceTree = "<group>";
@@ -261,6 +273,7 @@
 				FB7D7FA31A48EEB60003E4F0 /* gl */,
 				FB7D7F171A48E28D0003E4F0 /* inttypes.h */,
 				FB7D7FCB1A48F33A0003E4F0 /* Unity.cpp */,
+				FBE822791A7A62A600383F3B /* Android.cpp */,
 				FB7D7FCC1A48F33A0003E4F0 /* Unity.h */,
 				FB7D7F1F1A48E28D0003E4F0 /* UnityDevice.cpp */,
 				FB7D7F201A48E28D0003E4F0 /* UnityDevice.h */,
@@ -276,8 +289,12 @@
 				FB7D7FF61A48FFCB0003E4F0 /* SoyData.cpp */,
 				FB7D7FF71A48FFCB0003E4F0 /* SoyData.h */,
 				FB7D7FE71A48FFA10003E4F0 /* TProtocol.cpp */,
+				FB9C89C71A8CD13300931EFB /* TChannelFork.cpp */,
+				FB9C89C81A8CD13300931EFB /* TChannelFork.h */,
 				FB7D7FE81A48FFA10003E4F0 /* TProtocol.h */,
 				FB7D7FE91A48FFA10003E4F0 /* TProtocolCli.cpp */,
+				FBC7F1411A9448850085DAFE /* TFeatureBinRing.cpp */,
+				FBC7F1421A9448850085DAFE /* TFeatureBinRing.h */,
 				FB7D7FEA1A48FFA10003E4F0 /* TProtocolCli.h */,
 				FB7D7FEB1A48FFA10003E4F0 /* TProtocolHttp.cpp */,
 				FB7D7FEC1A48FFA10003E4F0 /* TProtocolHttp.h */,
@@ -418,6 +435,23 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXLegacyTarget section */
+		FBE822721A78F09C00383F3B /* PopUnityAndroid */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = FBE822751A78F09C00383F3B /* Build configuration list for PBXLegacyTarget "PopUnityAndroid" */;
+			buildPhases = (
+			);
+			buildToolPath = "$(SRCROOT)/Android/build.sh";
+			buildWorkingDirectory = "$(SRCROOT)/Android/";
+			dependencies = (
+			);
+			name = PopUnityAndroid;
+			passBuildSettingsInEnvironment = 1;
+			productName = PopUnityAndroid;
+		};
+/* End PBXLegacyTarget section */
+
 /* Begin PBXNativeTarget section */
 		8D57630D048677EA00EA77CD /* PopUnity */ = {
 			isa = PBXNativeTarget;
@@ -445,6 +479,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0610;
+				TargetAttributes = {
+					FBE822721A78F09C00383F3B = {
+						CreatedOnToolsVersion = 6.1;
+					};
+				};
 			};
 			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "PopUnity" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -461,6 +500,7 @@
 			projectRoot = "";
 			targets = (
 				8D57630D048677EA00EA77CD /* PopUnity */,
+				FBE822721A78F09C00383F3B /* PopUnityAndroid */,
 			);
 		};
 /* End PBXProject section */
@@ -509,6 +549,7 @@
 				FB7D80021A4901080003E4F0 /* SoyPixels.cpp in Sources */,
 				FB7D80621A4903460003E4F0 /* TestDetails.cpp in Sources */,
 				FB7D80111A4901450003E4F0 /* SoyString.cpp in Sources */,
+				FBC7F1431A9448850085DAFE /* TFeatureBinRing.cpp in Sources */,
 				FB7D80661A4903460003E4F0 /* TestResults.cpp in Sources */,
 				FB7D800C1A4901310003E4F0 /* SoyArray.cpp in Sources */,
 				FB7D7F261A48E28D0003E4F0 /* UnityDevice.cpp in Sources */,
@@ -517,11 +558,13 @@
 				FB7D7FFB1A4900200003E4F0 /* SoyApp.cpp in Sources */,
 				FB7D7FC81A48EF200003E4F0 /* SoyThread.cpp in Sources */,
 				FB7D80601A4903460003E4F0 /* ReportAssert.cpp in Sources */,
+				FBE8227A1A7A62A600383F3B /* Android.cpp in Sources */,
 				FB7D7F311A48EE530003E4F0 /* SoyTypes.cpp in Sources */,
 				FB7D7FCD1A48F33A0003E4F0 /* Unity.cpp in Sources */,
 				FB7D80281A4901C10003E4F0 /* sha1.cpp in Sources */,
 				FB7D7FF41A48FFA10003E4F0 /* TProtocolJson.cpp in Sources */,
 				FB7D7FE51A48FF880003E4F0 /* TChannelPipe.cpp in Sources */,
+				FB9C89C91A8CD13300931EFB /* TChannelFork.cpp in Sources */,
 				FB7D800D1A4901310003E4F0 /* SoyDebug.cpp in Sources */,
 				FB7D80411A4903350003E4F0 /* DeferredTestReporter.cpp in Sources */,
 				FB7D803E1A4903350003E4F0 /* AssertException.cpp in Sources */,
@@ -539,6 +582,7 @@
 /* Begin XCBuildConfiguration section */
 		1DEB911B08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FB7D7F2D1A48E2F90003E4F0 /* PopApp.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -564,6 +608,7 @@
 		};
 		1DEB911C08733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FB7D7F2D1A48E2F90003E4F0 /* PopApp.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -586,7 +631,6 @@
 		};
 		1DEB911F08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FB7D7F2D1A48E2F90003E4F0 /* PopApp.xcconfig */;
 			buildSettings = {
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -599,13 +643,94 @@
 		};
 		1DEB912008733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FB7D7F2D1A48E2F90003E4F0 /* PopApp.xcconfig */;
 			buildSettings = {
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				POP_DIR = ../NewChromantics/PopTrack/;
 				PREBINDING = NO;
 				SOYLENT_DIR = ../NewChromantics/ofxSoylent/;
+			};
+			name = Release;
+		};
+		FBE822731A78F09C00383F3B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FBE8227B1A7A654400383F3B /* PopAndroid.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUGGING_SYMBOLS = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		FBE822741A78F09C00383F3B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FBE8227B1A7A654400383F3B /* PopAndroid.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -626,6 +751,15 @@
 			buildConfigurations = (
 				1DEB911F08733D790010E9CD /* Debug */,
 				1DEB912008733D790010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FBE822751A78F09C00383F3B /* Build configuration list for PBXLegacyTarget "PopUnityAndroid" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FBE822731A78F09C00383F3B /* Debug */,
+				FBE822741A78F09C00383F3B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
