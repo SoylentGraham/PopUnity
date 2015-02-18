@@ -667,7 +667,7 @@ SoyPixelsMetaFull TUnityDevice_Opengl::GetTextureMeta(Unity::TDynamicTexture Tex
 #endif
 
 #if defined(ENABLE_OPENGL)
-bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const SoyPixelsImpl& Frame,bool Blocking)
+bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const SoyPixelsImpl& Frame,bool Blocking,bool Stretch)
 {
 	TUnityDeviceContextScope Context( *this );
 	if ( !Context )
@@ -716,7 +716,7 @@ bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const SoyPixelsImp
 	glGetTexLevelParameteriv(GL_TEXTURE_2D, MipLevel, GL_TEXTURE_WIDTH, &TextureWidth );
 	glGetTexLevelParameteriv(GL_TEXTURE_2D, MipLevel, GL_TEXTURE_HEIGHT, &TextureHeight );
 	
-	if ( glewIsSupported("GL_APPLE_client_storage") )
+	if ( !Stretch && glewIsSupported("GL_APPLE_client_storage") )
 	{
 		//	https://developer.apple.com/library/mac/documentation/graphicsimaging/conceptual/opengl-macprogguide/opengl_texturedata/opengl_texturedata.html
 		glTexParameteri(GL_TEXTURE_2D,
@@ -752,7 +752,7 @@ bool TUnityDevice_Opengl::CopyTexture(Unity::TTexture Texture,const SoyPixelsImp
 		const ArrayInterface<char>& PixelsArray = Pixels.GetPixelsArray();
 		auto* PixelsArrayData = PixelsArray.GetArray();
 	
-		static bool UseSubImage = true;
+		bool UseSubImage = !Stretch;
 		if ( UseSubImage )
 		{
 			int XOffset = 0;
@@ -875,7 +875,7 @@ bool TUnityDevice_Opengl::FreeMap(TOpenglBufferCache& Buffer)
 
 
 #if defined(ENABLE_OPENGL)
-bool TUnityDevice_Opengl::CopyTexture(Unity::TDynamicTexture Texture,const SoyPixelsImpl& Frame,bool Blocking)
+bool TUnityDevice_Opengl::CopyTexture(Unity::TDynamicTexture Texture,const SoyPixelsImpl& Frame,bool Blocking,bool Stretch)
 {
 	ofMutex::ScopedLock lock( mBufferCache );
 	auto* Buffer = mBufferCache.Find( Texture.GetInteger() );

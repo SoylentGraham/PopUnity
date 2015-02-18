@@ -161,12 +161,12 @@ void PopUnity::ProcessCopyTextureQueue()
 			}
 		}
 		
-		Unity::gDevice->CopyTexture( Copy.mTexture, Pixels.mValue, true );
+		Unity::gDevice->CopyTexture( Copy.mTexture, Pixels.mValue, true, Copy.mStretch );
 	}
 }
 
 
-void PopUnity::CopyTexture(TJobParam PixelsParam,Unity::TTexture Texture,SoyPixelsFormat::Type ConvertToFormat)
+void PopUnity::CopyTexture(TJobParam PixelsParam,Unity::TTexture Texture,SoyPixelsFormat::Type ConvertToFormat,bool Stretch)
 {
 	mCopyTextureQueue.lock();
 	
@@ -184,6 +184,7 @@ void PopUnity::CopyTexture(TJobParam PixelsParam,Unity::TTexture Texture,SoyPixe
 	Copy.mPixelsParam = PixelsParam;
 	Copy.mTexture = Texture;
 	Copy.mConvertToFormat = ConvertToFormat;
+	Copy.mStretch = Stretch;
 	mCopyTextureQueue.unlock();
 	
 }
@@ -311,7 +312,7 @@ extern "C" const char* EXPORT_API GetJobParam_string(TJobInterface* JobInterface
 }
 
 
-extern "C" bool EXPORT_API GetJobParam_texture(TJobInterface* JobInterface,const char* ParamName,int Texture,SoyPixelsFormat::Type Format)
+extern "C" bool EXPORT_API GetJobParam_texture(TJobInterface* JobInterface,const char* ParamName,int Texture,SoyPixelsFormat::Type Format,bool Stretch)
 {
 	auto& Job = *JobInterface->mTJob;
 
@@ -324,7 +325,7 @@ extern "C" bool EXPORT_API GetJobParam_texture(TJobInterface* JobInterface,const
 	
 	//	don't extract now and extract during upload in case it's a memfile and we can get the very latest image
 	auto& App = PopUnity::Get();
-	App.CopyTexture( Param, Unity::TTexture(Texture), Format );
+	App.CopyTexture( Param, Unity::TTexture(Texture), Format, Stretch );
 	
 	return true;
 }

@@ -88,10 +88,10 @@ public class PopJob
 		return Marshal.PtrToStringAuto( stringPtr );
 	}
 
-	public bool GetParam(string Param,Texture2D texture,SoyPixelsFormat Format=SoyPixelsFormat.Invalid)
+	public bool GetParam(string Param,Texture2D texture,SoyPixelsFormat Format=SoyPixelsFormat.Invalid,bool Stretch=false)
 	{
 		int FormatInt = Convert.ToInt32 (Format);
-		return PopUnity.GetJobParam_texture( ref mInterface, Param, texture.GetNativeTextureID(), FormatInt );
+		return PopUnity.GetJobParam_texture( ref mInterface, Param, texture.GetNativeTextureID(), FormatInt, Stretch );
 	}
 
 	public bool GetParamPixelsWidthHeight(string Param,out int Width,out int Height)
@@ -183,7 +183,7 @@ public class PopUnity
 	public static extern System.IntPtr GetJobParam_string(ref TJobInterface JobInterface,string Param,string DefaultValue);
 
 	[DllImport("PopUnity", CallingConvention = CallingConvention.Cdecl)]
-	public static extern bool GetJobParam_texture(ref TJobInterface JobInterface,string Param,int Texture,int ConvertToFormat);
+	public static extern bool GetJobParam_texture(ref TJobInterface JobInterface,string Param,int Texture,int ConvertToFormat,bool Stretch);
 	
 	[DllImport("PopUnity", CallingConvention = CallingConvention.Cdecl)]
 	public static extern bool GetJobParam_PixelsWidthHeight(ref TJobInterface JobInterface,string Param,ref int Width,ref int Height);
