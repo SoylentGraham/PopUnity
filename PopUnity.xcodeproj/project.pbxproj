@@ -85,6 +85,7 @@
 		2BC2A8D4144C433D00D5EF79 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		8D576316048677EA00EA77CD /* PopUnity.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PopUnity.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB25CF6F1A9658300047C881 /* SoyData.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = SoyData.inl; path = ../NewChromantics/PopTrack/src/SoyData.inl; sourceTree = "<group>"; };
 		FB6650CA1A55E54400DF0A12 /* SoyDebug.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SoyDebug.mm; path = ../NewChromantics/ofxSoylent/src/SoyDebug.mm; sourceTree = "<group>"; };
 		FB6650CE1A581CC500DF0A12 /* SoyMemFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoyMemFile.cpp; path = ../NewChromantics/ofxSoylent/src/SoyMemFile.cpp; sourceTree = "<group>"; };
 		FB6650CF1A581CC500DF0A12 /* SoyMemFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoyMemFile.h; path = ../NewChromantics/ofxSoylent/src/SoyMemFile.h; sourceTree = "<group>"; };
@@ -287,6 +288,7 @@
 				FB7D80121A49015D0003E4F0 /* TSerialisation.cpp */,
 				FB7D80131A49015D0003E4F0 /* TSerialisation.h */,
 				FB7D7FF61A48FFCB0003E4F0 /* SoyData.cpp */,
+				FB25CF6F1A9658300047C881 /* SoyData.inl */,
 				FB7D7FF71A48FFCB0003E4F0 /* SoyData.h */,
 				FB7D7FE71A48FFA10003E4F0 /* TProtocol.cpp */,
 				FB9C89C71A8CD13300931EFB /* TChannelFork.cpp */,

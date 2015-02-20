@@ -271,10 +271,10 @@ public:
 	}
 
 	uint16		GetHeight() const		{	return SoyPixelsMeta::GetHeight( GetDataSize() );	}
-	int			GetDataSize() const		{	return mDataSize;	}
+	size_t		GetDataSize() const		{	return mDataSize;	}
 
 public:
-	int			mDataSize;
+	size_t		mDataSize;
 };
 
 #if defined(ENABLE_OPENGL)
@@ -292,7 +292,7 @@ public:
 
 	bool		IsAllocated() const						{	return mBufferName != GL_INVALID_BUFFER_NAME;	}
 	bool		IsMapped() const						{	return mDataMap != nullptr;	}
-	int			GetSize() const							{	return mBufferMeta.GetDataSize();	}
+	size_t		GetSize() const							{	return mBufferMeta.GetDataSize();	}
 	inline bool	operator==(const uint32 UnityRef) const	{	return mUnityRef == UnityRef;	}
 
 public:

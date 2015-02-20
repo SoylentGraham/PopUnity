@@ -892,7 +892,7 @@ bool TUnityDevice_Opengl::CopyTexture(Unity::TDynamicTexture Texture,const SoyPi
 
 	//	gr: do safety check here
 	auto& PixelsArray = Frame.GetPixelsArray();
-	int DataSize = ofMin( PixelsArray.GetDataSize(), Buffer->mBufferMeta.GetDataSize() );
+	auto DataSize = std::min( PixelsArray.GetDataSize(), Buffer->mBufferMeta.GetDataSize() );
 	memcpy( Buffer->mDataMap, PixelsArray.GetArray(), DataSize );
 
 	//	umap if in render thread?

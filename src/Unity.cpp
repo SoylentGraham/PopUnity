@@ -383,7 +383,7 @@ bool TryExtractArray(const TJobParams& Params,const std::string& ParamName,const
 	//	last bit crashes. wrong ptrs?
 	TFeatureMatchCSharp* BufferSmall = reinterpret_cast<TFeatureMatchCSharp*>(Buffer);
 	auto SmallFeatures = GetRemoteArray( BufferSmall, BufferSize );
-	for ( int i=0;	i<std::min(BufferSize,ParamArray.GetSize());	i++ )
+	for ( int i=0;	i<std::min(BufferSize,size_cast<int>(ParamArray.GetSize()));	i++ )
 	{
 		auto& Fm = ParamArray[i];
 		SmallFeatures[i].x = Fm.mCoord.x;
